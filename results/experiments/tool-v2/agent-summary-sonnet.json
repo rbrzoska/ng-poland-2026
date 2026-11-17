@@ -1,0 +1,78 @@
+{
+  "model": "sonnet",
+  "modelIds": [
+    "claude-sonnet-5-5"
+  ],
+  "experiment": "tool-v2",
+  "task": "migrate",
+  "features": 120,
+  "runs": 5,
+  "parallelRuns": 0,
+  "updatedAt": "2026-11-10T08:51:50.697Z",
+  "arms": {
+    "tool-v2": {
+      "seconds": {
+        "median": 12,
+        "min": 9,
+        "max": 17
+      },
+      "turns": {
+        "median": 2,
+        "min": 2,
+        "max": 2
+      },
+      "inputTokens": {
+        "median": 63362,
+        "min": 63348,
+        "max": 63373
+      },
+      "outputTokens": {
+        "median": 296,
+        "min": 265,
+        "max": 298
+      },
+      "costUsd": {
+        "median": 0.0475768,
+        "min": 0.0472888,
+        "max": 0.0476062
+      },
+      "correct": {
+        "median": 640,
+        "min": 640,
+        "max": 640
+      },
+      "missed": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "wrong": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compileErrors": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "elementsWrong": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "functionallyCorrectRuns": 5,
+      "failedRuns": 0,
+      "shouldChange": 640
+    }
+  },
+  "ratios": {
+    "seconds": null,
+    "costUsd": null,
+    "outputTokens": null,
+    "inputTokens": null,
+    "turns": null
+  },
+  "specText": null,
+  "specLines": 0
+}

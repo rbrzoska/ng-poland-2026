@@ -1,0 +1,271 @@
+{
+  "model": "opus",
+  "run": 3,
+  "startedAt": "2026-11-16T19:20:30.239Z",
+  "sizes": {
+    "ajsComponents": 40,
+    "ajsDirectives": 4,
+    "ajsFilters": 8,
+    "ajsServices": 12,
+    "downgradedComponents": 10,
+    "downgradedInjectables": 4,
+    "angularComponents": 24,
+    "upgradeWrappers": 5,
+    "states": 14,
+    "ajsTemplates": 58,
+    "ajsInlineTemplates": 11,
+    "ajsFiles": 122,
+    "ajsLines": 1764
+  },
+  "key": {
+    "deadComponents": [
+      "cohortBanner",
+      "denariiLedger",
+      "helmetRack",
+      "patrolLog",
+      "shieldWall",
+      "tentInspector"
+    ],
+    "leafComponents": [
+      "amountInput",
+      "campHeader",
+      "centurionCard",
+      "cohortBanner",
+      "gladiusCounter",
+      "grainStore",
+      "helmetIcon",
+      "legionStats",
+      "pagerControl",
+      "rationSummary",
+      "sectionTitle",
+      "shieldBadge",
+      "standardBearer",
+      "supplyGauge",
+      "tentRow"
+    ],
+    "standardBearerElements": 9,
+    "unusedFilters": [
+      "cohortSize",
+      "shortDate",
+      "truncate"
+    ],
+    "twinComponents": [
+      "amountInput",
+      "helmetIcon",
+      "shieldBadge",
+      "standardBearer",
+      "tentRow"
+    ],
+    "unusedServices": [
+      "messengerQueue",
+      "standardsRegistry",
+      "tentAllocator"
+    ]
+  },
+  "arms": {
+    "no-tool": {
+      "seconds": 175,
+      "apiSeconds": 174,
+      "modelSeconds": 145,
+      "resultEvents": 1,
+      "turns": 13,
+      "toolCalls": 12,
+      "inputTokens": 738027,
+      "outputTokens": 12652,
+      "costUsd": 1.3792090000000001,
+      "modelId": "claude-opus-5",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "answers": {
+        "deadComponents": [
+          "cohortBanner",
+          "helmetRack",
+          "shieldWall",
+          "patrolLog",
+          "tentInspector",
+          "denariiLedger"
+        ],
+        "leafComponents": [
+          "campHeader",
+          "pagerControl",
+          "sectionTitle",
+          "gladiusCounter",
+          "helmetIcon",
+          "shieldBadge",
+          "centurionCard",
+          "cohortBanner",
+          "legionStats",
+          "standardBearer",
+          "tentRow",
+          "amountInput",
+          "grainStore",
+          "rationSummary",
+          "supplyGauge"
+        ],
+        "standardBearerElements": 9,
+        "unusedFilters": [
+          "cohortSize",
+          "shortDate",
+          "truncate"
+        ],
+        "twinComponents": [
+          "helmetIcon",
+          "shieldBadge",
+          "standardBearer",
+          "tentRow",
+          "amountInput"
+        ],
+        "unusedServices": [
+          "messengerQueue",
+          "standardsRegistry",
+          "tentAllocator"
+        ]
+      },
+      "correctAnswers": 6,
+      "wrongKeys": [],
+      "details": {
+        "deadComponents": {
+          "right": true,
+          "expected": 6,
+          "missing": [],
+          "extra": []
+        },
+        "leafComponents": {
+          "right": true,
+          "expected": 15,
+          "missing": [],
+          "extra": []
+        },
+        "standardBearerElements": {
+          "right": true,
+          "expected": 9,
+          "given": 9
+        },
+        "unusedFilters": {
+          "right": true,
+          "expected": 3,
+          "missing": [],
+          "extra": []
+        },
+        "twinComponents": {
+          "right": true,
+          "expected": 5,
+          "missing": [],
+          "extra": []
+        },
+        "unusedServices": {
+          "right": true,
+          "expected": 3,
+          "missing": [],
+          "extra": []
+        }
+      },
+      "allCorrect": true,
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\ajs-facts-hybrid-no-tool-bkpglv\\workspace",
+      "workspaceKept": false,
+      "recording": "results\\experiments\\hybrid\\recordings\\hybrid-opus-run-3-no-tool.ndjson"
+    },
+    "tool": {
+      "seconds": 70,
+      "apiSeconds": 69,
+      "modelSeconds": 45,
+      "resultEvents": 1,
+      "turns": 10,
+      "toolCalls": 9,
+      "inputTokens": 226816,
+      "outputTokens": 4014,
+      "costUsd": 0.44020000000000004,
+      "modelId": "claude-opus-5",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "answers": {
+        "deadComponents": [
+          "cohortBanner",
+          "denariiLedger",
+          "helmetRack",
+          "patrolLog",
+          "shieldWall",
+          "tentInspector"
+        ],
+        "leafComponents": [
+          "amountInput",
+          "campHeader",
+          "centurionCard",
+          "cohortBanner",
+          "gladiusCounter",
+          "grainStore",
+          "helmetIcon",
+          "legionStats",
+          "pagerControl",
+          "rationSummary",
+          "sectionTitle",
+          "shieldBadge",
+          "standardBearer",
+          "supplyGauge",
+          "tentRow"
+        ],
+        "standardBearerElements": 9,
+        "unusedFilters": [
+          "cohortSize",
+          "shortDate",
+          "truncate"
+        ],
+        "twinComponents": [
+          "amountInput",
+          "helmetIcon",
+          "shieldBadge",
+          "standardBearer",
+          "tentRow"
+        ],
+        "unusedServices": [
+          "messengerQueue",
+          "standardsRegistry",
+          "tentAllocator"
+        ]
+      },
+      "correctAnswers": 6,
+      "wrongKeys": [],
+      "details": {
+        "deadComponents": {
+          "right": true,
+          "expected": 6,
+          "missing": [],
+          "extra": []
+        },
+        "leafComponents": {
+          "right": true,
+          "expected": 15,
+          "missing": [],
+          "extra": []
+        },
+        "standardBearerElements": {
+          "right": true,
+          "expected": 9,
+          "given": 9
+        },
+        "unusedFilters": {
+          "right": true,
+          "expected": 3,
+          "missing": [],
+          "extra": []
+        },
+        "twinComponents": {
+          "right": true,
+          "expected": 5,
+          "missing": [],
+          "extra": []
+        },
+        "unusedServices": {
+          "right": true,
+          "expected": 3,
+          "missing": [],
+          "extra": []
+        }
+      },
+      "allCorrect": true,
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\ajs-facts-hybrid-tool-pd8ZbI\\workspace",
+      "workspaceKept": false,
+      "recording": "results\\experiments\\hybrid\\recordings\\hybrid-opus-run-3-tool.ndjson"
+    }
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "model": "sonnet",
+  "task": "blast",
+  "run": 3,
+  "startedAt": "2026-11-10T08:44:08.050Z",
+  "provinces": 8,
+  "arms": {
+    "no-tool": {
+      "seconds": 60,
+      "apiSeconds": 60,
+      "modelSeconds": 55,
+      "resultEvents": 1,
+      "turns": 10,
+      "toolCalls": 9,
+      "inputTokens": 474425,
+      "outputTokens": 5029,
+      "costUsd": 0.2700714,
+      "modelId": "claude-sonnet-5-5",
+      "cliVersion": "2.1.294",
+      "error": null,
+      "answers": {
+        "tentRoutes": [
+          "gallia/camps",
+          "gallia/camps/:id",
+          "gallia/map",
+          "gallia/reports/losses",
+          "britannia/camps",
+          "britannia/camps/:id",
+          "britannia/legions/:id",
+          "hispania/camps",
+          "hispania/camps/:id",
+          "hispania/legions/:id",
+          "hispania/map",
+          "hispania/reports/losses",
+          "germania/camps",
+          "germania/camps/:id",
+          "germania/reports/losses",
+          "germania/archive",
+          "aegyptus/camps",
+          "aegyptus/camps/:id",
+          "aegyptus/legions/:id",
+          "aegyptus/map",
+          "graecia/camps",
+          "graecia/camps/:id",
+          "graecia/legions/:id",
+          "graecia/reports/losses",
+          "dacia/camps",
+          "dacia/camps/:id",
+          "dacia/map",
+          "dacia/reports/losses",
+          "syria/camps",
+          "syria/camps/:id",
+          "syria/legions/:id",
+          "syria/archive"
+        ],
+        "rationRoutes": [
+          "gallia/camps/:id",
+          "gallia/supplies",
+          "britannia/supplies",
+          "britannia/reports/daily",
+          "britannia/reports/losses",
+          "hispania/camps/:id",
+          "hispania/supplies",
+          "germania/camps/:id",
+          "germania/supplies",
+          "germania/reports/daily",
+          "aegyptus/camps/:id",
+          "aegyptus/supplies",
+          "aegyptus/reports/losses",
+          "graecia/supplies",
+          "graecia/reports/daily",
+          "dacia/camps/:id",
+          "dacia/supplies",
+          "syria/camps/:id",
+          "syria/supplies",
+          "syria/reports/daily",
+          "syria/reports/losses"
+        ],
+        "helmetRoutes": [
+          "germania/archive",
+          "syria/archive"
+        ],
+        "unroutedComponents": [
+          "GalliaArchivePageComponent",
+          "BritanniaArchivePageComponent",
+          "HispaniaArchivePageComponent",
+          "AegyptusArchivePageComponent",
+          "GraeciaArchivePageComponent",
+          "DaciaArchivePageComponent",
+          "OldDashboardPageComponent",
+          "EagleComponent"
+        ]
+      },
+      "perKey": {
+        "tentRoutes": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 32
+        },
+        "rationRoutes": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 21
+        },
+        "helmetRoutes": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 2
+        },
+        "unroutedComponents": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 8
+        }
+      },
+      "wrongKeys": [],
+      "correctAnswers": 4,
+      "allCorrect": true,
+      "workspace": "/var/folders/tb/68tnh0pn5619ks87wpp1gqmc0000gp/T/ng-facts-atlas-blast-no-tool-jU8H6K/workspace",
+      "recording": "results/experiments/atlas-blast/recordings/atlas-blast-sonnet-run-3-no-tool.ndjson"
+    },
+    "tool": {
+      "seconds": 73,
+      "apiSeconds": 72,
+      "modelSeconds": 55,
+      "resultEvents": 1,
+      "turns": 9,
+      "toolCalls": 8,
+      "inputTokens": 417907,
+      "outputTokens": 4983,
+      "costUsd": 0.277726,
+      "modelId": "claude-sonnet-5-5",
+      "cliVersion": "2.1.294",
+      "error": null,
+      "answers": {
+        "tentRoutes": [
+          "aegyptus/camps",
+          "aegyptus/camps/:id",
+          "aegyptus/legions/:id",
+          "aegyptus/map",
+          "britannia/camps",
+          "britannia/camps/:id",
+          "britannia/legions/:id",
+          "dacia/camps",
+          "dacia/camps/:id",
+          "dacia/map",
+          "dacia/reports/losses",
+          "gallia/camps",
+          "gallia/camps/:id",
+          "gallia/map",
+          "gallia/reports/losses",
+          "germania/archive",
+          "germania/camps",
+          "germania/camps/:id",
+          "germania/reports/losses",
+          "graecia/camps",
+          "graecia/camps/:id",
+          "graecia/legions/:id",
+          "graecia/reports/losses",
+          "hispania/camps",
+          "hispania/camps/:id",
+          "hispania/legions/:id",
+          "hispania/map",
+          "hispania/reports/losses",
+          "syria/archive",
+          "syria/camps",
+          "syria/camps/:id",
+          "syria/legions/:id"
+        ],
+        "rationRoutes": [
+          "aegyptus/camps/:id",
+          "aegyptus/reports/losses",
+          "aegyptus/supplies",
+          "britannia/reports/daily",
+          "britannia/reports/losses",
+          "britannia/supplies",
+          "dacia/camps/:id",
+          "dacia/supplies",
+          "gallia/camps/:id",
+          "gallia/supplies",
+          "germania/camps/:id",
+          "germania/reports/daily",
+          "germania/supplies",
+          "graecia/reports/daily",
+          "graecia/supplies",
+          "hispania/camps/:id",
+          "hispania/supplies",
+          "syria/camps/:id",
+          "syria/reports/daily",
+          "syria/reports/losses",
+          "syria/supplies"
+        ],
+        "helmetRoutes": [
+          "germania/archive",
+          "syria/archive"
+        ],
+        "unroutedComponents": [
+          "AegyptusArchivePageComponent",
+          "BritanniaArchivePageComponent",
+          "DaciaArchivePageComponent",
+          "GalliaArchivePageComponent",
+          "GraeciaArchivePageComponent",
+          "HispaniaArchivePageComponent",
+          "OldDashboardPageComponent",
+          "EagleComponent"
+        ]
+      },
+      "perKey": {
+        "tentRoutes": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 32
+        },
+        "rationRoutes": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 21
+        },
+        "helmetRoutes": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 2
+        },
+        "unroutedComponents": {
+          "missing": 0,
+          "extra": 0,
+          "expected": 8
+        }
+      },
+      "wrongKeys": [],
+      "correctAnswers": 4,
+      "allCorrect": true,
+      "workspace": "/var/folders/tb/68tnh0pn5619ks87wpp1gqmc0000gp/T/ng-facts-atlas-blast-tool-yWZLWG/workspace",
+      "recording": "results/experiments/atlas-blast/recordings/atlas-blast-sonnet-run-3-tool.ndjson"
+    }
+  }
+}

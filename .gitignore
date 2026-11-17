@@ -1,0 +1,20 @@
+node_modules/
+.work/
+fixture/out-tsc/
+.agent-run.log
+fixture/
+fixture-expected/
+gaul/fixture/
+gaul/fixture-expected/
+atlas/
+atlas-key.json
+.atlas-run.log
+.atlas-blast.log
+.v2-run.log
+.DS_Store
+__pycache__/
+/hybrid/
+/hybrid-key.json
+
+# speaker versions (notes, presenter view): kept on this machine only
+presenter/

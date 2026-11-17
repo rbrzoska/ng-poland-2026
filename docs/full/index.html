@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veni, Vidi, Compilavi · NG Poland 2026</title>
+<meta name="description" content="Teaching AI agents to use the Angular compiler: slides of Rafał Brzoska's lightning talk at NG Poland 2026.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+html, body { margin: 0; height: 100%; background: #0d0312; overflow: hidden; }
+p, h1, h2, h3, ul { margin: 0; }
+ul { padding-left: 1.1em; }
+table { border-collapse: collapse; width: 100%; }
+td, th { padding: 10px 18px; }
+.slides { position: absolute; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.frame { position: absolute; inset: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
+.frame.current { opacity: 1; visibility: visible; }
+.frame > section { position: absolute; inset: 0; box-sizing: border-box; }
+#stage { left: 50%; top: 50%; cursor: pointer; }
+#counter { position: fixed; left: 10px; bottom: 6px; font: 12px/1 Roboto, Arial, sans-serif; color: #fff; opacity: .45; }
+#black { position: fixed; inset: 0; background: #000; display: none; z-index: 5; }
+body.black #black { display: block; }
+
+</style>
+</head>
+<body>
+<main id="stage" class="slides">
+<div class="frame" data-id="cover"><section id="cover" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:0;display:flex;flex-direction:row;gap:0">
+<img src="../assets/99698d599051010086c6e0be57722491.webp" alt="Map of Gaul, 50 BC" style="position:absolute;left:1119px;top:0;width:761px;height:1080px;object-fit:contain">
+<img src="../assets/b8ba6802910807b6e13aa189c2f5ed92.png" alt="Angular logo" style="position:absolute;left:128px;top:128px;width:96px;height:96px;object-fit:contain">
+<img src="../assets/c6b9bbeafe4f70b65fe5057c7b091baf.svg" alt="Voucherify" style="position:absolute;left:128px;top:910px;width:254px;height:42px;object-fit:contain">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<div style="width:900px;display:flex;flex-direction:column;justify-content:center;gap:28px;padding:128px 0 128px 128px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF;width:772px">NG Poland 2026</p>
+<div style="display:flex;flex-direction:column;gap:0px;width:772px">
+<h1 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:128px;font-weight:400;line-height:1.0;letter-spacing:2px;width:772px;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">Veni, Vidi, Compilavi</h1>
+<p style="font-size:20px;color:#8891A6;width:772px;line-height:1.3">(do not ask your AI what it means 🙂)</p>
+</div>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:48px;font-weight:400;line-height:1.2;color:#1F2533;width:772px">Teaching AI agents to use the Angular compiler</h2>
+<p style="font-size:28px;color:#40485A;width:772px;line-height:1.4">Rafał Brzoska · Software Engineer</p>
+</div>
+<div style="position:relative;width:1020px;height:1080px;display:flex;flex-direction:column;padding:168px 0 0 0">
+<div style="position:relative;left:-52px;width:342px;height:342px;border-radius:50%;overflow:hidden;background:#BFE0EE">
+<img src="../assets/99698d599051010086c6e0be57722491.webp" alt="" style="position:absolute;left:0;top:0;width:2013px;height:2856px;object-fit:contain;transform:translate(-67px, -727px)">
+<img src="../assets/f3dd58f788ee229f1526a702abd8f1ab.webp" alt="The Gaulish village, magnified" style="position:absolute;left:56px;top:65px;width:230px;height:212px;object-fit:contain">
+</div>
+<img src="../assets/6dea6f8de653822ffc636d6951705363.webp" alt="Magnifying glass over the village" style="position:absolute;left:-149px;top:146px;width:460px;height:581px;object-fit:contain">
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="about"><section id="about" data-transition="fade" style="background:#FFFFFF;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="../assets/3b1d608522bb76642a193cd9ab0d6d73.webp" alt="Rafał Brzoska in a Gaulish winged helmet" style="position:absolute;left:1370px;top:250px;width:440px;height:440px;object-fit:cover">
+<img src="../assets/c6b9bbeafe4f70b65fe5057c7b091baf.svg" alt="Voucherify" style="position:absolute;left:1440px;top:730px;width:300px;height:50px;object-fit:contain">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Quis loquitur? · who is talking</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:128px;font-weight:400;line-height:1.0;letter-spacing:2px;width:1200px;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">Rafał Brzoska</h2>
+<p style="font-size:38px;line-height:1.35;color:#40485A;width:1200px">Commands legions of AI agents at <b>Voucherify</b></p>
+<div style="width:1140px;display:flex;flex-direction:column;gap:10px;margin-top:10px">
+<img src="../assets/4c65e1cfab3d13b66bb998e83bdfe07c.png" alt="An accordion, a cup of yerba mate, and an old map with the Angular logo" style="width:1140px;height:392px;object-fit:contain">
+<div style="display:flex;font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1.1;color:#1F2533;text-align:center">
+<p style="width:35%">Off duty</p>
+<p style="width:21%">Fuel</p>
+<p style="width:44%;color:#C41633">The weapon</p>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="bigapp"><section id="bigapp" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:104px 128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">What we have · the year is 2026</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;font-weight:400;line-height:1.04;letter-spacing:1px">One big Angular app. <span style="color:#A127F2">One mission.</span></h2>
+<div style="display:flex;gap:56px;align-items:center">
+<div style="width:640px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:baseline;gap:20px;background:#FFFFFF;padding:34px 34px;border:1px solid #E3E0EC;border-radius:20px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:76px;line-height:1;color:#1F2533">Hundreds</p><p style="font-size:34px;color:#40485A">of components</p></div>
+<div style="display:flex;align-items:baseline;gap:20px;background:#FFFFFF;padding:34px 34px;border:1px solid #E3E0EC;border-radius:20px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:76px;line-height:1;color:#1F2533">Thousands</p><p style="font-size:34px;color:#40485A">of inputs</p></div>
+</div>
+<div data-step="1" style="flex:1;display:flex;align-items:center;gap:28px;background:#FFFFFF;padding:42px 44px;border:1px solid #E3E0EC;border-left:8px solid #F230BF;border-radius:20px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#F230BF">!</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1.1;color:#1F2533">A breaking change</p></div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="mission"><section id="mission" data-transition="fade" style="font-variant-ligatures:none;background:#FFFFFF;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:72px 96px;display:flex;flex-direction:column;justify-content:center;gap:24px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF;text-align:center">The mission · one shared component, one breaking change</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px;text-align:center">The design system shipped <span style="color:#A127F2">app-pill v2.</span></h2>
+<div style="display:flex;gap:28px;align-items:center">
+<div data-step="1" style="width:360px;display:flex;flex-direction:column;align-items:center;gap:10px">
+<img src="../assets/4eef313f79223ad6539440385eadeee7.png" alt="Obelix carrying a roast boar with a small flag that says grep" style="width:360px;height:456px;object-fit:contain">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:60px;line-height:1;color:#C41633">Hungry Obelix</p>
+<p style="font-size:28px;line-height:1.3;color:#40485A;text-align:center">files + grep<br>eats a lot of tokens</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
+<div style="display:grid;grid-template-columns:auto 60px auto 1fr;column-gap:18px;row-gap:12px;align-items:center;background:#F6F4FA;border:1px solid #E3E0EC;border-radius:20px;padding:26px 32px;font-size:30px">
+<p style="font-family:'JetBrains Mono', monospace;color:#C41633">disableTooltip</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;color:#7A8296;text-align:center">→</p><p style="font-family:'JetBrains Mono', monospace;color:#1B7F4A">tooltip</p><p style="color:#5A6273;font-size:26px">the opposite meaning</p>
+<p style="font-family:'JetBrains Mono', monospace;color:#C41633">variant</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;color:#7A8296;text-align:center">→</p><p style="font-family:'JetBrains Mono', monospace;color:#1B7F4A">tone</p><p style="color:#5A6273;font-size:26px">new values</p>
+<p style="font-family:'JetBrains Mono', monospace;color:#C41633">label</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;color:#7A8296;text-align:center">→</p><p style="font-family:'JetBrains Mono', monospace;color:#1B7F4A">content</p><p style="color:#5A6273;font-size:26px">the text moves inside the tag</p>
+</div>
+<div style="background:#170621;border-radius:20px;padding:22px 30px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#FF8A9E;white-space:nowrap"><span style="color:#8E86A6">v1&#160;</span> &lt;app-pill label="On" variant="success" [disableTooltip]="!on" /&gt;</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#9FE0B8;white-space:nowrap"><span style="color:#8E86A6">v2&#160;</span> &lt;app-pill tone="positive" [tooltip]="on"&gt;On&lt;/app-pill&gt;</p>
+</div>
+<div style="display:flex;gap:16px">
+<p style="flex:1;text-align:center;background:#F6F4FA;border:1px solid #E3E0EC;border-radius:16px;padding:14px 10px;font-size:26px;color:#40485A"><b style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;color:#1F2533;line-height:1">440</b><br>places to change</p>
+<p style="flex:1;text-align:center;background:#F6F4FA;border:1px solid #E3E0EC;border-radius:16px;padding:14px 10px;font-size:26px;color:#40485A"><b style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;color:#1F2533;line-height:1">120</b><br>components</p>
+<p style="flex:1;text-align:center;background:linear-gradient(135deg, #F230BF, #C41633);border-radius:16px;padding:14px 10px;font-size:26px;color:#FFFFFF"><b style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1">700</b><br>compiler errors</p>
+</div>
+</div>
+<div data-step="2" style="width:330px;display:flex;flex-direction:column;align-items:center;gap:10px">
+<img src="../assets/85692aaef93af48975e3f57c115cb06f.png" alt="Asterix holding a small bottle with a label that says compiler" style="width:300px;height:456px;object-fit:contain">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:60px;line-height:1;color:#A127F2">Smart Asterix</p>
+<p style="font-size:28px;line-height:1.3;color:#40485A;text-align:center">the same model<br>plus a magic potion</p>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="search-1"><section id="search-1" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:64px 112px;display:flex;flex-direction:column;justify-content:center;gap:20px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The search · the agents' own log, from a recorded run</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Same task. <span style="color:#F230BF">Two ways to search.</span></h2>
+<p style="font-size:34px;line-height:1.3;color:#FFFFFF;background:#2B1240;border:2px solid #A127F2;border-radius:16px;padding:14px 26px;align-self:flex-start"><span style="font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#C98BFF">We are looking for</span>&#160;&#160; every <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">&lt;app-pill&gt;</b> and its old inputs: <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">disableTooltip</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">variant</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">label</b></p>
+<div style="display:flex;gap:28px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#FF6FA5">Obelix · grep</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #FF6FA5;border-radius:12px;padding:12px 18px;visibility:hidden"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; Migrate every &lt;app-pill&gt; to v2 …</p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:hidden">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">Grep "app-pill|PillComponent"</span><br>&#160;&#160;Output too large (30.8KB)</p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rcE "&lt;app-pill([ &gt;/]|$)" src</span><br>&#160;&#160;420 &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← there are 440</span></p>
+<p data-step="3" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rhoE "&lt;app-pill[^&gt;]*&gt;?" src | uniq -c</span><br>&#160;&#160;100 &lt;app-pill label="…" variant="…" …/&gt;<br>&#160;&#160;&#160;60 &lt;app-pill &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← tag split over lines</span><br>&#160;&#160;&#160;40 &lt;app-pill … [disableTooltip]="count &gt;<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← cut at the "&gt;"</span></p>
+<p data-step="4" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">python3 mig.py</span> &#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← his own regex program</span></p>
+</div>
+<p data-step="4" style="font-size:26px;color:#DCD6E8;visibility:hidden"><b>9 commands</b> · 10 trips to the model · 301 k tokens</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#C98BFF">Asterix · the compiler</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #C98BFF;border-radius:12px;padding:12px 18px;visibility:hidden"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; the same + <span style="color:#F2C230">“and use ng-facts script based on Angular Compiler”</span></p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:hidden">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts usages PillComponent</span><br>&#160;&#160;<b style="color:#9FE0B8">440 uses in 120 files</b> <span style="color:#8E86A6">(139 ms)</span><br>&#160;&#160;&#160;&#160;feature-1.component.html:3 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:4 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:5 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;<span style="color:#8E86A6">… +437 more</span></p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts migrate spec.json --write</span><br>&#160;&#160;440 elements, <b style="color:#9FE0B8">2680 edits</b> in 170 files,<br>&#160;&#160;0 need a decision <span style="color:#8E86A6">(163 ms)</span></p>
+</div>
+<p data-step="2" style="font-size:26px;color:#DCD6E8;visibility:hidden"><b>3 commands</b> · 4 trips to the model · 130 k tokens</p>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="search-2"><section id="search-2" data-transition="none" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:64px 112px;display:flex;flex-direction:column;justify-content:center;gap:20px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The search · the agents' own log, from a recorded run</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Same task. <span style="color:#F230BF">Two ways to search.</span></h2>
+<p style="font-size:34px;line-height:1.3;color:#FFFFFF;background:#2B1240;border:2px solid #A127F2;border-radius:16px;padding:14px 26px;align-self:flex-start"><span style="font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#C98BFF">We are looking for</span>&#160;&#160; every <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">&lt;app-pill&gt;</b> and its old inputs: <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">disableTooltip</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">variant</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">label</b></p>
+<div style="display:flex;gap:28px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#FF6FA5">Obelix · grep</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #FF6FA5;border-radius:12px;padding:12px 18px;visibility:visible"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; Migrate every &lt;app-pill&gt; to v2 …</p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:visible">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">Grep "app-pill|PillComponent"</span><br>&#160;&#160;Output too large (30.8KB)</p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rcE "&lt;app-pill([ &gt;/]|$)" src</span><br>&#160;&#160;420 &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← there are 440</span></p>
+<p data-step="3" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rhoE "&lt;app-pill[^&gt;]*&gt;?" src | uniq -c</span><br>&#160;&#160;100 &lt;app-pill label="…" variant="…" …/&gt;<br>&#160;&#160;&#160;60 &lt;app-pill &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← tag split over lines</span><br>&#160;&#160;&#160;40 &lt;app-pill … [disableTooltip]="count &gt;<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← cut at the "&gt;"</span></p>
+<p data-step="4" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">python3 mig.py</span> &#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← his own regex program</span></p>
+</div>
+<p data-step="4" style="font-size:26px;color:#DCD6E8;visibility:visible"><b>9 commands</b> · 10 trips to the model · 301 k tokens</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#C98BFF">Asterix · the compiler</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #C98BFF;border-radius:12px;padding:12px 18px;visibility:hidden"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; the same + <span style="color:#F2C230">“and use ng-facts script based on Angular Compiler”</span></p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:hidden">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts usages PillComponent</span><br>&#160;&#160;<b style="color:#9FE0B8">440 uses in 120 files</b> <span style="color:#8E86A6">(139 ms)</span><br>&#160;&#160;&#160;&#160;feature-1.component.html:3 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:4 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:5 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;<span style="color:#8E86A6">… +437 more</span></p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts migrate spec.json --write</span><br>&#160;&#160;440 elements, <b style="color:#9FE0B8">2680 edits</b> in 170 files,<br>&#160;&#160;0 need a decision <span style="color:#8E86A6">(163 ms)</span></p>
+</div>
+<p data-step="2" style="font-size:26px;color:#DCD6E8;visibility:hidden"><b>3 commands</b> · 4 trips to the model · 130 k tokens</p>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="search-3"><section id="search-3" data-transition="none" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:64px 112px;display:flex;flex-direction:column;justify-content:center;gap:20px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The search · the agents' own log, from a recorded run</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Same task. <span style="color:#F230BF">Two ways to search.</span></h2>
+<p style="font-size:34px;line-height:1.3;color:#FFFFFF;background:#2B1240;border:2px solid #A127F2;border-radius:16px;padding:14px 26px;align-self:flex-start"><span style="font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#C98BFF">We are looking for</span>&#160;&#160; every <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">&lt;app-pill&gt;</b> and its old inputs: <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">disableTooltip</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">variant</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">label</b></p>
+<div style="display:flex;gap:28px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#FF6FA5">Obelix · grep</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #FF6FA5;border-radius:12px;padding:12px 18px;visibility:visible"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; Migrate every &lt;app-pill&gt; to v2 …</p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:visible">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">Grep "app-pill|PillComponent"</span><br>&#160;&#160;Output too large (30.8KB)</p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rcE "&lt;app-pill([ &gt;/]|$)" src</span><br>&#160;&#160;420 &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← there are 440</span></p>
+<p data-step="3" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rhoE "&lt;app-pill[^&gt;]*&gt;?" src | uniq -c</span><br>&#160;&#160;100 &lt;app-pill label="…" variant="…" …/&gt;<br>&#160;&#160;&#160;60 &lt;app-pill &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← tag split over lines</span><br>&#160;&#160;&#160;40 &lt;app-pill … [disableTooltip]="count &gt;<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← cut at the "&gt;"</span></p>
+<p data-step="4" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">python3 mig.py</span> &#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← his own regex program</span></p>
+</div>
+<p data-step="4" style="font-size:26px;color:#DCD6E8;visibility:visible"><b>9 commands</b> · 10 trips to the model · 301 k tokens</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#C98BFF">Asterix · the compiler</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #C98BFF;border-radius:12px;padding:12px 18px;visibility:visible"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; the same + <span style="color:#F2C230">“and use ng-facts script based on Angular Compiler”</span></p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:visible">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts usages PillComponent</span><br>&#160;&#160;<b style="color:#9FE0B8">440 uses in 120 files</b> <span style="color:#8E86A6">(139 ms)</span><br>&#160;&#160;&#160;&#160;feature-1.component.html:3 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:4 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:5 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;<span style="color:#8E86A6">… +437 more</span></p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts migrate spec.json --write</span><br>&#160;&#160;440 elements, <b style="color:#9FE0B8">2680 edits</b> in 170 files,<br>&#160;&#160;0 need a decision <span style="color:#8E86A6">(163 ms)</span></p>
+</div>
+<p data-step="2" style="font-size:26px;color:#DCD6E8;visibility:visible"><b>3 commands</b> · 4 trips to the model · 130 k tokens</p>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="ngfacts"><section id="ngfacts" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:72px 128px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The magic potion · brewed by our druids, the Angular core team</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">The potion: <span style="color:#F230BF">a few lines of code.</span></h2>
+<div style="display:flex;gap:32px;align-items:stretch">
+<div style="width:1060px;background:#0E0316;border:1px solid #3A1F4A;border-radius:18px;padding:30px 34px">
+<p style="font-family:'JetBrains Mono', monospace;font-size:25px;line-height:1.46;color:#B9B2CC;white-space:nowrap"><span style="color:#C98BFF">import</span> { <mark data-step="1" style="background:#F230BF;color:#FFFFFF;padding:0 6px;border-radius:5px">parseTemplate</mark> } <span style="color:#C98BFF">from</span> <span style="color:#9FE0B8">"@angular/compiler"</span>;<br><br><span style="color:#8E86A6">// node mini-facts.mjs <b style="color:#F2C230">app-pill disableTooltip</b></span><br><span style="color:#C98BFF">const</span> [ tag, input ] = process.argv.slice(2);<br><br><span style="color:#C98BFF">for</span> (<span style="color:#C98BFF">const</span> file <span style="color:#C98BFF">of</span> htmlFiles) {<br>&#160;&#160;<span style="color:#C98BFF">const</span> { nodes } = <mark data-step="1" style="background:#F230BF;color:#FFFFFF;padding:0 6px;border-radius:5px">parseTemplate(read(file), file)</mark>;<br><br>&#160;&#160;everyElement(nodes, element =&gt; {<br>&#160;&#160;&#160;&#160;<span style="color:#C98BFF">if</span> (<mark data-step="2" style="background:#A127F2;color:#FFFFFF;padding:0 6px;border-radius:5px">element.name !== tag</mark>) <span style="color:#C98BFF">return</span>;<br>&#160;&#160;&#160;&#160;<span style="color:#C98BFF">for</span> (<span style="color:#C98BFF">const</span> binding <span style="color:#C98BFF">of</span> element.inputs) {<br>&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#C98BFF">if</span> (<mark data-step="2" style="background:#A127F2;color:#FFFFFF;padding:0 6px;border-radius:5px">binding.name !== input</mark>) <span style="color:#C98BFF">continue</span>;<br>&#160;&#160;&#160;&#160;&#160;&#160;<mark data-step="3" style="background:#1B7F4A;color:#FFFFFF;padding:0 6px;border-radius:5px">print(file, binding.sourceSpan)</mark>;<br>&#160;&#160;&#160;&#160;}<br>&#160;&#160;});<br>}</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:18px">
+<div data-step="1" style="display:flex;gap:22px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F230BF;border-radius:16px;padding:22px 26px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;color:#F230BF">1</p><p style="font-size:34px;line-height:1.25;color:#FFFFFF"><b>The compiler reads</b><br><span style="font-size:28px;color:#B9B2CC">facts, not a regex guess</span></p></div>
+<div data-step="2" style="display:flex;gap:22px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #A127F2;border-radius:16px;padding:22px 26px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;color:#C98BFF">2</p><p style="font-size:34px;line-height:1.25;color:#FFFFFF"><b>Only the tag and input you ask for</b><br><span style="font-size:28px;color:#B9B2CC">no wrong hits: 1 004 → 440</span></p></div>
+<div data-step="3" style="display:flex;gap:22px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #1B7F4A;border-radius:16px;padding:22px 26px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;color:#9FE0B8">3</p><p style="font-size:34px;line-height:1.25;color:#FFFFFF"><b>File and line, nothing more</b><br><span style="font-size:28px;color:#B9B2CC">the agent reads less and asks less</span></p></div>
+</div>
+</div>
+<p data-step="4" style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:58px;font-weight:400;line-height:1.1;color:#C98BFF">The compiler reads. <span style="color:#FFFFFF">The script answers.</span> <span style="color:#F230BF">The agent decides.</span></p>
+
+</section>
+</div>
+<div class="frame" data-id="results"><section id="results" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:88px 128px;display:flex;flex-direction:column;justify-content:center;gap:30px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Does it pay off? · the same mission, every run recorded</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;font-weight:400;line-height:1.04;letter-spacing:1px">Same result. <span style="color:#A127F2">A smaller bill.</span></h2>
+<div style="display:grid;grid-template-columns:460px 1fr 1fr;column-gap:24px;row-gap:20px;align-items:stretch">
+<p></p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:48px;color:#C41633;padding-left:36px">Obelix · files + grep</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:48px;color:#A127F2;padding-left:36px">Asterix · with the potion</p>
+
+<div style="display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:60px;line-height:1.05">Strong model</p><p style="font-size:28px;color:#5A6273">Claude Sonnet · 8 runs each</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:26px 36px;border:1px solid #E3E0EC;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;line-height:1">$0.17–0.32</p><p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b></p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:26px 36px;border:2px solid #A127F2;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;line-height:1;color:#A127F2">$0.06–0.09</p><p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b> · once $0.65</p></div>
+
+<div data-step="1" style="display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:60px;line-height:1.05">Small, cheap model</p><p style="font-size:28px;color:#5A6273">Claude Haiku · 3 runs each</p></div>
+<div data-step="1" style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:26px 36px;border:1px solid #E3E0EC;border-left:10px solid #C41633;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;line-height:1;color:#C41633">1 of 3</p><p style="font-size:30px;color:#40485A">runs right · $0.02–0.04 a run</p></div>
+<div data-step="1" style="display:flex;flex-direction:column;gap:6px;background:linear-gradient(120deg, #1B7F4A, #12603A);color:#FFFFFF;padding:26px 36px;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;line-height:1">3 of 3</p><p style="font-size:30px">runs right · about one cent a run</p></div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="village"><section id="village" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:88px 128px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Your turn · the potion is already in your node_modules</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.02;letter-spacing:1px;color:#FFFFFF">Don&#39;t make your agent search.<br><span style="color:#F230BF">Ask your compiler.</span></h2>
+<div style="display:flex;gap:24px;align-items:stretch">
+<div data-step="1" style="flex:1;display:flex;flex-direction:column;gap:10px;background:#24102F;border:1px solid #3A1F4A;border-top:8px solid #F230BF;border-radius:18px;padding:28px 32px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;color:#F230BF">1</p>
+<p style="font-size:42px;line-height:1.2;color:#FFFFFF"><b>Copy 25 lines</b></p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:26px;color:#9FE0B8">tool/mini-facts.mjs</p><p style="font-size:28px;line-height:1.35;color:#B9B2CC">It works for any component and any input: they are just arguments.</p>
+</div>
+<div data-step="2" style="flex:1;display:flex;flex-direction:column;gap:10px;background:#24102F;border:1px solid #3A1F4A;border-top:8px solid #A127F2;border-radius:18px;padding:28px 32px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;color:#C98BFF">2</p>
+<p style="font-size:42px;line-height:1.2;color:#FFFFFF"><b>Need another answer?</b></p>
+<p style="font-size:28px;line-height:1.35;color:#B9B2CC">Ask your agent to add one more command to the script. Once.</p>
+</div>
+<div data-step="3" style="flex:1;display:flex;flex-direction:column;gap:10px;background:#2B1240;border:2px solid #A127F2;border-top:8px solid #1B7F4A;border-radius:18px;padding:28px 32px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;color:#9FE0B8">3</p>
+<p style="font-size:42px;line-height:1.2;color:#FFFFFF"><b>Give it to your agent</b></p>
+<p style="font-size:28px;line-height:1.35;color:#B9B2CC">One line in its instructions:<br>“Before you search, run the script.”</p>
+</div>
+</div>
+<p data-step="2" style="font-size:30px;line-height:1.5;color:#DCD6E8"><b style="font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#C98BFF">What you can use it for</b><br>Who uses this input? · What is dead code? · Which routes show this component? · Leaving AngularJS · NgRx → signals</p>
+
+</section>
+</div>
+<div class="frame" data-id="thanks"><section id="thanks" data-transition="fade" style="background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:row;gap:64px;align-items:center">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<img src="../assets/f81a1384f9a04ac357fc0e773ca876f9.webp" alt="The village banquet under the stars with the speaker raising a mug at the table; instead of the bard, a gagged little robot is tied to the tree, its laptop showing a sad face" style="width:960px;height:540px;object-fit:cover;border-radius:28px;border:6px solid #3A1F4A">
+<div style="width:640px;display:flex;flex-direction:column;gap:26px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The end · the banquet begins</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:136px;font-weight:400;line-height:1.0;letter-spacing:2px;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">Thank you!</h2>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;font-weight:400;line-height:1.1;color:#FFFFFF">These agents are crazy!</p>
+<p style="position:absolute;left:37px;top:1023px;font-size:28px;color:#C7C9DD"><b>Rafał Brzoska</b> · Voucherify</p>
+<p style="position:absolute;left:1283px;top:1023px;font-size:28px;color:#C7C9DD">github.com/rbrzoska/ng-poland-2026</p>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="appendix"><section id="appendix" data-transition="fade" style="background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:88px 128px;display:flex;gap:60px;align-items:center">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<div style="flex:1;display:flex;flex-direction:column;gap:30px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Appendix</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Everything else<br><span style="color:#F230BF">we measured.</span></h2>
+<div style="display:flex;align-items:center;gap:30px;margin-top:18px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:260px;font-weight:400;line-height:0.9;background:linear-gradient(120deg, #F230BF, #A127F2);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF;padding-right:12px">60</p>
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;font-weight:400;line-height:1;color:#FFFFFF">runs recorded</p>
+<p style="font-size:30px;line-height:1.35;color:#DCD6E8">One run: the same task for each agent,<br>each on its own fresh copy of the app,<br>then the judge. <b style="color:#FFFFFF">107 agent sessions in all.</b></p>
+</div>
+</div>
+</div>
+<div style="width:740px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:26px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F230BF;border-radius:16px;padding:20px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#F230BF;width:36px">1</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;white-space:nowrap">How we measured</p></div>
+<div style="display:flex;align-items:center;gap:26px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F230BF;border-radius:16px;padding:20px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#F230BF;width:36px">2</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;white-space:nowrap">The breaking change in detail</p></div>
+<div style="display:flex;align-items:center;gap:26px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #A127F2;border-radius:16px;padding:20px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#C98BFF;width:36px">3</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;white-space:nowrap">What if we only mention the compiler?</p></div>
+<div style="display:flex;align-items:center;gap:26px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #A127F2;border-radius:16px;padding:20px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#C98BFF;width:36px">4</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;white-space:nowrap">Questions and other jobs</p></div>
+<div style="display:flex;align-items:center;gap:26px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #1B7F4A;border-radius:16px;padding:20px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#9FE0B8;width:36px">5</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;white-space:nowrap">The AngularJS corner</p></div>
+<div style="display:flex;align-items:center;gap:26px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #1B7F4A;border-radius:16px;padding:20px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#9FE0B8;width:36px">6</p><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;white-space:nowrap">Limits and how to run it</p></div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="method"><section id="method" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:72px 128px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">How we measured · the same rules for every run</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Same task, same model. <span style="color:#F230BF">One extra sentence.</span></h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:22px">
+<div style="display:flex;gap:24px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F230BF;border-radius:16px;padding:26px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#F230BF;width:44px">1</p><div style="flex:1;display:flex;flex-direction:column;gap:12px"><p style="font-size:36px;line-height:1.2;font-weight:700;color:#FFFFFF">The same task text for both</p><p style="font-size:28px;line-height:1.35;color:#DCD6E8">Asterix gets one more sentence:</p><p style="font-family:'JetBrains Mono', monospace;font-size:24px;line-height:1.45;color:#C98BFF;background:#0E0316;border:1px solid #3A1F4A;border-radius:12px;padding:14px 18px">“A deterministic migration tool built on the Angular compiler is available — describe the API change as a small JSON spec and let the tool apply every edit …”</p></div></div>
+<div style="display:flex;gap:24px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #A127F2;border-radius:16px;padding:26px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#C98BFF;width:44px">2</p><div style="flex:1;display:flex;flex-direction:column;gap:12px"><p style="font-size:36px;line-height:1.2;font-weight:700;color:#FFFFFF">A generated test app</p><div style="display:flex;gap:36px;align-items:flex-end"><p style="font-size:26px;line-height:1.25;color:#DCD6E8"><b style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1;color:#FFFFFF">120</b><br>components</p><p style="font-size:26px;line-height:1.25;color:#DCD6E8"><b style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1;color:#FFFFFF">440</b><br>&lt;app-pill&gt; elements</p><p style="font-size:26px;line-height:1.25;color:#DCD6E8"><b style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1;color:#FFFFFF">6</b><br>template styles</p></div><p style="font-size:28px;line-height:1.35;color:#DCD6E8">Plus decoys that must stay as they are.</p></div></div>
+<div style="display:flex;gap:24px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #1B7F4A;border-radius:16px;padding:26px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#9FE0B8;width:44px">3</p><div style="flex:1;display:flex;flex-direction:column;gap:12px"><p style="font-size:36px;line-height:1.2;font-weight:700;color:#FFFFFF">The judge checks two things</p><p style="font-size:28px;line-height:1.35;color:#DCD6E8">The Angular compiler reports <b style="color:#9FE0B8">0 errors</b>, and every template equals the answer key, <b style="color:#9FE0B8">element by element</b>.</p><p style="font-size:28px;line-height:1.35;color:#B9B2CC">Compared on the compiler’s AST,<br>so formatting does not matter.</p></div></div>
+<div style="display:flex;gap:24px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F2C230;border-radius:16px;padding:26px 30px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#F2C230;width:44px">4</p><div style="flex:1;display:flex;flex-direction:column;gap:12px"><p style="font-size:36px;line-height:1.2;font-weight:700;color:#FFFFFF">Every run recorded, nothing averaged</p><p style="font-size:28px;line-height:1.35;color:#DCD6E8">Every number is the lowest and the highest of all runs.</p><p style="font-size:28px;line-height:1.35;color:#B9B2CC"><b style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1;color:#FFFFFF">$0.17–0.32</b>&#160;&#160;cheapest run to most expensive run</p></div></div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="traps"><section id="traps" data-transition="fade" style="font-variant-ligatures:none;background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:64px 128px 130px;display:flex;flex-direction:column;justify-content:center;gap:24px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The breaking change in detail · why grep struggles</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px">Four traps <span style="color:#C41633">that fool a regex.</span></h2>
+<div style="display:flex;gap:24px;align-items:stretch">
+<div style="width:464px;display:flex;flex-direction:column;gap:8px">
+<p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#C41633">One tag, five lines.</b> grep reads one.</p>
+<div style="flex:1;display:flex;align-items:center;background:#170621;border-radius:16px;padding:14px 20px"><p style="font-family:'JetBrains Mono', monospace;font-size:25px;line-height:1.5;color:#F6F4FA;white-space:nowrap">&lt;app-pill<br>&#160;&#160;&#160;&#160;label="Plain"<br>&#160;&#160;&#160;&#160;variant="warning"<br>&#160;&#160;&#160;&#160;[disableTooltip]="true"<br>/&gt;</p></div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#C41633">A &gt; inside an expression.</b> A regex thinks the tag ends there.</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:25px;line-height:1.5;color:#F6F4FA;white-space:nowrap;background:#170621;border-radius:16px;padding:12px 20px">&lt;app-pill [label]="title" [disableTooltip]="count <mark style="background:#F2C230;color:#170621;padding:0 3px;border-radius:5px">&gt;</mark> 3" /&gt;</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#C41633">Another component with a similar tag.</b> It must stay as it is.</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:25px;line-height:1.5;color:#F6F4FA;white-space:nowrap;background:#170621;border-radius:16px;padding:12px 20px">&lt;app-pill<mark style="background:#F2C230;color:#170621;padding:0 3px;border-radius:5px">-legacy</mark> label="Legacy" variant="info" [disableTooltip]="true" /&gt;</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#C41633">The same input name on another component.</b> It must stay as it is.</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:25px;line-height:1.5;color:#F6F4FA;white-space:nowrap;background:#170621;border-radius:16px;padding:12px 20px">&lt;<mark style="background:#F2C230;color:#170621;padding:0 3px;border-radius:5px">app-card</mark> heading="Feature 6" [disableTooltip]="true"&gt;</p>
+</div>
+</div>
+</div>
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296;margin-top:4px">Three scripts, no agent · the same 440 places = 640 lines to change</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1.2fr;column-gap:20px;align-items:stretch">
+<div style="display:flex;align-items:center;gap:22px;background:#FFFFFF;padding:14px 28px;border:1px solid #E3E0EC;border-left:10px solid #C41633;border-radius:16px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#C41633">0</p>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:38px;line-height:1.1;white-space:nowrap">Find and replace</p><p style="font-size:26px;color:#40485A">of 640 lines right</p></div>
+</div>
+<div style="display:flex;align-items:center;gap:22px;background:#FFFFFF;padding:14px 28px;border:1px solid #E3E0EC;border-left:10px solid #C41633;border-radius:16px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1;color:#C41633">220</p>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:38px;line-height:1.1;white-space:nowrap">A careful regex</p><p style="font-size:26px;color:#40485A">of 640 lines right</p></div>
+</div>
+<div style="display:flex;align-items:center;gap:22px;background:linear-gradient(120deg, #1B7F4A, #12603A);color:#FFFFFF;padding:14px 28px;border-radius:16px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1">640</p>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:38px;line-height:1.1;white-space:nowrap">The potion with a recipe</p><p style="font-size:26px">of 640 lines right</p></div>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="spec"><section id="spec" data-transition="fade" style="font-variant-ligatures:none;background:#FFFFFF;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:80px 128px;display:flex;flex-direction:column;justify-content:center;gap:30px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The breaking change in detail · the recipe Asterix wrote · Claude Sonnet</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:100px;font-weight:400;line-height:1.04;letter-spacing:1px;">A few lines of JSON. <span style="color:#A127F2">2 680 edits.</span></h2>
+<div style="display:flex;gap:40px;align-items:stretch">
+<div style="width:1000px;display:flex;align-items:center;background:#170621;padding:28px 40px;border-radius:20px">
+<p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.6;color:#F6F4FA;white-space:nowrap">{ "component": "PillComponent", "inputs": {<br>&#160;&#160;<span style="color:#FF6FA5">"disableTooltip"</span>: { "rename": "tooltip", "negate": true },<br>&#160;&#160;<span style="color:#FF6FA5">"variant"</span>: { "rename": "tone",<br>&#160;&#160;&#160;&#160;"values": { "info": "neutral", "success": "positive",<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"warning": "caution" },<br>&#160;&#160;&#160;&#160;"otherwise": { "pipe": "pillTone", "import": "PillTonePipe",<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"from": "…/pill-tone.pipe" } },<br>&#160;&#160;<span style="color:#FF6FA5">"label"</span>: { "toContent": true }<br>} }</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:4px;background:#F6F4FA;padding:20px 28px;border:1px solid #E3E0EC;border-radius:16px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">440 places</p>
+<p style="font-size:26px;color:#40485A">in 170 files · 80 new imports</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#F6F4FA;padding:20px 28px;border:1px solid #E3E0EC;border-left:8px solid #C41633;border-radius:16px">
+<p style="font-size:26px;color:#40485A"><b style="color:#C41633">Obelix</b> · his own regex script</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:60px;font-weight:400;line-height:1;color:#1F2533">$0.17–0.32</p>
+<p style="font-size:26px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b> runs</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#F6F4FA;padding:20px 28px;border:1px solid #E3E0EC;border-left:8px solid #A127F2;border-radius:16px">
+<p style="font-size:26px;color:#40485A"><b style="color:#A127F2">Asterix</b> · this recipe</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:60px;font-weight:400;line-height:1;color:#A127F2">$0.06–0.09</p>
+<p style="font-size:26px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b> · once $0.65</p>
+</div>
+</div>
+</div>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:60px;font-weight:400;line-height:1.1;color:#A127F2;align-self:flex-start">The agent decides. The script repeats.</p>
+
+</section>
+</div>
+<div class="frame" data-id="race"><section id="race" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:64px 128px 130px;display:flex;flex-direction:column;justify-content:center;gap:22px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The breaking change in detail · Claude Sonnet · 8 runs each</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:80px;font-weight:400;line-height:1.04;letter-spacing:1px">Both always correct. <span style="color:#A127F2">Asterix makes fewer trips<br>and writes far less.</span></h2>
+<div style="display:grid;grid-template-columns:400px 1fr 1fr;column-gap:20px;row-gap:8px;align-items:stretch">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296;align-self:end">Lowest–highest run</p>
+<div style="display:flex;flex-direction:column;gap:2px;padding-left:32px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1.1;color:#C41633">Obelix · files + grep</p><p style="font-size:26px;color:#5A6273">all 8 runs</p></div>
+<div style="display:flex;flex-direction:column;gap:2px;padding-left:32px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1.1;color:#A127F2">Asterix · with the potion</p><p style="font-size:26px;color:#5A6273"><b style="color:#1F2533">once</b> = he tripped over his own shell command</p></div>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1;align-self:center">Runs fully correct</p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1;color:#1B7F4A">8 of 8</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1;color:#1B7F4A">8 of 8</p></div>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1;align-self:center">Trips to the model</p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1">8–17</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1">3–6</p><p style="font-size:28px;color:#40485A">once 28</p></div>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1;align-self:center">Tokens sent</p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1">251k–652k</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1">96k–165k</p><p style="font-size:28px;color:#40485A">once 1 606k</p></div>
+
+<div style="display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1.05">Tokens written</p><p style="font-size:26px;color:#5A6273">what the model types itself</p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1">3.3k–7.8k</p><p style="font-size:28px;color:#40485A">a run · a regex program</p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 32px;border:2px solid #A127F2;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#A127F2">0.5k–1.1k</p><p style="font-size:28px;color:#40485A">a run · a short recipe · once 11k</p></div>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1;align-self:center">Cost of a run</p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1">$0.17–0.32</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:12px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1">$0.06–0.09</p><p style="font-size:28px;color:#40485A">once $0.65</p></div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="scaling"><section id="scaling" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:64px 128px 96px;display:flex;flex-direction:column;justify-content:center;gap:24px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The breaking change in detail · three sizes · Claude Sonnet</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px">16 times the app. <span style="color:#A127F2">Almost the same bill.</span></h2>
+<div style="display:grid;grid-template-columns:300px 1fr 1fr 1fr;column-gap:20px;row-gap:14px;align-items:stretch">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296;align-self:end">Cost of a run, lowest–highest</p>
+<div style="display:flex;align-items:flex-end;gap:20px;padding-left:28px"><div style="width:44px;height:44px;background:#170621;border-radius:6px"></div><div style="display:flex;flex-direction:column;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1">30</p><p style="font-size:26px;line-height:1.25;color:#5A6273">components<br>110 places</p></div></div>
+<div style="display:flex;align-items:flex-end;gap:20px;padding-left:28px"><div style="width:88px;height:88px;background:#170621;border-radius:8px"></div><div style="display:flex;flex-direction:column;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1">120</p><p style="font-size:26px;line-height:1.25;color:#5A6273">components<br>440 places</p></div></div>
+<div style="display:flex;align-items:flex-end;gap:20px;padding-left:28px"><div style="width:176px;height:176px;background:#170621;border-radius:10px"></div><div style="display:flex;flex-direction:column;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1">480</p><p style="font-size:26px;line-height:1.25;color:#5A6273">components<br>1 760 places</p></div></div>
+
+<div style="display:flex;flex-direction:column;justify-content:center;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1.05;color:#C41633">Obelix</p><p style="font-size:26px;color:#5A6273">files + grep</p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 28px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1">$0.19–0.22</p><p style="font-size:26px;color:#40485A">right in <b style="color:#1B7F4A">3 of 3</b></p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 28px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1">$0.17–0.32</p><p style="font-size:26px;color:#40485A">right in <b style="color:#1B7F4A">8 of 8</b></p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 28px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1">$0.19–0.29</p><p style="font-size:26px;color:#40485A">right in <b style="color:#1B7F4A">3 of 3</b></p></div>
+
+<div style="display:flex;flex-direction:column;justify-content:center;gap:2px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;line-height:1.05;color:#A127F2">Asterix</p><p style="font-size:26px;color:#5A6273">with the potion</p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 28px;border:2px solid #A127F2;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;color:#A127F2">$0.06</p><p style="font-size:26px;color:#40485A">right in <b style="color:#1B7F4A">3 of 3</b></p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 28px;border:2px solid #A127F2;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;color:#A127F2">$0.06–0.09</p><p style="font-size:26px;color:#40485A">right in <b style="color:#1B7F4A">8 of 8</b> · once $0.65</p></div>
+<div style="display:flex;flex-direction:column;gap:4px;background:#FFFFFF;padding:18px 28px;border:2px solid #A127F2;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;color:#A127F2">$0.07–0.17</p><p style="font-size:26px;color:#40485A">right in <b style="color:#1B7F4A">3 of 3</b><br>twice his own command hung</p></div>
+</div>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:52px;font-weight:400;line-height:1.1;color:#1F2533">Both work through a script. <span style="color:#A127F2">A script does not care how many files.</span></p>
+
+</section>
+</div>
+<div class="frame" data-id="steelman"><section id="steelman" data-transition="fade" style="font-variant-ligatures:none;background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:80px 128px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">What if we only mention the compiler? · Claude Sonnet</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;font-weight:400;line-height:1.04;letter-spacing:1px">A hint is not enough. <span style="color:#A127F2">A ready script is.</span></h2>
+<div style="display:flex;flex-direction:column;gap:8px;background:#170621;border-radius:18px;padding:22px 32px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B9B2CC">The hint added to the prompt</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.45;color:#F6F4FA">“The Angular compiler is installed in node_modules …<br><span style="color:#F2C230">write your own migration script on top of the compiler</span> and run it.”</p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:24px;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-radius:18px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296">Plain prompt</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.1;color:#C41633">Obelix · files + grep</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1">$0.17–0.32</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b></p>
+<p style="font-size:26px;color:#5A6273">3.3k–7.8k tokens written</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-left:10px solid #C41633;border-radius:18px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296">Prompt + the hint</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.1;color:#C41633">Obelix · his own codemod</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#C41633">$0.23–0.27</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#C41633">2 of 3</b></p>
+<p style="font-size:26px;color:#5A6273">8.0k–10k tokens written</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:24px 32px;border:2px solid #A127F2;border-radius:18px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296">Prompt + ready script</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.1;color:#A127F2">Asterix · with the potion</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#A127F2">$0.06–0.09</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b> · once $0.65</p>
+<p style="font-size:26px;color:#5A6273">0.5k–1.1k tokens written · once 11k</p>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="toolv2"><section id="toolv2" data-transition="fade" style="font-variant-ligatures:none;background:#FFFFFF;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:64px 128px 100px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">What if we only mention the compiler? · now the exact call · Claude Sonnet</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px">The clearer the call, <span style="color:#A127F2">the cheaper the run.</span></h2>
+<div style="display:flex;gap:32px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
+<div style="flex:1;display:flex;gap:24px;align-items:center;background:#F6F4FA;border:1px solid #E3E0EC;border-left:10px solid #F230BF;border-radius:16px;padding:22px 28px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;width:44px;text-align:center;color:#F230BF">1</p><p style="font-size:34px;line-height:1.25"><b>The recipe goes inline</b><br><span style="font-size:28px;color:#5A6273">no file for the agent to write</span></p></div>
+<div style="flex:1;display:flex;gap:24px;align-items:center;background:#F6F4FA;border:1px solid #E3E0EC;border-left:10px solid #A127F2;border-radius:16px;padding:22px 28px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;width:44px;text-align:center;color:#A127F2">2</p><p style="font-size:34px;line-height:1.25"><b>The format is in the prompt</b><br><span style="font-size:28px;color:#5A6273">no trip to ask for help first</span></p></div>
+<div style="flex:1;display:flex;gap:24px;align-items:center;background:#F6F4FA;border:1px solid #E3E0EC;border-left:10px solid #1B7F4A;border-radius:16px;padding:22px 28px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;width:44px;text-align:center;color:#1B7F4A">3</p><p style="font-size:34px;line-height:1.25"><b>The tool runs the compiler check</b><br><span style="font-size:28px;color:#5A6273">the answer ends with “ngc: 0 errors”</span></p></div>
+</div>
+<div style="width:760px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px;background:#F6F4FA;padding:22px 36px;border:1px solid #E3E0EC;border-radius:18px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1;color:#5A6273">The first tool · 8 runs</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1">$0.06–0.09 <span style="font-family:Roboto, Arial, sans-serif;font-size:30px;color:#40485A">a run · once $0.65</span></p>
+<p style="font-size:30px;color:#40485A">3–6 trips to the model · once 28 · right in <b style="color:#1B7F4A">8 of 8</b></p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;background:linear-gradient(120deg, #1B7F4A, #12603A);color:#FFFFFF;padding:22px 36px;border-radius:18px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;line-height:1.1">The improved tool · 5 runs</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:128px;line-height:1">$0.05 <span style="font-family:Roboto, Arial, sans-serif;font-size:30px">a run, every run</span></p>
+<p style="font-size:30px">2 trips to the model · right in <b>5 of 5</b></p>
+</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:28px;background:#170621;border-radius:18px;padding:20px 32px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B9B2CC;white-space:nowrap">One call</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:28px;color:#F6F4FA;white-space:nowrap">node ng-facts.mjs migrate <span style="color:#F2C230">'{ the recipe }'</span> --root . --write</p>
+<p style="margin-left:auto;font-family:'JetBrains Mono', monospace;font-size:28px;color:#9FE0B8;white-space:nowrap">ngc: 0 errors</p>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="questions-stage"><section id="questions-stage" data-transition="fade" style="background:#FFFFFF;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:80px 128px 112px;display:flex;flex-direction:column;justify-content:center;gap:32px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Questions and other jobs · six questions, no edits · Claude Sonnet</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1.04;letter-spacing:1px">Twice, Obelix counted 60 warning pills.<br><span style="color:#A127F2">There are 100.</span></h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#F6F4FA;padding:32px 44px;border:1px solid #E3E0EC;border-top:8px solid #C41633;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1.1;color:#C41633">Obelix · files + grep</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:112px;line-height:1;color:#C41633">3 of 5</p>
+<p style="font-size:32px;line-height:1.35;color:#40485A">runs with all six answers right · $0.13–0.20 a run</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#F6F4FA;padding:32px 44px;border:1px solid #E3E0EC;border-top:8px solid #A127F2;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;line-height:1.1;color:#A127F2">Asterix · with the potion</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:112px;line-height:1;color:#1B7F4A">5 of 5</p>
+<p style="font-size:32px;line-height:1.35;color:#40485A">runs with all six answers right · $0.08–0.10 a run</p>
+</div>
+</div>
+<p style="font-size:34px;line-height:1.45;color:#40485A">“Can we delete the <b>warning</b> variant?”<br><b style="color:#1F2533">A wrong edit makes the compiler shout. A wrong answer makes no sound.</b></p>
+
+</section>
+</div>
+<div class="frame" data-id="blast"><section id="blast" data-transition="fade" style="font-variant-ligatures:none;background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:80px 128px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Questions and other jobs · blast radius · Claude Sonnet · 5 runs each</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1.04;letter-spacing:1px">The script must be able to <span style="color:#A127F2">answer the question.</span></h2>
+<div style="display:flex;align-items:center;gap:28px;background:#170621;border-radius:18px;padding:20px 32px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B9B2CC">The question</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:32px;color:#F6F4FA;white-space:nowrap">Which routes can show <span style="color:#F2C230">&lt;app-tent&gt;</span>?</p>
+<p style="font-size:28px;color:#B9B2CC;margin-left:auto;white-space:nowrap">105 components · no edits, only answers</p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:24px;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:10px;background:#FFFFFF;padding:28px 34px;border:1px solid #E3E0EC;border-top:8px solid #C41633;border-radius:18px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.05;color:#C41633">Obelix · files + grep</p>
+<p style="font-size:28px;line-height:1.3;color:#5A6273">searches the text himself</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;margin-top:auto">$0.24–0.35</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">5 of 5</b></p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FFFFFF;padding:28px 34px;border:1px solid #E3E0EC;border-top:8px solid #7A8296;border-radius:18px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.05;color:#1F2533">Asterix · the migration potion</p>
+<p style="font-size:28px;line-height:1.3;color:#5A6273"><span style="font-family:'JetBrains Mono', monospace;font-size:26px;background:#F6F4FA;border:1px solid #E3E0EC;border-radius:8px;padding:2px 10px;color:#1F2533">usages</span> lists uses, not routes</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;line-height:1;margin-top:auto">$0.19–0.28</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#C41633">4 of 5</b></p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FFFFFF;padding:28px 34px;border:2px solid #A127F2;border-top:8px solid #A127F2;border-radius:18px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.05;color:#A127F2">Asterix · two new commands</p>
+<p style="font-size:28px;line-height:1.3;color:#5A6273"><span style="font-family:'JetBrains Mono', monospace;font-size:26px;background:#F6F4FA;border:1px solid #E3E0EC;border-radius:8px;padding:2px 10px;color:#A127F2">where</span> <span style="font-family:'JetBrains Mono', monospace;font-size:26px;background:#F6F4FA;border:1px solid #E3E0EC;border-radius:8px;padding:2px 10px;color:#A127F2">unrouted</span></p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#A127F2;margin-top:auto">$0.06–0.08</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">5 of 5</b></p>
+</div>
+</div>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1.1;color:#1F2533">The wrong potion: no better than grep. <span style="color:#A127F2">The right one: under a third of the bill.</span></p>
+
+</section>
+</div>
+<div class="frame" data-id="a11y"><section id="a11y" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:80px 128px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Questions and other jobs · writing labels · Claude Sonnet · 5 runs each</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">75 labels to write. <span style="color:#F2C230">A draw.</span></h2>
+<div style="display:flex;flex-direction:column;gap:10px;background:#0E0316;border:1px solid #3A1F4A;border-radius:18px;padding:22px 32px">
+<p style="font-size:28px;line-height:1.3;color:#DCD6E8">Give every icon button without a label a short, meaningful one. One judgement per place.</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:28px;line-height:1.5;color:#F6F4FA;white-space:nowrap">&lt;app-icon-button icon="trash" <mark style="background:#F2C230;color:#170621;padding:0 6px;border-radius:5px">label="Remove tent"</mark> (press)="remove()" /&gt;</p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 120px 1fr;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:6px;background:#24102F;padding:28px 40px;border:1px solid #3A1F4A;border-top:8px solid #C41633;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;color:#FF6FA5">Obelix · files + grep</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:120px;line-height:1;color:#FFFFFF">4 of 5</p>
+<p style="font-size:30px;color:#DCD6E8">runs right · $0.13–0.22 a run</p>
+</div>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:120px;line-height:1;color:#F2C230;text-align:center;align-self:center">=</p>
+<div style="display:flex;flex-direction:column;gap:6px;background:#24102F;padding:28px 40px;border:1px solid #3A1F4A;border-top:8px solid #A127F2;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;color:#C98BFF">Asterix · with the potion</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:120px;line-height:1;color:#FFFFFF">4 of 5</p>
+<p style="font-size:30px;color:#DCD6E8">runs right · $0.13–0.20 a run</p>
+</div>
+</div>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1.1;color:#FFFFFF">The script gives facts and repetition. <span style="color:#F2C230">It does not judge.</span></p>
+
+</section>
+</div>
+<div class="frame" data-id="angularjs"><section id="angularjs" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:80px 128px;display:flex;flex-direction:column;justify-content:center;gap:32px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The AngularJS corner · 40 old components · Claude Sonnet 5 · 3 runs each</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">AngularJS too: <span style="color:#F230BF">less than half the bill.</span></h2>
+<div style="display:flex;gap:40px;align-items:stretch">
+<div style="width:760px;display:flex;flex-direction:column;justify-content:center;gap:16px;background:#24102F;border:1px solid #3A1F4A;border-radius:20px;padding:32px 36px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#8E86A6">The same name, two worlds</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:30px;background:#170621;border-radius:12px;padding:16px 22px;color:#F6F4FA">.component(<mark style="background:#F2C230;color:#170621;padding:0 4px;border-radius:4px">"amountInput"</mark>, { … })</p>
+<p style="font-size:26px;color:#FF8A9E;padding-left:6px">AngularJS · still registered</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:30px;background:#170621;border-radius:12px;padding:16px 22px;color:#F6F4FA">selector: <mark style="background:#F2C230;color:#170621;padding:0 4px;border-radius:4px">"amount-input"</mark></p>
+<p style="font-size:26px;color:#9FE0B8;padding-left:6px">Angular · the replacement</p>
+<p style="font-size:30px;line-height:1.35;color:#DCD6E8;margin-top:8px"><b style="color:#FFFFFF">Six questions before migrating:</b> what is dead, what is a leaf, what already has a twin?</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#24102F;padding:28px 40px;border:1px solid #3A1F4A;border-top:8px solid #C41633;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;color:#FF6FA5">Obelix · files + grep</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#FFFFFF">$1.11–1.30</p>
+<p style="font-size:28px;color:#DCD6E8">a run · all six answers right in <b style="color:#9FE0B8">3 of 3</b> runs</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#2B1240;padding:28px 40px;border:2px solid #A127F2;border-top:8px solid #A127F2;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:44px;color:#C98BFF">Asterix · with the potion</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#C98BFF">$0.22–0.45</p>
+<p style="font-size:28px;color:#DCD6E8">a run · all six answers right in <b style="color:#9FE0B8">3 of 3</b> runs</p>
+</div>
+</div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="models"><section id="models" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:64px 128px 130px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The AngularJS corner · the same six questions · four models · 3 runs each</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1.04;letter-spacing:1px">Alone, strong models pay double.<br><span style="color:#C41633">The small one gets lost.</span></h2>
+<div style="display:grid;grid-template-columns:400px 1fr 1fr;column-gap:20px;row-gap:14px;align-items:stretch">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296;align-self:end">Answers right, of six</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;color:#C41633;padding-left:32px">Obelix · files + grep</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;color:#A127F2;padding-left:32px">Asterix · with the potion</p>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:52px;line-height:1;align-self:center">Fable 5.1 <span style="font-family:Roboto, Arial, sans-serif;font-size:24px;color:#7A8296">strongest</span></p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:14px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1">6 of 6</p><p style="font-size:28px;color:#40485A">$1.79–1.91 a run</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:14px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1">5–6 of 6</p><p style="font-size:28px;color:#40485A">$0.71–0.83 a run</p></div>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:52px;line-height:1;align-self:center">Opus 5</p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:14px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1">6 of 6</p><p style="font-size:28px;color:#40485A">$1.21–1.38 a run</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:14px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1">6 of 6</p><p style="font-size:28px;color:#40485A">$0.41–0.54 a run</p></div>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:52px;line-height:1;align-self:center">Sonnet 5</p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:14px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1">6 of 6</p><p style="font-size:28px;color:#40485A">$1.11–1.30 a run</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:14px 32px;border:1px solid #E3E0EC;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:64px;line-height:1">6 of 6</p><p style="font-size:28px;color:#40485A">$0.22–0.45 a run</p></div>
+
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:52px;line-height:1;align-self:center">Haiku 4.5 <span style="font-family:Roboto, Arial, sans-serif;font-size:24px;color:#7A8296">small</span></p>
+<div style="display:flex;align-items:baseline;gap:22px;background:#FFFFFF;padding:14px 32px;border:1px solid #E3E0EC;border-left:10px solid #C41633;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#C41633">2–3 of 6</p><p style="font-size:28px;color:#40485A">$0.63–1.03 a run</p></div>
+<div style="display:flex;align-items:baseline;gap:22px;background:linear-gradient(120deg, #1B7F4A, #12603A);color:#FFFFFF;padding:14px 32px;border-radius:16px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1">5–6 of 6</p><p style="font-size:28px">$0.13 a run</p></div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="tools"><section id="tools" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:64px 128px 100px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Limits and how to run it · the three scripts in the repo</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Three scripts. <span style="color:#F230BF">The smallest: 25 lines of code.</span></h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:28px;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:14px;background:#24102F;border:1px solid #3A1F4A;border-top:8px solid #F230BF;border-radius:18px;padding:26px 32px 30px">
+<p style="font-family:'JetBrains Mono', monospace;font-size:34px;color:#FFFFFF">mini-facts.mjs</p>
+<p style="display:flex;align-items:baseline;gap:14px;font-size:30px;color:#DCD6E8"><span style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:120px;line-height:1;color:#F230BF">25</span>lines of code</p>
+<p style="font-size:30px;line-height:1.3;color:#DCD6E8;min-height:117px"><b style="color:#FFFFFF">The starter</b><br>Where is this input used?<br>It prints file and line.</p>
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#8E86A6">You give it</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;font-family:'JetBrains Mono', monospace;font-size:24px;color:#F6F4FA">
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">&lt;tag&gt;</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">&lt;input&gt;</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#2B1240;border:2px solid #A127F2;border-top:8px solid #A127F2;border-radius:18px;padding:26px 32px 30px">
+<p style="font-family:'JetBrains Mono', monospace;font-size:34px;color:#FFFFFF">ng-facts.mjs</p>
+<p style="display:flex;align-items:baseline;gap:14px;font-size:30px;color:#DCD6E8;margin-top:36px">about<span style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#C98BFF">630</span>lines</p>
+<p style="font-size:30px;line-height:1.3;color:#DCD6E8;min-height:117px"><b style="color:#FFFFFF">The potion</b><br>Facts about an Angular app,<br>and edits from a recipe.</p>
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#8E86A6">Commands</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;font-family:'JetBrains Mono', monospace;font-size:24px;color:#F6F4FA">
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">usages</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">where</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">unrouted</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">check</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">rename-input</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">migrate</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#24102F;border:1px solid #3A1F4A;border-top:8px solid #F2C230;border-radius:18px;padding:26px 32px 30px">
+<p style="font-family:'JetBrains Mono', monospace;font-size:34px;color:#FFFFFF">ajs-facts.mjs</p>
+<p style="display:flex;align-items:baseline;gap:14px;font-size:30px;color:#DCD6E8;margin-top:36px">about<span style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;line-height:1;color:#F2C230">1 500</span>lines</p>
+<p style="font-size:30px;line-height:1.3;color:#DCD6E8;min-height:117px"><b style="color:#FFFFFF">The same idea</b><br>for an AngularJS + Angular app:<br>what is there, and what uses it.</p>
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#8E86A6">Commands</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;font-family:'JetBrains Mono', monospace;font-size:24px;color:#F6F4FA">
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">summary</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">list</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">show</p>
+<p style="background:#0E0316;border:1px solid #3A1F4A;border-radius:10px;padding:6px 12px">usages</p>
+</div>
+</div>
+</div>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:58px;font-weight:400;line-height:1.1;color:#C98BFF">Copy the idea: <span style="color:#FFFFFF">ask the parser,</span> <span style="color:#F230BF">print file and line.</span></p>
+
+</section>
+</div>
+<div class="frame" data-id="limits"><section id="limits" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:72px 128px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Limits and how to run it · read this before you quote a number</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:100px;font-weight:400;line-height:1.04;letter-spacing:1px">What we do <span style="color:#C41633">not</span> claim.</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-top:8px solid #C41633;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:90px;line-height:1;color:#C41633">About 1 in 7</p><p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#1F2533">No speed claim.</b> 16 of 107 sessions hang on the agent’s own shell command, so clock time is noise.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-top:8px solid #C41633;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:90px;line-height:1;color:#7A8296;text-decoration:line-through;text-decoration-color:#C41633;text-decoration-thickness:8px">10× faster</p><p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#1F2533">Withdrawn.</b> It was the first result, from one run. It did not happen again.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-top:8px solid #C41633;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:90px;line-height:1;color:#C41633">$0.65</p><p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#1F2533">Not always cheap.</b> One Asterix run in eight. The other seven cost <span style="white-space:nowrap">$0.06–0.09.</span></p></div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-top:8px solid #A127F2;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:90px;line-height:1;color:#A127F2">2 of 3</p><p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#1F2533">Not always right.</b> The strongest model with the potion, on AngularJS. The small one: 1 of 3.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-top:8px solid #A127F2;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:90px;line-height:1;color:#A127F2">6 questions</p><p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#1F2533">Not a real product.</b> The test apps are generated; the AngularJS questions fit what the script lists.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-top:8px solid #A127F2;border-radius:18px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:90px;line-height:1;color:#A127F2">6 models</p><p style="font-size:28px;line-height:1.3;color:#40485A"><b style="color:#1F2533">Not every model.</b> Pill job: <span style="white-space:nowrap">Sonnet 5.5,</span> <span style="white-space:nowrap">Haiku 5.5.</span> AngularJS: <span style="white-space:nowrap">Fable 5.1,</span> <span style="white-space:nowrap">Opus 5,</span> <span style="white-space:nowrap">Sonnet 5,</span> <span style="white-space:nowrap">Haiku 4.5.</span></p></div>
+</div>
+
+</section>
+</div>
+<div class="frame" data-id="reproduce"><section id="reproduce" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:72px 128px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="../assets/756f2525b48eaa36095d0a128c642db9.webp" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Limits and how to run it · the repo is public · Node 22 or newer</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Run it yourself: <span style="color:#F230BF">five steps.</span></h2>
+<div style="display:flex;gap:32px;align-items:stretch">
+<div style="width:1050px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;background:#0E0316;border:1px solid #3A1F4A;border-radius:18px;padding:30px 36px">
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">1</b> · get the packages</p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> npm install</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">2</b> · find &amp; replace, regex and the compiler, side by side · <span style="color:#9FE0B8">free, no API key</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> npm run demo</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">3</b> · the small potion: where is this input used? · <span style="color:#9FE0B8">free</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> node tool/mini-facts.mjs <span style="color:#F2C230">app-pill disableTooltip</span> fixture/src</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">4</b> · Obelix and Asterix on the mission, three runs · <span style="color:#FF8A9E">costs API money</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> node bench/agent.mjs --runs 3</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">5</b> · the AngularJS app and its answer key · <span style="color:#9FE0B8">free</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> node scripts/generate-hybrid.mjs<br><span style="color:#8E86A6">$</span> node bench/hybrid.mjs --check</p></div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B9B2CC">Where things are</p>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F230BF;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">tool/</p><p style="font-size:28px;color:#B9B2CC">the scripts: the potion</p></div>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #A127F2;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">bench/</p><p style="font-size:28px;color:#B9B2CC">the measurements</p></div>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F2C230;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">scripts/</p><p style="font-size:28px;color:#B9B2CC">the test apps are made here</p></div>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #1B7F4A;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">results/</p><p style="font-size:28px;color:#B9B2CC">every recorded run</p></div>
+</div>
+</div>
+
+</section>
+</div>
+</main>
+<div id="counter"></div>
+<div id="black"></div>
+<script>
+const DATA = {"talkCount":11,"talkSeconds":300,"presenter":false,"notes":[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]],"ids":["cover","about","bigapp","mission","search-1","search-2","search-3","ngfacts","results","village","thanks","appendix","method","traps","spec","race","scaling","steelman","toolv2","questions-stage","blast","a11y","angularjs","models","tools","limits","reproduce"]};
+const W = 1920, H = 1080;
+const presenter = DATA.presenter && new URLSearchParams(location.search).has("presenter");
+const stage = document.getElementById("stage");
+const frames = [ ...stage.querySelectorAll(".frame") ];
+const channel = "BroadcastChannel" in window ? new BroadcastChannel("veni-vidi-compilavi") : null;
+let current = 0;
+
+// Time is shared through localStorage so a reload (live draft edits) keeps the timer running.
+const TIMER_KEY = "vvc-timer";
+const loadTimer = () => { try { return JSON.parse(localStorage.getItem(TIMER_KEY)) || { start: null, elapsed: 0 }; } catch { return { start: null, elapsed: 0 }; } };
+const saveTimer = timer => { try { localStorage.setItem(TIMER_KEY, JSON.stringify(timer)); } catch {} };
+let timer = loadTimer();
+const elapsed = () => (timer.elapsed + (timer.start ? Date.now() - timer.start : 0)) / 1000;
+const clock = seconds => (seconds < 0 ? "−" : "") + Math.floor(Math.abs(seconds) / 60) + ":" + String(Math.floor(Math.abs(seconds) % 60)).padStart(2, "0");
+
+function fit(box, slides, width, height) {
+    const scale = Math.min(width / W, height / H);
+    slides.style.transform = "translate(" + (width - W * scale) / 2 + "px, " + (height - H * scale) / 2 + "px) scale(" + scale + ")";
+}
+const fitStage = () => {
+    const scale = Math.min(innerWidth / W, innerHeight / H);
+    stage.style.transform = "translate(" + -W / 2 * scale + "px, " + -H / 2 * scale + "px) scale(" + scale + ")";
+};
+
+function show(index, { broadcast = true } = {}) {
+    current = Math.max(0, Math.min(frames.length - 1, index));
+    frames.forEach((frame, position) => frame.classList.toggle("current", position === current));
+    document.getElementById("counter").textContent = current + 1 + " / " + frames.length;
+    history.replaceState(null, "", location.search + "#" + (current + 1));
+    if (broadcast && channel) channel.postMessage({ type: "show", index: current });
+    if (presenter) renderPresenter();
+}
+
+// ---------- presenter ----------
+let nowSlides, nextSlides;
+function cloneDeck(target) {
+    const copy = stage.cloneNode(true);
+    copy.removeAttribute("id");
+    copy.style.cursor = "default";
+    target.appendChild(copy);
+    new ResizeObserver(() => fit(target, copy, target.clientWidth, target.clientHeight)).observe(target);
+    return copy;
+}
+function showIn(copy, index) {
+    [ ...copy.children ].forEach((frame, position) => {
+        frame.style.transition = "none";
+        frame.classList.toggle("current", position === index);
+    });
+}
+function slideWindow(index) {
+    const says = DATA.notes[index].filter(line => line.kind === "say");
+    if (!says.length) return null;
+    // "→ Click to … at 1:23." gives the planned moment to leave the slide; otherwise the next slide's first sentence.
+    const leave = DATA.notes[index].filter(line => line.kind === "do").map(line => line.text.match(/at (\d+):(\d{2})/)).filter(Boolean).pop();
+    const nextSays = (DATA.notes[index + 1] || []).filter(line => line.kind === "say");
+    const end = leave ? Number(leave[1]) * 60 + Number(leave[2]) : nextSays.length ? nextSays[0].at : index + 1 >= DATA.talkCount ? DATA.talkSeconds : null;
+    return { start: says[0].at, end };
+}
+function renderPresenter() {
+    showIn(nowSlides, current);
+    showIn(nextSlides, current + 1);
+    document.getElementById("next-view").classList.toggle("end", current + 1 >= DATA.talkCount);
+    const isTalk = current < DATA.talkCount;
+    document.getElementById("position").textContent = isTalk ? "Slide " + (current + 1) + " of " + DATA.talkCount : "Backup " + (current + 1 - DATA.talkCount) + " of " + (frames.length - DATA.talkCount);
+    const notes = document.getElementById("notes");
+    const lines = DATA.notes[current];
+    notes.innerHTML = lines.length ? "" : '<div class="empty">No notes on this slide.</div>';
+    for (const line of lines) {
+        const row = document.createElement("div");
+        row.className = line.kind + (line.cut ? " cut" : "");
+        if (line.kind === "say") {
+            row.dataset.at = line.at;
+            row.innerHTML = '<span class="at"></span><span class="text"></span>';
+            row.querySelector(".at").textContent = clock(line.at);
+            row.querySelector(".text").textContent = line.text;
+        } else row.textContent = (line.kind === "do" ? "→ " : "") + line.text;
+        notes.appendChild(row);
+    }
+    notes.scrollTop = 0;
+    tick();
+}
+function tick() {
+    const seconds = elapsed();
+    const timerEl = document.getElementById("timer");
+    timerEl.textContent = clock(seconds);
+    timerEl.classList.toggle("paused", !timer.start);
+    document.getElementById("toggle").textContent = timer.start ? "Pause" : seconds ? "Resume" : "Start";
+    document.getElementById("clock").textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const plan = document.getElementById("plan");
+    const window_ = slideWindow(current);
+    plan.className = "";
+    if (current >= DATA.talkCount) plan.textContent = "backup slide";
+    else if (!window_) plan.textContent = "plan: —";
+    else {
+        const left = (window_.end ?? window_.start) - seconds;
+        const ahead = window_.start - seconds;
+        if (seconds > DATA.talkSeconds) { plan.textContent = "OVER TIME by " + clock(seconds - DATA.talkSeconds); plan.className = "over"; }
+        else if (window_.end !== null && seconds > window_.end) { plan.textContent = "behind plan by " + clock(seconds - window_.end) + " — cut ✂ lines"; plan.className = "late"; }
+        else if (ahead > 3) { plan.textContent = "ahead of plan by " + clock(ahead) + " — slow down"; plan.className = "ahead"; }
+        else plan.textContent = "on plan · move on at " + clock(window_.end ?? window_.start) + " (" + clock(left) + " left)";
+    }
+    const rows = [ ...document.querySelectorAll("#notes .say") ];
+    let active = null;
+    rows.forEach(row => { if (Number(row.dataset.at) <= seconds) active = row; });
+    rows.forEach(row => {
+        row.classList.toggle("now", row === active);
+        row.classList.toggle("done", active !== null && Number(row.dataset.at) < Number(active.dataset.at));
+    });
+}
+function toggleTimer() {
+    timer = timer.start ? { start: null, elapsed: timer.elapsed + Date.now() - timer.start } : { start: Date.now(), elapsed: timer.elapsed };
+    saveTimer(timer); tick();
+}
+function resetTimer() { timer = { start: null, elapsed: 0 }; saveTimer(timer); tick(); }
+
+function openAudience() {
+    window.open(location.pathname + "#" + (current + 1), "vvc-audience", "popup,width=1280,height=720");
+}
+function setBlack(on, broadcast = true) {
+    document.body.classList.toggle("black", on);
+    if (broadcast && channel) channel.postMessage({ type: "black", on });
+}
+
+// ---------- input ----------
+const FORWARD = [ "ArrowRight", "ArrowDown", "PageDown", " ", "Enter" ];
+const BACK = [ "ArrowLeft", "ArrowUp", "PageUp", "Backspace" ];
+addEventListener("keydown", event => {
+    if (event.target.tagName === "BUTTON" && (event.key === " " || event.key === "Enter")) event.preventDefault();
+    if (FORWARD.includes(event.key)) {
+        if (presenter && !timer.start && !timer.elapsed) toggleTimer();
+        show(current + 1);
+    }
+    else if (BACK.includes(event.key)) show(current - 1);
+    else if (event.key === "Home") show(0);
+    else if (event.key === "End") show(frames.length - 1);
+    else if (event.key === "f" || event.key === "F") document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    else if (event.key === "b" || event.key === "B" || event.key === ".") setBlack(!document.body.classList.contains("black"));
+    else if (presenter && (event.key === "t" || event.key === "T")) toggleTimer();
+    else if (presenter && (event.key === "r" || event.key === "R")) resetTimer();
+    else if (DATA.presenter && !presenter && (event.key === "p" || event.key === "P")) window.open(location.pathname + "?presenter#" + (current + 1), "vvc-presenter", "popup,width=1400,height=850");
+});
+if (channel) channel.onmessage = ({ data }) => {
+    if (data.type === "show" && data.index !== current) show(data.index, { broadcast: false });
+    if (data.type === "black") setBlack(data.on, false);
+    if (data.type === "hello" && presenter) channel.postMessage({ type: "show", index: current });
+};
+
+if (presenter) {
+    document.body.classList.add("presenter");
+    document.title = "Presenter · " + document.title;
+    nowSlides = cloneDeck(document.getElementById("now-view"));
+    nextSlides = cloneDeck(document.getElementById("next-view"));
+    document.getElementById("prev").onclick = () => show(current - 1);
+    document.getElementById("next").onclick = () => { if (!timer.start && !timer.elapsed) toggleTimer(); show(current + 1); };
+    document.getElementById("toggle").onclick = toggleTimer;
+    document.getElementById("reset").onclick = resetTimer;
+    document.getElementById("audience").onclick = openAudience;
+    setInterval(tick, 250);
+    addEventListener("storage", event => { if (event.key === TIMER_KEY) { timer = loadTimer(); tick(); } });
+} else {
+    stage.addEventListener("click", event => show(current + (event.clientX < innerWidth / 3 ? -1 : 1)));
+    let touchStart = null;
+    addEventListener("touchstart", event => { touchStart = event.changedTouches[0].clientX; }, { passive: true });
+    addEventListener("touchend", event => {
+        const distance = event.changedTouches[0].clientX - touchStart;
+        if (Math.abs(distance) > 40) show(current + (distance < 0 ? 1 : -1));
+    }, { passive: true });
+    addEventListener("resize", fitStage);
+    fitStage();
+}
+const fromAddress = () => show((parseInt(location.hash.slice(1), 10) || 1) - 1, { broadcast: false });
+addEventListener("hashchange", fromAddress);
+fromAddress();
+if (channel && !presenter) channel.postMessage({ type: "hello" });
+
+</script>
+</body>
+</html>

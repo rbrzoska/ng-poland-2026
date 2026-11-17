@@ -1,0 +1,41 @@
+{
+  "name": "angular-compiler-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo: the Angular compiler as a deterministic fact source and codemod engine for AI agents",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "compile": "ngc -p fixture/tsconfig.json",
+    "usages": "node tool/ng-facts.mjs usages",
+    "codemod": "node tool/ng-facts.mjs rename-input",
+    "bench": "node bench/run.mjs",
+    "bench:agent": "node bench/agent.mjs",
+    "demo": "npm run generate && npm run bench",
+    "ui": "node ui/server.mjs",
+    "gaul:generate": "node gaul/generate.mjs",
+    "gaul:before": "cd gaul/fixture && ng serve --port 4321",
+    "gaul:after": "cd gaul/fixture-expected && ng serve --port 4322",
+    "gaul:migrate": "node tool/ng-facts.mjs migrate tool/specs/tent-v2.migration.json --root gaul/fixture",
+    "hybrid:generate": "node scripts/generate-hybrid.mjs",
+    "hybrid:check": "node bench/hybrid.mjs --check"
+  },
+  "dependencies": {
+    "@angular/common": "22.2.1",
+    "@angular/compiler": "22.2.1",
+    "@angular/compiler-cli": "22.2.1",
+    "@angular/core": "22.2.1",
+    "@angular/platform-browser": "22.2.1",
+    "@angular/router": "22.2.1",
+    "rxjs": "7.8.2",
+    "tslib": "2.8.1",
+    "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "@angular/build": "22.2.1",
+    "@angular/cli": "22.2.1"
+  }
+}

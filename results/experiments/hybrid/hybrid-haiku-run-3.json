@@ -1,0 +1,283 @@
+{
+  "model": "haiku",
+  "run": 3,
+  "startedAt": "2026-11-16T19:21:08.648Z",
+  "sizes": {
+    "ajsComponents": 40,
+    "ajsDirectives": 4,
+    "ajsFilters": 8,
+    "ajsServices": 12,
+    "downgradedComponents": 10,
+    "downgradedInjectables": 4,
+    "angularComponents": 24,
+    "upgradeWrappers": 5,
+    "states": 14,
+    "ajsTemplates": 58,
+    "ajsInlineTemplates": 11,
+    "ajsFiles": 122,
+    "ajsLines": 1764
+  },
+  "key": {
+    "deadComponents": [
+      "cohortBanner",
+      "denariiLedger",
+      "helmetRack",
+      "patrolLog",
+      "shieldWall",
+      "tentInspector"
+    ],
+    "leafComponents": [
+      "amountInput",
+      "campHeader",
+      "centurionCard",
+      "cohortBanner",
+      "gladiusCounter",
+      "grainStore",
+      "helmetIcon",
+      "legionStats",
+      "pagerControl",
+      "rationSummary",
+      "sectionTitle",
+      "shieldBadge",
+      "standardBearer",
+      "supplyGauge",
+      "tentRow"
+    ],
+    "standardBearerElements": 9,
+    "unusedFilters": [
+      "cohortSize",
+      "shortDate",
+      "truncate"
+    ],
+    "twinComponents": [
+      "amountInput",
+      "helmetIcon",
+      "shieldBadge",
+      "standardBearer",
+      "tentRow"
+    ],
+    "unusedServices": [
+      "messengerQueue",
+      "standardsRegistry",
+      "tentAllocator"
+    ]
+  },
+  "arms": {
+    "no-tool": {
+      "seconds": 385,
+      "apiSeconds": 384,
+      "modelSeconds": 286,
+      "resultEvents": 1,
+      "turns": 5,
+      "toolCalls": 112,
+      "inputTokens": 144488,
+      "outputTokens": 2164,
+      "costUsd": 0.85706105,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "answers": {
+        "deadComponents": [
+          "denariiLedger",
+          "shieldWall"
+        ],
+        "leafComponents": [
+          "sectionTitle"
+        ],
+        "standardBearerElements": 9,
+        "unusedFilters": [
+          "cohortSize",
+          "truncate"
+        ],
+        "twinComponents": [
+          "amountInput",
+          "helmetIcon",
+          "shieldBadge",
+          "standardBearer",
+          "tentRow"
+        ],
+        "unusedServices": [
+          "legacyReports",
+          "messengerQueue",
+          "standardsRegistry"
+        ]
+      },
+      "correctAnswers": 2,
+      "wrongKeys": [
+        "deadComponents",
+        "leafComponents",
+        "unusedFilters",
+        "unusedServices"
+      ],
+      "details": {
+        "deadComponents": {
+          "right": false,
+          "expected": 6,
+          "missing": [
+            "cohortBanner",
+            "helmetRack",
+            "patrolLog",
+            "tentInspector"
+          ],
+          "extra": []
+        },
+        "leafComponents": {
+          "right": false,
+          "expected": 15,
+          "missing": [
+            "amountInput",
+            "campHeader",
+            "centurionCard",
+            "cohortBanner",
+            "gladiusCounter",
+            "grainStore",
+            "helmetIcon",
+            "legionStats",
+            "pagerControl",
+            "rationSummary",
+            "shieldBadge",
+            "standardBearer",
+            "supplyGauge",
+            "tentRow"
+          ],
+          "extra": []
+        },
+        "standardBearerElements": {
+          "right": true,
+          "expected": 9,
+          "given": 9
+        },
+        "unusedFilters": {
+          "right": false,
+          "expected": 3,
+          "missing": [
+            "shortDate"
+          ],
+          "extra": []
+        },
+        "twinComponents": {
+          "right": true,
+          "expected": 5,
+          "missing": [],
+          "extra": []
+        },
+        "unusedServices": {
+          "right": false,
+          "expected": 3,
+          "missing": [
+            "tentAllocator"
+          ],
+          "extra": [
+            "legacyReports"
+          ]
+        }
+      },
+      "allCorrect": false,
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\ajs-facts-hybrid-no-tool-RBusBP\\workspace",
+      "workspaceKept": false,
+      "recording": "results\\experiments\\hybrid\\recordings\\hybrid-haiku-run-3-no-tool.ndjson"
+    },
+    "tool": {
+      "seconds": 65,
+      "apiSeconds": 64,
+      "modelSeconds": 51,
+      "resultEvents": 1,
+      "turns": 10,
+      "toolCalls": 9,
+      "inputTokens": 237004,
+      "outputTokens": 6525,
+      "costUsd": 0.1297279,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "answers": {
+        "deadComponents": [
+          "cohortBanner",
+          "denariiLedger",
+          "helmetRack",
+          "patrolLog",
+          "shieldWall",
+          "tentInspector"
+        ],
+        "leafComponents": [
+          "amountInput",
+          "campHeader",
+          "centurionCard",
+          "cohortBanner",
+          "gladiusCounter",
+          "grainStore",
+          "helmetIcon",
+          "legionStats",
+          "pagerControl",
+          "rationSummary",
+          "sectionTitle",
+          "shieldBadge",
+          "standardBearer",
+          "supplyGauge",
+          "tentRow"
+        ],
+        "standardBearerElements": 9,
+        "unusedFilters": [
+          "cohortSize",
+          "shortDate",
+          "truncate"
+        ],
+        "twinComponents": [
+          "amountInput",
+          "helmetIcon",
+          "shieldBadge",
+          "standardBearer",
+          "tentRow"
+        ],
+        "unusedServices": [
+          "messengerQueue",
+          "standardsRegistry",
+          "tentAllocator"
+        ]
+      },
+      "correctAnswers": 6,
+      "wrongKeys": [],
+      "details": {
+        "deadComponents": {
+          "right": true,
+          "expected": 6,
+          "missing": [],
+          "extra": []
+        },
+        "leafComponents": {
+          "right": true,
+          "expected": 15,
+          "missing": [],
+          "extra": []
+        },
+        "standardBearerElements": {
+          "right": true,
+          "expected": 9,
+          "given": 9
+        },
+        "unusedFilters": {
+          "right": true,
+          "expected": 3,
+          "missing": [],
+          "extra": []
+        },
+        "twinComponents": {
+          "right": true,
+          "expected": 5,
+          "missing": [],
+          "extra": []
+        },
+        "unusedServices": {
+          "right": true,
+          "expected": 3,
+          "missing": [],
+          "extra": []
+        }
+      },
+      "allCorrect": true,
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\ajs-facts-hybrid-tool-wfsD4k\\workspace",
+      "workspaceKept": false,
+      "recording": "results\\experiments\\hybrid\\recordings\\hybrid-haiku-run-3-tool.ndjson"
+    }
+  }
+}

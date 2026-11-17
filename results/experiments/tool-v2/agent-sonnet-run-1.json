@@ -1,0 +1,40 @@
+{
+  "model": "sonnet",
+  "run": 1,
+  "startedAt": "2026-11-10T08:50:34.384Z",
+  "budget": 3,
+  "features": 120,
+  "task": "migrate",
+  "parallel": false,
+  "arms": {
+    "tool-v2": {
+      "seconds": 12,
+      "apiSeconds": 12,
+      "modelSeconds": 8,
+      "resultEvents": 1,
+      "turns": 2,
+      "toolCalls": 1,
+      "inputTokens": 63368,
+      "outputTokens": 265,
+      "costUsd": 0.0472888,
+      "modelId": "claude-sonnet-5-5",
+      "cliVersion": "2.1.294",
+      "error": null,
+      "shouldChange": 640,
+      "correct": 640,
+      "missed": 0,
+      "wrong": 0,
+      "filesExact": 217,
+      "files": 217,
+      "compileErrors": 0,
+      "elements": 1027,
+      "elementsWrong": 0,
+      "extraImports": 0,
+      "functionallyCorrect": true,
+      "specText": "{\"component\":\"PillComponent\",\"inputs\":{\"disableTooltip\":{\"rename\":\"tooltip\",\"negate\":true},\"variant\":{\"rename\":\"tone\",\"values\":{\"info\":\"neutral\",\"success\":\"positive\",\"warning\":\"caution\"},\"otherwise\":{\"pipe\":\"pillTone\",\"import\":\"PillTonePipe\",\"from\":\"src/app/lib/pill-tone.pipe\"}},\"label\":{\"toContent\":true}}}",
+      "workspace": "/var/folders/tb/68tnh0pn5619ks87wpp1gqmc0000gp/T/ng-facts-agent-tool-v2-3IRG0b/workspace",
+      "recording": "results/experiments/tool-v2/recordings/agent-sonnet-run-1-tool-v2.ndjson",
+      "patch": "results/experiments/tool-v2/recordings/agent-sonnet-run-1-tool-v2.patch"
+    }
+  }
+}

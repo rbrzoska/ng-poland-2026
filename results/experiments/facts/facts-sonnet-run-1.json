@@ -1,0 +1,70 @@
+{
+  "model": "sonnet",
+  "run": 1,
+  "startedAt": "2026-11-10T06:11:54.501Z",
+  "features": 120,
+  "key": {
+    "pillElements": 440,
+    "pillElementsInInlineTemplates": 120,
+    "disableTooltipBindingsElsewhere": 200,
+    "pillsWithLiteralWarning": 100,
+    "pillsWithNonLiteralVariant": 80,
+    "pillsWithoutVariant": 100
+  },
+  "arms": {
+    "no-tool": {
+      "seconds": 30,
+      "apiSeconds": 29,
+      "modelSeconds": 26,
+      "resultEvents": 1,
+      "turns": 5,
+      "toolCalls": 4,
+      "inputTokens": 204352,
+      "outputTokens": 2539,
+      "costUsd": 0.15549480000000002,
+      "modelId": "claude-sonnet-5-5",
+      "cliVersion": "2.1.294",
+      "error": null,
+      "answers": {
+        "pillElements": 440,
+        "pillElementsInInlineTemplates": 120,
+        "disableTooltipBindingsElsewhere": 200,
+        "pillsWithLiteralWarning": 100,
+        "pillsWithNonLiteralVariant": 80,
+        "pillsWithoutVariant": 100
+      },
+      "correctAnswers": 6,
+      "wrongKeys": [],
+      "allCorrect": true,
+      "workspace": "/var/folders/tb/68tnh0pn5619ks87wpp1gqmc0000gp/T/ng-facts-questions-no-tool-eatgNR/workspace",
+      "recording": "results/experiments/facts/recordings/facts-sonnet-run-1-no-tool.ndjson"
+    },
+    "tool": {
+      "seconds": 27,
+      "apiSeconds": 26,
+      "modelSeconds": 19,
+      "resultEvents": 1,
+      "turns": 5,
+      "toolCalls": 4,
+      "inputTokens": 164769,
+      "outputTokens": 1301,
+      "costUsd": 0.08621999999999999,
+      "modelId": "claude-sonnet-5-5",
+      "cliVersion": "2.1.294",
+      "error": null,
+      "answers": {
+        "pillElements": 440,
+        "pillElementsInInlineTemplates": 120,
+        "disableTooltipBindingsElsewhere": 200,
+        "pillsWithLiteralWarning": 100,
+        "pillsWithNonLiteralVariant": 80,
+        "pillsWithoutVariant": 100
+      },
+      "correctAnswers": 6,
+      "wrongKeys": [],
+      "allCorrect": true,
+      "workspace": "/var/folders/tb/68tnh0pn5619ks87wpp1gqmc0000gp/T/ng-facts-questions-tool-ragrEZ/workspace",
+      "recording": "results/experiments/facts/recordings/facts-sonnet-run-1-tool.ndjson"
+    }
+  }
+}

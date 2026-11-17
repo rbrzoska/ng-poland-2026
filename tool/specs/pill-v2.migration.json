@@ -1,0 +1,12 @@
+{
+  "component": "PillComponent",
+  "inputs": {
+    "disableTooltip": { "rename": "tooltip", "negate": true },
+    "variant": {
+      "rename": "tone",
+      "values": { "info": "neutral", "success": "positive", "warning": "caution" },
+      "otherwise": { "pipe": "pillTone", "import": "PillTonePipe", "from": "src/app/lib/pill-tone.pipe" }
+    },
+    "label": { "toContent": true }
+  }
+}

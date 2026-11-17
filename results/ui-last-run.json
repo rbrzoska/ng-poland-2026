@@ -1,0 +1,280 @@
+{
+  "runId": 1793699822405,
+  "finishedAt": "2026-11-03T09:57:14.681Z",
+  "config": {
+    "features": 120,
+    "model": "sonnet",
+    "budget": 3,
+    "agents": true,
+    "replay": true,
+    "replaySpeed": 10
+  },
+  "prep": {
+    "facts": {
+      "uses": 440,
+      "useFiles": 120,
+      "ms": 107,
+      "decoys": 200,
+      "toolTokens": 330,
+      "grepFiles": 214,
+      "grepLines": 984,
+      "grepTokens": 45429,
+      "files": 217
+    },
+    "baselineErrors": 700,
+    "steps": {
+      "generate": {
+        "status": "ok",
+        "startedAt": 1793699822406,
+        "ms": 120
+      },
+      "facts": {
+        "status": "ok",
+        "startedAt": 1793699822526,
+        "ms": 331
+      },
+      "baseline": {
+        "status": "ok",
+        "startedAt": 1793699822857,
+        "ms": 1070,
+        "detail": "1400 errors before migration"
+      }
+    }
+  },
+  "lanes": {
+    "expected": {
+      "metrics": {
+        "compileErrors": 0,
+        "correct": 640,
+        "missed": 0,
+        "wrong": 0,
+        "shouldChange": 640,
+        "filesExact": 217,
+        "files": 217,
+        "elements": 1027,
+        "elementsWrong": 0,
+        "functionallyCorrect": true
+      },
+      "steps": {
+        "ngc": {
+          "status": "ok",
+          "startedAt": 1793699823989,
+          "ms": 1867,
+          "detail": "0 errors"
+        },
+        "score": {
+          "status": "ok",
+          "startedAt": 1793699825856,
+          "ms": 266
+        },
+        "build": {
+          "status": "ok",
+          "startedAt": 1793699826122,
+          "ms": 3816
+        }
+      }
+    },
+    "sed": {
+      "metrics": {
+        "seconds": 0,
+        "compileErrors": 700,
+        "correct": 0,
+        "missed": 640,
+        "wrong": 1600,
+        "shouldChange": 640,
+        "filesExact": 7,
+        "files": 217,
+        "elements": 1027,
+        "elementsWrong": 940,
+        "functionallyCorrect": false
+      },
+      "steps": {
+        "refactor": {
+          "status": "ok",
+          "startedAt": 1793699824039,
+          "ms": 31
+        },
+        "ngc": {
+          "status": "fail",
+          "startedAt": 1793699824070,
+          "ms": 2292,
+          "detail": "1040 errors"
+        },
+        "score": {
+          "status": "fail",
+          "startedAt": 1793699826362,
+          "ms": 169
+        },
+        "build": {
+          "status": "skip",
+          "detail": "does not compile",
+          "ms": 0
+        }
+      }
+    },
+    "regex": {
+      "metrics": {
+        "seconds": 0,
+        "compileErrors": 220,
+        "correct": 220,
+        "missed": 420,
+        "wrong": 280,
+        "shouldChange": 640,
+        "filesExact": 47,
+        "files": 217,
+        "elements": 1027,
+        "elementsWrong": 460,
+        "functionallyCorrect": false
+      },
+      "steps": {
+        "refactor": {
+          "status": "ok",
+          "startedAt": 1793699824120,
+          "ms": 30
+        },
+        "ngc": {
+          "status": "fail",
+          "startedAt": 1793699824150,
+          "ms": 1994,
+          "detail": "320 errors"
+        },
+        "score": {
+          "status": "fail",
+          "startedAt": 1793699826144,
+          "ms": 217
+        },
+        "build": {
+          "status": "skip",
+          "detail": "does not compile",
+          "ms": 0
+        }
+      }
+    },
+    "codemod": {
+      "metrics": {
+        "seconds": 0.5,
+        "compileErrors": 0,
+        "correct": 640,
+        "missed": 0,
+        "wrong": 0,
+        "shouldChange": 640,
+        "filesExact": 217,
+        "files": 217,
+        "elements": 1027,
+        "elementsWrong": 0,
+        "functionallyCorrect": true
+      },
+      "steps": {
+        "refactor": {
+          "status": "ok",
+          "startedAt": 1793699824211,
+          "ms": 540
+        },
+        "ngc": {
+          "status": "ok",
+          "startedAt": 1793699824751,
+          "ms": 1846,
+          "detail": "0 errors"
+        },
+        "score": {
+          "status": "ok",
+          "startedAt": 1793699826597,
+          "ms": 110
+        },
+        "build": {
+          "status": "ok",
+          "startedAt": 1793699826707,
+          "ms": 3251
+        }
+      }
+    },
+    "agent-grep": {
+      "metrics": {
+        "turns": 10,
+        "toolCalls": 9,
+        "inputTokens": 296052,
+        "outputTokens": 5340,
+        "seconds": 55,
+        "costUsd": 0.18342179999999997,
+        "compileErrors": 0,
+        "correct": 540,
+        "missed": 100,
+        "wrong": 100,
+        "shouldChange": 640,
+        "filesExact": 127,
+        "files": 217,
+        "elements": 1027,
+        "elementsWrong": 0,
+        "functionallyCorrect": true
+      },
+      "steps": {
+        "refactor": {
+          "status": "ok",
+          "startedAt": 1793699824282,
+          "ms": 7090
+        },
+        "ngc": {
+          "status": "ok",
+          "startedAt": 1793699831372,
+          "ms": 1177,
+          "detail": "0 errors"
+        },
+        "score": {
+          "status": "fail",
+          "startedAt": 1793699832549,
+          "ms": 101
+        },
+        "build": {
+          "status": "ok",
+          "startedAt": 1793699832650,
+          "ms": 2031
+        }
+      }
+    },
+    "agent-facts": {
+      "metrics": {
+        "turns": 6,
+        "toolCalls": 5,
+        "inputTokens": 164559,
+        "outputTokens": 996,
+        "seconds": 24,
+        "specText": "{\"component\":\"PillComponent\",\"inputs\":{\n\"disableTooltip\":{\"rename\":\"tooltip\",\"negate\":true},\n\"variant\":{\"rename\":\"tone\",\"values\":{\"info\":\"neutral\",\"success\":\"positive\",\"warning\":\"caution\"},\"otherwise\":{\"pipe\":\"pillTone\",\"import\":\"PillTonePipe\",\"from\":\"src/app/lib/pill-tone.pipe\"}},\n\"label\":{\"toContent\":true}}}",
+        "specLines": 4,
+        "costUsd": 0.0838158,
+        "compileErrors": 0,
+        "correct": 640,
+        "missed": 0,
+        "wrong": 0,
+        "shouldChange": 640,
+        "filesExact": 217,
+        "files": 217,
+        "elements": 1027,
+        "elementsWrong": 0,
+        "functionallyCorrect": true
+      },
+      "steps": {
+        "refactor": {
+          "status": "ok",
+          "startedAt": 1793699824405,
+          "ms": 3487
+        },
+        "ngc": {
+          "status": "ok",
+          "startedAt": 1793699827892,
+          "ms": 1884,
+          "detail": "0 errors"
+        },
+        "score": {
+          "status": "ok",
+          "startedAt": 1793699829776,
+          "ms": 161
+        },
+        "build": {
+          "status": "ok",
+          "startedAt": 1793699829938,
+          "ms": 2287
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Getafix's Cauldron</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="top">
+        <div class="brand">
+            <div class="eyebrow">Angular compiler × AI agents</div>
+            <h1>Getafix's Cauldron</h1>
+            <p class="tagline">One API migration across 120 components, six ways — judged by <code>ngc --strictTemplates</code>, a diff and the built app.</p>
+        </div>
+        <form class="controls" id="controls">
+            <label>Features <input type="number" name="features" value="120" min="10" max="1000" step="10"></label>
+            <label>Model
+                <select name="model">
+                    <option value="sonnet" selected>sonnet</option>
+                    <option value="haiku">haiku</option>
+                    <option value="opus">opus</option>
+                </select>
+            </label>
+            <label>Budget / agent $ <input type="number" name="budget" value="3" min="0.5" max="20" step="0.5"></label>
+            <label class="check"><input type="checkbox" name="agents" checked> Run Claude agents</label>
+            <label class="check" title="Stream a recorded run from results/recordings at 10× speed and re-apply that agent's edits — no network needed"><input type="checkbox" name="replay" checked> Replay recorded agents (offline)</label>
+            <button type="submit" id="run">Brew the potion</button>
+            <button type="button" id="stop" class="ghost" disabled>Stop</button>
+            <button type="button" id="reset" class="ghost">Reset</button>
+            <a class="slides-link" href="/slides" target="_blank">Slides ↗</a>
+        </form>
+    </header>
+    <div class="banner" id="restored-banner" hidden>Showing the last finished run (restored) — press Brew to run again</div>
+
+    <section class="briefing" id="briefing">
+        <div class="briefing-head">
+            <span class="label">Briefing</span>
+            <div class="briefing-tabs" role="tablist">
+                <button type="button" role="tab" data-brief="task" class="active">The task</button>
+                <button type="button" role="tab" data-brief="code">The code</button>
+                <button type="button" role="tab" data-brief="traps">The traps</button>
+                <button type="button" role="tab" data-brief="lanes">The lanes</button>
+                <button type="button" role="tab" data-brief="tool">How ng-facts works</button>
+                <button type="button" role="tab" data-brief="judge">How it is judged</button>
+            </div>
+        </div>
+
+        <div class="brief-panel active" data-panel="task">
+            <div class="brief-grid">
+                <div class="brief-text">
+                    <h2>The library ships a new major version. Migrate 120 components to it.</h2>
+                    <p>The workspace is an Angular 22 app (<span data-stat="features">120</span> feature components, <span data-stat="files">~216</span> source files). Its component library has just been upgraded: <code>&lt;app-pill&gt;</code> v2 has a different API, a new <code>PillTonePipe</code> exists, and every consumer still speaks v1 — <b>the app does not compile</b>.</p>
+                    <ul>
+                        <li><code>disableTooltip</code> → <code>tooltip</code>, with the <b>opposite meaning</b>: every value negated minimally (<code>!isActive</code> → <code>isActive</code>, <code>count &gt; 3</code> → <code>!(count &gt; 3)</code>);</li>
+                        <li><code>variant</code> → <code>tone</code>, values renamed (<code>success</code>→<code>positive</code>, <code>warning</code>→<code>caution</code>), also inside <code>?:</code> expressions;</li>
+                        <li>when the value comes from a field, it goes through the <code>pillTone</code> pipe — and <code>PillTonePipe</code> must be <b>added to that component's <code>imports</code> in TypeScript</b>;</li>
+                        <li><code>label</code> is gone: its value moves into the element <b>content</b> — self-closing tags get expanded, <code>[label]="title"</code> becomes <code>{{ title }}</code>;</li>
+                        <li>and nothing else changes — <code>&lt;app-card&gt;</code> has an input with the same name.</li>
+                    </ul>
+                    <p>This is what <code>ng update</code> migrations do for Angular Material. Here we ask: who should do it in your own codebase — an AI agent, or the compiler with the agent's help?</p>
+                </div>
+                <div class="brief-card">
+                    <div class="label">The idea</div>
+                    <p class="quote">The agent should not type out hundreds of edits. It should describe the change — and let the compiler apply it.</p>
+                    <div class="label">The tool</div>
+                    <p><code>ng-facts migrate spec.json</code>: an API change written as ~10 lines of JSON. The Angular compiler finds every element, the edits are mechanical. No AI output for the edits, no files read into the context.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="brief-panel" data-panel="code">
+            <p class="brief-intro">Live from the generated workspace. Before (v1 consumer) on the left, the correct migration on the right; changed lines highlighted.</p>
+            <div class="code-pair">
+                <figure class="code"><figcaption>features/feature-6/feature-6.component.html — v1</figcaption><pre id="code-template-before"></pre></figure>
+                <figure class="code"><figcaption>features/feature-6/feature-6.component.html — migrated</figcaption><pre id="code-template-after"></pre></figure>
+            </div>
+            <div class="code-pair">
+                <figure class="code"><figcaption>features/feature-6/feature-6.component.ts — v1</figcaption><pre id="code-feature-before"></pre></figure>
+                <figure class="code"><figcaption>features/feature-6/feature-6.component.ts — migrated (pipe imported)</figcaption><pre id="code-feature-after"></pre></figure>
+            </div>
+            <div class="code-pair">
+                <figure class="code"><figcaption>lib/pill.component.ts — v2, already in the workspace</figcaption><pre id="code-pill"></pre></figure>
+                <figure class="code"><figcaption>tool/specs/pill-v2.migration.json — the whole migration</figcaption><pre id="code-spec"></pre></figure>
+            </div>
+        </div>
+
+        <div class="brief-panel" data-panel="traps">
+            <div class="trap-grid">
+                <div class="trap"><b>Same name, different component</b><code>&lt;app-card [disableTooltip]="true"&gt;</code><p>Text search cannot tell it from the pill. Changing it breaks the card for every consumer you did not see.</p></div>
+                <div class="trap"><b>Same prefix, different element</b><code>&lt;app-pill-legacy label="Legacy" [disableTooltip]="true" /&gt;</code><p>The old pill, still on the v1 API on purpose. <code>&lt;app-pill\b</code> matches it; the compiler's selector matcher does not.</p></div>
+                <div class="trap"><b>Same name, plain class field</b><code>@if (disableTooltip) { … }</code><p>Each feature has its own field called <code>disableTooltip</code>. It is not the input. Nor is the comment, nor the hint text.</p></div>
+                <div class="trap"><b>Six formatting styles</b><code>label='Plain' · one attribute per line · /&gt; on its own line · @for</code><p>Single quotes, double spaces, nested <code>?:</code>, <code>?.</code>, <code>[]</code> and calls in expressions, two pills on one line — text is not structure.</p></div>
+                <div class="trap"><b>A <code>&gt;</code> inside an attribute</b><code>[disableTooltip]="count &gt; 3"</code><p>Ends a <code>&lt;app-pill[^&gt;]*&gt;</code> regex in the middle of the tag; the rest of the element is never seen.</p></div>
+                <div class="trap"><b>Values inside expressions</b><code>[variant]="isActive ? 'success' : 'warning'"</code><p>Only the string literals change — the condition must stay untouched.</p></div>
+                <div class="trap"><b>A field instead of a literal</b><code>[variant]="statusVariant"</code><p>Cannot be mapped in the template: needs the pipe, <b>and</b> an edit in the component's TypeScript <code>imports</code>.</p></div>
+                <div class="trap"><b>Input → content projection</b><code>&lt;app-pill label="X" /&gt; → &lt;app-pill&gt;X&lt;/app-pill&gt;</code><p>A structural change: the tag is expanded, the attribute removed (with its line), the end tag merged.</p></div>
+                <div class="trap"><b>Inline and external templates</b><code>template: `…` · templateUrl</code><p>A quarter of the components keep the template inside a <code>.ts</code> string literal.</p></div>
+                <div class="trap"><b>An external consumer</b><code>inputs: { [name]: true }</code><p>The built app sets the card input by a name computed at runtime — only an API that did not change keeps it working.</p></div>
+            </div>
+        </div>
+
+        <div class="brief-panel" data-panel="lanes">
+            <div class="lane-grid">
+                <div class="lane-desc"><b>Reference</b><p>The correct migration, produced by the generator that wrote the workspace. Answer key for the diff, baseline for the built app.</p></div>
+                <div class="lane-desc"><b>Find &amp; replace</b><p>Rename the attributes everywhere and hope. What a bulk edit, or a hurried agent with <code>sed</code>, does.</p></div>
+                <div class="lane-desc"><b>Careful regex</b><p>Inside <code>&lt;app-pill …&gt;</code> tags only: negation, value map, label → content. The best a text approach can reasonably do.</p></div>
+                <div class="lane-desc"><b>Compiler + spec (execution only)</b><p><code>ng-facts migrate pill-v2.migration.json</code> with a spec written beforehand: the API change as data, every edit applied mechanically by the Angular compiler. This is not a competitor of the agents — it is the part the agent with ng-facts delegates. Writing the spec costs the agent ~27 s; executing it costs the compiler ~0.15 s.</p></div>
+                <div class="lane-desc"><b>Claude: files + grep</b><p>Your <code>claude</code> CLI, headless, in a temporary copy. The task, the files and a shell — it has to find, read and edit everything itself.</p></div>
+                <div class="lane-desc"><b>Claude + ng-facts</b><p>The same agent and task, plus the tool. It has to <b>write the spec itself</b> from the v2 code — the tool does the 2 680 edits.</p></div>
+            </div>
+            <p class="brief-note">Agents run with <code>Read/Edit/Write/Glob/Grep/Bash</code>, no MCP servers, no user settings, a per-agent budget cap — and without the answer key or the ready-made spec.</p>
+        </div>
+
+        <div class="brief-panel" data-panel="tool">
+            <ol class="pipeline">
+                <li><b>TypeScript AST</b><span>Components, selectors, signal inputs and templates — inline literals with their exact offset, or <code>templateUrl</code>.</span></li>
+                <li><b><code>parseTemplate()</code></b><span>The Angular compiler's own parser: elements, bindings, <code>@if</code>/<code>@for</code>, expressions — all with exact source spans.</span></li>
+                <li><b><code>SelectorMatcher</code></b><span>Each element matched to its component the way the compiler does it: <code>&lt;app-pill&gt;</code> and <code>&lt;app-card&gt;</code> never mix.</span></li>
+                <li><b>Expression AST</b><span>Negate by structure (<code>PrefixNot</code>, <code>LiteralPrimitive</code>, <code>Binary</code>); map string literals inside <code>Conditional</code>; anything else → pipe.</span></li>
+                <li><b>Structural edits</b><span>Remove an attribute (with its line), expand <code>/&gt;</code> into content + end tag, add <code>PillTonePipe</code> to the decorator <code>imports</code> and the import statement.</span></li>
+                <li><b>Spec in, edits out</b><span>The API change is ~10 lines of JSON. Dry run first; anything it cannot decide goes to a "needs a decision" list.</span></li>
+            </ol>
+            <p class="brief-note"><code>tool/ng-facts.mjs</code>. The whole migration: ~2 680 edits in 170 files, 80 imports added, in ~130 ms — byte-identical to the answer key.</p>
+        </div>
+
+        <div class="brief-panel" data-panel="judge">
+            <div class="lane-grid">
+                <div class="lane-desc"><b>1 · The compiler</b><p><code>ngc --strictTemplates</code>: v1 bindings on v2 are <code>NG8002</code>, a wrong value type is a type error. Before migration: 700 errors.</p></div>
+                <div class="lane-desc"><b>2 · The diff — twice</b><p>Every file aligned line by line with the answer key (correct, missed, wrong lines), and then the compiler's own template AST compared element by element: formatting-blind, meaning-exact. "Functionally correct" = 0 ngc errors and 0 elements wrong.</p></div>
+                <div class="lane-desc"><b>3 · The built app</b><p><code>ng build</code>, served here. Every pill compared with the reference: text, tone and tooltip — a red frame marks a difference.</p></div>
+                <div class="lane-desc"><b>4 · The API contract</b><p><code>&lt;app-pill [tooltip]="true"&gt;</code> must show a hint; an external consumer of <code>&lt;app-card&gt;</code> must keep working.</p></div>
+                <div class="lane-desc"><b>5 · The cost</b><p>For agents: time, turns, input tokens (incl. cache) and dollars, read live from the Claude CLI stream.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="task">
+        <div class="task-text">
+            <span class="label">The run</span>
+            <p>Library on <code>PillComponent</code> v2, 120 consumers on v1. Every lane starts from the same broken workspace and has to make it compile — correctly.</p>
+        </div>
+        <div class="prep">
+            <div class="chips" id="prep-steps"></div>
+            <div class="facts" id="facts"></div>
+        </div>
+        <details class="prep-log">
+            <summary>Preparation log</summary>
+            <div class="log" id="prep-log"></div>
+        </details>
+    </section>
+
+    <main class="lanes" id="lanes"></main>
+
+    <section class="compare" id="compare">
+        <div class="compare-head">
+            <h2>The village, built</h2>
+            <p>Each lane that compiles is built with <code>ng build</code> and served below. The red <span class="dot">i</span> marks a pill with a tooltip; pills whose text, tone or tooltip differ from the reference get a red frame.</p>
+            <div class="tabs" id="tabs"></div>
+        </div>
+        <div class="frames">
+            <figure>
+                <figcaption><b>Reference</b> <span id="ref-count" class="count"></span></figcaption>
+                <iframe id="frame-ref" title="Reference app"></iframe>
+            </figure>
+            <figure>
+                <figcaption><b id="lane-name">—</b> <span id="lane-count" class="count"></span> <span id="lane-diff" class="diff"></span></figcaption>
+                <iframe id="frame-lane" title="Selected lane app"></iframe>
+            </figure>
+        </div>
+    </section>
+
+    <section class="summary">
+        <h2>Scoreboard</h2>
+        <div class="table-wrap"><table id="scoreboard"></table></div>
+    </section>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>

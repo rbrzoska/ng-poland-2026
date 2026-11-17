@@ -1,0 +1,133 @@
+{
+  "model": "sonnet",
+  "modelIds": [
+    "claude-sonnet-5-5"
+  ],
+  "experiment": null,
+  "task": "migrate",
+  "features": 120,
+  "runs": 8,
+  "parallelRuns": 3,
+  "updatedAt": "2026-11-10T08:40:02.461Z",
+  "arms": {
+    "no-tool": {
+      "seconds": {
+        "median": 58,
+        "min": 45,
+        "max": 742
+      },
+      "turns": {
+        "median": 9.5,
+        "min": 8,
+        "max": 17
+      },
+      "inputTokens": {
+        "median": 288317,
+        "min": 251454,
+        "max": 651722
+      },
+      "outputTokens": {
+        "median": 4956,
+        "min": 3253,
+        "max": 7818
+      },
+      "costUsd": {
+        "median": 0.1880543,
+        "min": 0.16607600000000003,
+        "max": 0.31634260000000003
+      },
+      "correct": {
+        "median": 490,
+        "min": 400,
+        "max": 560
+      },
+      "missed": {
+        "median": 150,
+        "min": 80,
+        "max": 240
+      },
+      "wrong": {
+        "median": 150,
+        "min": 80,
+        "max": 240
+      },
+      "compileErrors": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "elementsWrong": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "functionallyCorrectRuns": 8,
+      "failedRuns": 0,
+      "shouldChange": 640
+    },
+    "tool": {
+      "seconds": {
+        "median": 25.5,
+        "min": 14,
+        "max": 735
+      },
+      "turns": {
+        "median": 4,
+        "min": 3,
+        "max": 28
+      },
+      "inputTokens": {
+        "median": 129540,
+        "min": 95698,
+        "max": 1605901
+      },
+      "outputTokens": {
+        "median": 773,
+        "min": 486,
+        "max": 11033
+      },
+      "costUsd": {
+        "median": 0.06952720000000001,
+        "min": 0.058104,
+        "max": 0.6525164000000001
+      },
+      "correct": {
+        "median": 640,
+        "min": 640,
+        "max": 640
+      },
+      "missed": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "wrong": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compileErrors": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "elementsWrong": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "functionallyCorrectRuns": 8,
+      "failedRuns": 0,
+      "shouldChange": 640
+    }
+  },
+  "ratios": {
+    "seconds": 2.3,
+    "costUsd": 2.7,
+    "outputTokens": 6.4,
+    "inputTokens": 2.2,
+    "turns": 2.4
+  },
+  "specText": "{\"component\":\"PillComponent\",\"inputs\":{\n\"disableTooltip\":{\"rename\":\"tooltip\",\"negate\":true},\n\"variant\":{\"rename\":\"tone\",\"values\":{\"info\":\"neutral\",\"success\":\"positive\",\"warning\":\"caution\"},\"otherwise\":{\"pipe\":\"pillTone\",\"import\":\"PillTonePipe\",\"from\":\"src/app/lib/pill-tone.pipe\"}},\n\"label\":{\"toContent\":true}}}",
+  "specLines": 4
+}

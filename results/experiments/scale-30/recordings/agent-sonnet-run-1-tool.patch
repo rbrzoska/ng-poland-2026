@@ -1,0 +1,883 @@
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-1/feature-1.component.html b/src/app/features/feature-1/feature-1.component.html
+--- a/src/app/features/feature-1/feature-1.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-1/feature-1.component.html	2026-11-10 07:28:59
+@@ -1,9 +1,9 @@
+ <app-card heading="Feature 1" [disableTooltip]="true">
+   <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-  <app-pill [disableTooltip]='true' label='Plain'/>
+-  <app-pill  variant="success"  [disableTooltip]="!isActive"  label="Active"/>
+-  <app-pill [disableTooltip]="count > 3" [label]="title" variant="info" />
+-  <app-pill [variant]="isActive ? 'success' : 'warning'" label="Multi-line" [disableTooltip]="isActive"></app-pill>
++  <app-pill [tooltip]='false'>Plain</app-pill>
++  <app-pill  tone="positive"  [tooltip]="isActive">Active</app-pill>
++  <app-pill [tooltip]="!(count > 3)" tone="neutral">{{ title }}</app-pill>
++  <app-pill [tone]="isActive ? 'positive' : 'caution'" [tooltip]="!isActive">Multi-line</app-pill>
+   @if (isActive) {
+     <app-pill-legacy label="Legacy" variant="info" [disableTooltip]="true" />
+   }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-10/feature-10.component.html b/src/app/features/feature-10/feature-10.component.html
+--- a/src/app/features/feature-10/feature-10.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-10/feature-10.component.html	2026-11-10 07:28:59
+@@ -1,9 +1,9 @@
+ <app-card heading="Feature 10" [disableTooltip]="!isActive">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-    <app-pill label="Quiet" variant="info" [disableTooltip]="user?.prefs?.quiet" />
+-    <app-pill [label]="title" [variant]="statusVariant" [disableTooltip]="items.length === 0" />
+-    <app-pill label="Keyed" variant="warning" [disableTooltip]="flags['hidden']" />
+-    <app-pill label="Called" variant="success" [disableTooltip]="isHidden()" />
++    <app-pill tone="neutral" [tooltip]="!user?.prefs?.quiet">Quiet</app-pill>
++    <app-pill [tone]="statusVariant | pillTone" [tooltip]="!(items.length === 0)">{{ title }}</app-pill>
++    <app-pill tone="caution" [tooltip]="!flags['hidden']">Keyed</app-pill>
++    <app-pill tone="positive" [tooltip]="!isHidden()">Called</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-10/feature-10.component.ts b/src/app/features/feature-10/feature-10.component.ts
+--- a/src/app/features/feature-10/feature-10.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-10/feature-10.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-10",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-10.component.html"
+ })
+ export class Feature010Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-11/feature-11.component.html b/src/app/features/feature-11/feature-11.component.html
+--- a/src/app/features/feature-11/feature-11.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-11/feature-11.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 11" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     <div class="row">
+-        <app-pill label="Info" variant="info" [disableTooltip]="true" /><app-pill label="Active" variant="success" [disableTooltip]="!isActive" />
++        <app-pill tone="neutral" [tooltip]="false">Info</app-pill><app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+         <app-pill-legacy [label]="title" [variant]="statusVariant" [disableTooltip]="count > 3" />
+     </div>
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-12/feature-12.component.ts b/src/app/features/feature-12/feature-12.component.ts
+--- a/src/app/features/feature-12/feature-12.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-12/feature-12.component.ts	2026-11-10 07:28:59
+@@ -1,24 +1,23 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-12",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     template: `
+         <app-card heading="Feature 12" [disableTooltip]="true">
+             <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-            <app-pill label="Plain" [disableTooltip]="true" />
+-            <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
+-            <app-pill [label]="title" [disableTooltip]="count > 3" />
++            <app-pill [tooltip]="false">Plain</app-pill>
++            <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
++            <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+             <app-pill
+-                [variant]="isActive ? 'success' : 'warning'"
+-                label="Multi-line"
+-                [disableTooltip]="isActive">
+-            </app-pill>
++                [tone]="isActive ? 'positive' : 'caution'"
++                [tooltip]="!isActive">Multi-line</app-pill>
+             @if (isActive) {
+-                <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++                <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+             }
+             @if (disableTooltip) {
+                 <small>Own flag, unrelated to the pill input</small>
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-13/feature-13.component.html b/src/app/features/feature-13/feature-13.component.html
+--- a/src/app/features/feature-13/feature-13.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-13/feature-13.component.html	2026-11-10 07:28:59
+@@ -1,9 +1,9 @@
+ <app-card heading="Feature 13" [disableTooltip]="true">
+   <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-  <app-pill [disableTooltip]='true' label='Plain'/>
+-  <app-pill  variant="success"  [disableTooltip]="!isActive"  label="Active"/>
+-  <app-pill [disableTooltip]="count > 3" [label]="title" variant="info" />
+-  <app-pill [variant]="isActive ? 'success' : 'warning'" label="Multi-line" [disableTooltip]="isActive"></app-pill>
++  <app-pill [tooltip]='false'>Plain</app-pill>
++  <app-pill  tone="positive"  [tooltip]="isActive">Active</app-pill>
++  <app-pill [tooltip]="!(count > 3)" tone="neutral">{{ title }}</app-pill>
++  <app-pill [tone]="isActive ? 'positive' : 'caution'" [tooltip]="!isActive">Multi-line</app-pill>
+   @if (isActive) {
+     <app-pill-legacy label="Legacy" variant="info" [disableTooltip]="true" />
+   }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-14/feature-14.component.html b/src/app/features/feature-14/feature-14.component.html
+--- a/src/app/features/feature-14/feature-14.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-14/feature-14.component.html	2026-11-10 07:28:59
+@@ -1,16 +1,12 @@
+ <app-card heading="Feature 14" [disableTooltip]="true">
+     <!-- disableTooltip here is the card's flag; pills carry their own -->
+     <app-pill
+-        label="Plain"
+-        variant="warning"
+-        [disableTooltip]="true"
+-    />
++        tone="caution"
++        [tooltip]="false">Plain</app-pill>
+     <app-pill
+-        [label]="title"
+-        [variant]="count > 3 ? 'success' : isActive ? 'warning' : 'info'"
+-        [disableTooltip]="!(isActive && count > 1)"
+-    />
+-    <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++        [tone]="count > 3 ? 'positive' : isActive ? 'caution' : 'neutral'"
++        [tooltip]="isActive && count > 1">{{ title }}</app-pill>
++    <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-14/feature-14.component.ts b/src/app/features/feature-14/feature-14.component.ts
+--- a/src/app/features/feature-14/feature-14.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-14/feature-14.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-14",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-14.component.html"
+ })
+ export class Feature014Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-15/feature-15.component.html b/src/app/features/feature-15/feature-15.component.html
+--- a/src/app/features/feature-15/feature-15.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-15/feature-15.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 15" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     @for (item of items; track item.id) {
+-        <app-pill [label]="item.name" [variant]="item.variant" [disableTooltip]="item.hidden" />
++        <app-pill [tone]="item.variant | pillTone" [tooltip]="!item.hidden">{{ item.name }}</app-pill>
+     }
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+     @if (disableTooltip) { <small>Own flag, unrelated to the pill input</small> }
+ </app-card>
+ <app-card heading="Decoy only" [disableTooltip]="!isActive" />
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-15/feature-15.component.ts b/src/app/features/feature-15/feature-15.component.ts
+--- a/src/app/features/feature-15/feature-15.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-15/feature-15.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-15",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-15.component.html"
+ })
+ export class Feature015Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-16/feature-16.component.ts b/src/app/features/feature-16/feature-16.component.ts
+--- a/src/app/features/feature-16/feature-16.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-16/feature-16.component.ts	2026-11-10 07:28:59
+@@ -1,18 +1,19 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-16",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     template: `
+         <app-card heading="Feature 16" [disableTooltip]="!isActive">
+             <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-            <app-pill label="Quiet" variant="info" [disableTooltip]="user?.prefs?.quiet" />
+-            <app-pill [label]="title" [variant]="statusVariant" [disableTooltip]="items.length === 0" />
+-            <app-pill label="Keyed" variant="warning" [disableTooltip]="flags['hidden']" />
+-            <app-pill label="Called" variant="success" [disableTooltip]="isHidden()" />
++            <app-pill tone="neutral" [tooltip]="!user?.prefs?.quiet">Quiet</app-pill>
++            <app-pill [tone]="statusVariant | pillTone" [tooltip]="!(items.length === 0)">{{ title }}</app-pill>
++            <app-pill tone="caution" [tooltip]="!flags['hidden']">Keyed</app-pill>
++            <app-pill tone="positive" [tooltip]="!isHidden()">Called</app-pill>
+             @if (disableTooltip) {
+                 <small>Own flag, unrelated to the pill input</small>
+             }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-17/feature-17.component.html b/src/app/features/feature-17/feature-17.component.html
+--- a/src/app/features/feature-17/feature-17.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-17/feature-17.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 17" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     <div class="row">
+-        <app-pill label="Info" variant="info" [disableTooltip]="true" /><app-pill label="Active" variant="success" [disableTooltip]="!isActive" />
++        <app-pill tone="neutral" [tooltip]="false">Info</app-pill><app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+         <app-pill-legacy [label]="title" [variant]="statusVariant" [disableTooltip]="count > 3" />
+     </div>
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-18/feature-18.component.html b/src/app/features/feature-18/feature-18.component.html
+--- a/src/app/features/feature-18/feature-18.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-18/feature-18.component.html	2026-11-10 07:28:59
+@@ -1,15 +1,13 @@
+ <app-card heading="Feature 18" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     <app-pill
+-        [variant]="isActive ? 'success' : 'warning'"
+-        label="Multi-line"
+-        [disableTooltip]="isActive">
+-    </app-pill>
++        [tone]="isActive ? 'positive' : 'caution'"
++        [tooltip]="!isActive">Multi-line</app-pill>
+     @if (isActive) {
+-        <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++        <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+     }
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-18/feature-18.component.ts b/src/app/features/feature-18/feature-18.component.ts
+--- a/src/app/features/feature-18/feature-18.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-18/feature-18.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-18",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-18.component.html"
+ })
+ export class Feature018Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-19/feature-19.component.html b/src/app/features/feature-19/feature-19.component.html
+--- a/src/app/features/feature-19/feature-19.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-19/feature-19.component.html	2026-11-10 07:28:59
+@@ -1,9 +1,9 @@
+ <app-card heading="Feature 19" [disableTooltip]="true">
+   <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-  <app-pill [disableTooltip]='true' label='Plain'/>
+-  <app-pill  variant="success"  [disableTooltip]="!isActive"  label="Active"/>
+-  <app-pill [disableTooltip]="count > 3" [label]="title" variant="info" />
+-  <app-pill [variant]="isActive ? 'success' : 'warning'" label="Multi-line" [disableTooltip]="isActive"></app-pill>
++  <app-pill [tooltip]='false'>Plain</app-pill>
++  <app-pill  tone="positive"  [tooltip]="isActive">Active</app-pill>
++  <app-pill [tooltip]="!(count > 3)" tone="neutral">{{ title }}</app-pill>
++  <app-pill [tone]="isActive ? 'positive' : 'caution'" [tooltip]="!isActive">Multi-line</app-pill>
+   @if (isActive) {
+     <app-pill-legacy label="Legacy" variant="info" [disableTooltip]="true" />
+   }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-2/feature-2.component.html b/src/app/features/feature-2/feature-2.component.html
+--- a/src/app/features/feature-2/feature-2.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-2/feature-2.component.html	2026-11-10 07:28:59
+@@ -1,16 +1,12 @@
+ <app-card heading="Feature 2" [disableTooltip]="true">
+     <!-- disableTooltip here is the card's flag; pills carry their own -->
+     <app-pill
+-        label="Plain"
+-        variant="warning"
+-        [disableTooltip]="true"
+-    />
++        tone="caution"
++        [tooltip]="false">Plain</app-pill>
+     <app-pill
+-        [label]="title"
+-        [variant]="count > 3 ? 'success' : isActive ? 'warning' : 'info'"
+-        [disableTooltip]="!(isActive && count > 1)"
+-    />
+-    <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++        [tone]="count > 3 ? 'positive' : isActive ? 'caution' : 'neutral'"
++        [tooltip]="isActive && count > 1">{{ title }}</app-pill>
++    <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-2/feature-2.component.ts b/src/app/features/feature-2/feature-2.component.ts
+--- a/src/app/features/feature-2/feature-2.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-2/feature-2.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-2",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-2.component.html"
+ })
+ export class Feature002Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-20/feature-20.component.ts b/src/app/features/feature-20/feature-20.component.ts
+--- a/src/app/features/feature-20/feature-20.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-20/feature-20.component.ts	2026-11-10 07:28:59
+@@ -1,25 +1,22 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-20",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     template: `
+         <app-card heading="Feature 20" [disableTooltip]="true">
+             <!-- disableTooltip here is the card's flag; pills carry their own -->
+             <app-pill
+-                label="Plain"
+-                variant="warning"
+-                [disableTooltip]="true"
+-            />
++                tone="caution"
++                [tooltip]="false">Plain</app-pill>
+             <app-pill
+-                [label]="title"
+-                [variant]="count > 3 ? 'success' : isActive ? 'warning' : 'info'"
+-                [disableTooltip]="!(isActive && count > 1)"
+-            />
+-            <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++                [tone]="count > 3 ? 'positive' : isActive ? 'caution' : 'neutral'"
++                [tooltip]="isActive && count > 1">{{ title }}</app-pill>
++            <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+             @if (disableTooltip) {
+                 <small>Own flag, unrelated to the pill input</small>
+             }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-21/feature-21.component.html b/src/app/features/feature-21/feature-21.component.html
+--- a/src/app/features/feature-21/feature-21.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-21/feature-21.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 21" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     @for (item of items; track item.id) {
+-        <app-pill [label]="item.name" [variant]="item.variant" [disableTooltip]="item.hidden" />
++        <app-pill [tone]="item.variant | pillTone" [tooltip]="!item.hidden">{{ item.name }}</app-pill>
+     }
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+     @if (disableTooltip) { <small>Own flag, unrelated to the pill input</small> }
+ </app-card>
+ <app-card heading="Decoy only" [disableTooltip]="!isActive" />
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-21/feature-21.component.ts b/src/app/features/feature-21/feature-21.component.ts
+--- a/src/app/features/feature-21/feature-21.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-21/feature-21.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-21",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-21.component.html"
+ })
+ export class Feature021Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-22/feature-22.component.html b/src/app/features/feature-22/feature-22.component.html
+--- a/src/app/features/feature-22/feature-22.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-22/feature-22.component.html	2026-11-10 07:28:59
+@@ -1,9 +1,9 @@
+ <app-card heading="Feature 22" [disableTooltip]="!isActive">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-    <app-pill label="Quiet" variant="info" [disableTooltip]="user?.prefs?.quiet" />
+-    <app-pill [label]="title" [variant]="statusVariant" [disableTooltip]="items.length === 0" />
+-    <app-pill label="Keyed" variant="warning" [disableTooltip]="flags['hidden']" />
+-    <app-pill label="Called" variant="success" [disableTooltip]="isHidden()" />
++    <app-pill tone="neutral" [tooltip]="!user?.prefs?.quiet">Quiet</app-pill>
++    <app-pill [tone]="statusVariant | pillTone" [tooltip]="!(items.length === 0)">{{ title }}</app-pill>
++    <app-pill tone="caution" [tooltip]="!flags['hidden']">Keyed</app-pill>
++    <app-pill tone="positive" [tooltip]="!isHidden()">Called</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-22/feature-22.component.ts b/src/app/features/feature-22/feature-22.component.ts
+--- a/src/app/features/feature-22/feature-22.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-22/feature-22.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-22",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-22.component.html"
+ })
+ export class Feature022Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-23/feature-23.component.html b/src/app/features/feature-23/feature-23.component.html
+--- a/src/app/features/feature-23/feature-23.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-23/feature-23.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 23" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     <div class="row">
+-        <app-pill label="Info" variant="info" [disableTooltip]="true" /><app-pill label="Active" variant="success" [disableTooltip]="!isActive" />
++        <app-pill tone="neutral" [tooltip]="false">Info</app-pill><app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+         <app-pill-legacy [label]="title" [variant]="statusVariant" [disableTooltip]="count > 3" />
+     </div>
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-24/feature-24.component.ts b/src/app/features/feature-24/feature-24.component.ts
+--- a/src/app/features/feature-24/feature-24.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-24/feature-24.component.ts	2026-11-10 07:28:59
+@@ -1,24 +1,23 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-24",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     template: `
+         <app-card heading="Feature 24" [disableTooltip]="true">
+             <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-            <app-pill label="Plain" [disableTooltip]="true" />
+-            <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
+-            <app-pill [label]="title" [disableTooltip]="count > 3" />
++            <app-pill [tooltip]="false">Plain</app-pill>
++            <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
++            <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+             <app-pill
+-                [variant]="isActive ? 'success' : 'warning'"
+-                label="Multi-line"
+-                [disableTooltip]="isActive">
+-            </app-pill>
++                [tone]="isActive ? 'positive' : 'caution'"
++                [tooltip]="!isActive">Multi-line</app-pill>
+             @if (isActive) {
+-                <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++                <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+             }
+             @if (disableTooltip) {
+                 <small>Own flag, unrelated to the pill input</small>
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-25/feature-25.component.html b/src/app/features/feature-25/feature-25.component.html
+--- a/src/app/features/feature-25/feature-25.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-25/feature-25.component.html	2026-11-10 07:28:59
+@@ -1,9 +1,9 @@
+ <app-card heading="Feature 25" [disableTooltip]="true">
+   <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-  <app-pill [disableTooltip]='true' label='Plain'/>
+-  <app-pill  variant="success"  [disableTooltip]="!isActive"  label="Active"/>
+-  <app-pill [disableTooltip]="count > 3" [label]="title" variant="info" />
+-  <app-pill [variant]="isActive ? 'success' : 'warning'" label="Multi-line" [disableTooltip]="isActive"></app-pill>
++  <app-pill [tooltip]='false'>Plain</app-pill>
++  <app-pill  tone="positive"  [tooltip]="isActive">Active</app-pill>
++  <app-pill [tooltip]="!(count > 3)" tone="neutral">{{ title }}</app-pill>
++  <app-pill [tone]="isActive ? 'positive' : 'caution'" [tooltip]="!isActive">Multi-line</app-pill>
+   @if (isActive) {
+     <app-pill-legacy label="Legacy" variant="info" [disableTooltip]="true" />
+   }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-26/feature-26.component.html b/src/app/features/feature-26/feature-26.component.html
+--- a/src/app/features/feature-26/feature-26.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-26/feature-26.component.html	2026-11-10 07:28:59
+@@ -1,16 +1,12 @@
+ <app-card heading="Feature 26" [disableTooltip]="true">
+     <!-- disableTooltip here is the card's flag; pills carry their own -->
+     <app-pill
+-        label="Plain"
+-        variant="warning"
+-        [disableTooltip]="true"
+-    />
++        tone="caution"
++        [tooltip]="false">Plain</app-pill>
+     <app-pill
+-        [label]="title"
+-        [variant]="count > 3 ? 'success' : isActive ? 'warning' : 'info'"
+-        [disableTooltip]="!(isActive && count > 1)"
+-    />
+-    <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++        [tone]="count > 3 ? 'positive' : isActive ? 'caution' : 'neutral'"
++        [tooltip]="isActive && count > 1">{{ title }}</app-pill>
++    <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-26/feature-26.component.ts b/src/app/features/feature-26/feature-26.component.ts
+--- a/src/app/features/feature-26/feature-26.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-26/feature-26.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-26",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-26.component.html"
+ })
+ export class Feature026Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-27/feature-27.component.html b/src/app/features/feature-27/feature-27.component.html
+--- a/src/app/features/feature-27/feature-27.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-27/feature-27.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 27" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     @for (item of items; track item.id) {
+-        <app-pill [label]="item.name" [variant]="item.variant" [disableTooltip]="item.hidden" />
++        <app-pill [tone]="item.variant | pillTone" [tooltip]="!item.hidden">{{ item.name }}</app-pill>
+     }
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+     @if (disableTooltip) { <small>Own flag, unrelated to the pill input</small> }
+ </app-card>
+ <app-card heading="Decoy only" [disableTooltip]="!isActive" />
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-27/feature-27.component.ts b/src/app/features/feature-27/feature-27.component.ts
+--- a/src/app/features/feature-27/feature-27.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-27/feature-27.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-27",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-27.component.html"
+ })
+ export class Feature027Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-28/feature-28.component.ts b/src/app/features/feature-28/feature-28.component.ts
+--- a/src/app/features/feature-28/feature-28.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-28/feature-28.component.ts	2026-11-10 07:28:59
+@@ -1,18 +1,19 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-28",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     template: `
+         <app-card heading="Feature 28" [disableTooltip]="!isActive">
+             <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-            <app-pill label="Quiet" variant="info" [disableTooltip]="user?.prefs?.quiet" />
+-            <app-pill [label]="title" [variant]="statusVariant" [disableTooltip]="items.length === 0" />
+-            <app-pill label="Keyed" variant="warning" [disableTooltip]="flags['hidden']" />
+-            <app-pill label="Called" variant="success" [disableTooltip]="isHidden()" />
++            <app-pill tone="neutral" [tooltip]="!user?.prefs?.quiet">Quiet</app-pill>
++            <app-pill [tone]="statusVariant | pillTone" [tooltip]="!(items.length === 0)">{{ title }}</app-pill>
++            <app-pill tone="caution" [tooltip]="!flags['hidden']">Keyed</app-pill>
++            <app-pill tone="positive" [tooltip]="!isHidden()">Called</app-pill>
+             @if (disableTooltip) {
+                 <small>Own flag, unrelated to the pill input</small>
+             }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-29/feature-29.component.html b/src/app/features/feature-29/feature-29.component.html
+--- a/src/app/features/feature-29/feature-29.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-29/feature-29.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 29" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     <div class="row">
+-        <app-pill label="Info" variant="info" [disableTooltip]="true" /><app-pill label="Active" variant="success" [disableTooltip]="!isActive" />
++        <app-pill tone="neutral" [tooltip]="false">Info</app-pill><app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+         <app-pill-legacy [label]="title" [variant]="statusVariant" [disableTooltip]="count > 3" />
+     </div>
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-3/feature-3.component.html b/src/app/features/feature-3/feature-3.component.html
+--- a/src/app/features/feature-3/feature-3.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-3/feature-3.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 3" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     @for (item of items; track item.id) {
+-        <app-pill [label]="item.name" [variant]="item.variant" [disableTooltip]="item.hidden" />
++        <app-pill [tone]="item.variant | pillTone" [tooltip]="!item.hidden">{{ item.name }}</app-pill>
+     }
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+     @if (disableTooltip) { <small>Own flag, unrelated to the pill input</small> }
+ </app-card>
+ <app-card heading="Decoy only" [disableTooltip]="!isActive" />
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-3/feature-3.component.ts b/src/app/features/feature-3/feature-3.component.ts
+--- a/src/app/features/feature-3/feature-3.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-3/feature-3.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-3",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-3.component.html"
+ })
+ export class Feature003Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-30/feature-30.component.html b/src/app/features/feature-30/feature-30.component.html
+--- a/src/app/features/feature-30/feature-30.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-30/feature-30.component.html	2026-11-10 07:28:59
+@@ -1,15 +1,13 @@
+ <app-card heading="Feature 30" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     <app-pill
+-        [variant]="isActive ? 'success' : 'warning'"
+-        label="Multi-line"
+-        [disableTooltip]="isActive">
+-    </app-pill>
++        [tone]="isActive ? 'positive' : 'caution'"
++        [tooltip]="!isActive">Multi-line</app-pill>
+     @if (isActive) {
+-        <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++        <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+     }
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-30/feature-30.component.ts b/src/app/features/feature-30/feature-30.component.ts
+--- a/src/app/features/feature-30/feature-30.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-30/feature-30.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-30",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-30.component.html"
+ })
+ export class Feature030Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-4/feature-4.component.ts b/src/app/features/feature-4/feature-4.component.ts
+--- a/src/app/features/feature-4/feature-4.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-4/feature-4.component.ts	2026-11-10 07:28:59
+@@ -1,18 +1,19 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-4",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     template: `
+         <app-card heading="Feature 4" [disableTooltip]="!isActive">
+             <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-            <app-pill label="Quiet" variant="info" [disableTooltip]="user?.prefs?.quiet" />
+-            <app-pill [label]="title" [variant]="statusVariant" [disableTooltip]="items.length === 0" />
+-            <app-pill label="Keyed" variant="warning" [disableTooltip]="flags['hidden']" />
+-            <app-pill label="Called" variant="success" [disableTooltip]="isHidden()" />
++            <app-pill tone="neutral" [tooltip]="!user?.prefs?.quiet">Quiet</app-pill>
++            <app-pill [tone]="statusVariant | pillTone" [tooltip]="!(items.length === 0)">{{ title }}</app-pill>
++            <app-pill tone="caution" [tooltip]="!flags['hidden']">Keyed</app-pill>
++            <app-pill tone="positive" [tooltip]="!isHidden()">Called</app-pill>
+             @if (disableTooltip) {
+                 <small>Own flag, unrelated to the pill input</small>
+             }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-5/feature-5.component.html b/src/app/features/feature-5/feature-5.component.html
+--- a/src/app/features/feature-5/feature-5.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-5/feature-5.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 5" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     <div class="row">
+-        <app-pill label="Info" variant="info" [disableTooltip]="true" /><app-pill label="Active" variant="success" [disableTooltip]="!isActive" />
++        <app-pill tone="neutral" [tooltip]="false">Info</app-pill><app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+         <app-pill-legacy [label]="title" [variant]="statusVariant" [disableTooltip]="count > 3" />
+     </div>
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+     }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-6/feature-6.component.html b/src/app/features/feature-6/feature-6.component.html
+--- a/src/app/features/feature-6/feature-6.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-6/feature-6.component.html	2026-11-10 07:28:59
+@@ -1,15 +1,13 @@
+ <app-card heading="Feature 6" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
+-    <app-pill [label]="title" [disableTooltip]="count > 3" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
++    <app-pill [tooltip]="!(count > 3)">{{ title }}</app-pill>
+     <app-pill
+-        [variant]="isActive ? 'success' : 'warning'"
+-        label="Multi-line"
+-        [disableTooltip]="isActive">
+-    </app-pill>
++        [tone]="isActive ? 'positive' : 'caution'"
++        [tooltip]="!isActive">Multi-line</app-pill>
+     @if (isActive) {
+-        <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++        <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+     }
+     @if (disableTooltip) {
+         <small>Own flag, unrelated to the pill input</small>
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-6/feature-6.component.ts b/src/app/features/feature-6/feature-6.component.ts
+--- a/src/app/features/feature-6/feature-6.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-6/feature-6.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-6",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-6.component.html"
+ })
+ export class Feature006Component {
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-7/feature-7.component.html b/src/app/features/feature-7/feature-7.component.html
+--- a/src/app/features/feature-7/feature-7.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-7/feature-7.component.html	2026-11-10 07:28:59
+@@ -1,9 +1,9 @@
+ <app-card heading="Feature 7" [disableTooltip]="true">
+   <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+-  <app-pill [disableTooltip]='true' label='Plain'/>
+-  <app-pill  variant="success"  [disableTooltip]="!isActive"  label="Active"/>
+-  <app-pill [disableTooltip]="count > 3" [label]="title" variant="info" />
+-  <app-pill [variant]="isActive ? 'success' : 'warning'" label="Multi-line" [disableTooltip]="isActive"></app-pill>
++  <app-pill [tooltip]='false'>Plain</app-pill>
++  <app-pill  tone="positive"  [tooltip]="isActive">Active</app-pill>
++  <app-pill [tooltip]="!(count > 3)" tone="neutral">{{ title }}</app-pill>
++  <app-pill [tone]="isActive ? 'positive' : 'caution'" [tooltip]="!isActive">Multi-line</app-pill>
+   @if (isActive) {
+     <app-pill-legacy label="Legacy" variant="info" [disableTooltip]="true" />
+   }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-8/feature-8.component.ts b/src/app/features/feature-8/feature-8.component.ts
+--- a/src/app/features/feature-8/feature-8.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-8/feature-8.component.ts	2026-11-10 07:28:59
+@@ -1,25 +1,22 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-8",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     template: `
+         <app-card heading="Feature 8" [disableTooltip]="true">
+             <!-- disableTooltip here is the card's flag; pills carry their own -->
+             <app-pill
+-                label="Plain"
+-                variant="warning"
+-                [disableTooltip]="true"
+-            />
++                tone="caution"
++                [tooltip]="false">Plain</app-pill>
+             <app-pill
+-                [label]="title"
+-                [variant]="count > 3 ? 'success' : isActive ? 'warning' : 'info'"
+-                [disableTooltip]="!(isActive && count > 1)"
+-            />
+-            <app-pill [variant]="statusVariant" label="Nested" [disableTooltip]="false" />
++                [tone]="count > 3 ? 'positive' : isActive ? 'caution' : 'neutral'"
++                [tooltip]="isActive && count > 1">{{ title }}</app-pill>
++            <app-pill [tone]="statusVariant | pillTone" [tooltip]="true">Nested</app-pill>
+             @if (disableTooltip) {
+                 <small>Own flag, unrelated to the pill input</small>
+             }
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-9/feature-9.component.html b/src/app/features/feature-9/feature-9.component.html
+--- a/src/app/features/feature-9/feature-9.component.html	2026-11-10 07:27:50
++++ b/src/app/features/feature-9/feature-9.component.html	2026-11-10 07:28:59
+@@ -1,10 +1,10 @@
+ <app-card heading="Feature 9" [disableTooltip]="true">
+     <p class="hint">Set disableTooltip on a pill to hide its hint.</p>
+     @for (item of items; track item.id) {
+-        <app-pill [label]="item.name" [variant]="item.variant" [disableTooltip]="item.hidden" />
++        <app-pill [tone]="item.variant | pillTone" [tooltip]="!item.hidden">{{ item.name }}</app-pill>
+     }
+-    <app-pill label="Plain" [disableTooltip]="true" />
+-    <app-pill variant="success" label="Active" [disableTooltip]="!isActive" />
++    <app-pill [tooltip]="false">Plain</app-pill>
++    <app-pill tone="positive" [tooltip]="isActive">Active</app-pill>
+     @if (disableTooltip) { <small>Own flag, unrelated to the pill input</small> }
+ </app-card>
+ <app-card heading="Decoy only" [disableTooltip]="!isActive" />
+diff -ruN -x out-tsc -x dist -x .angular -x node_modules a/src/app/features/feature-9/feature-9.component.ts b/src/app/features/feature-9/feature-9.component.ts
+--- a/src/app/features/feature-9/feature-9.component.ts	2026-11-10 07:27:50
++++ b/src/app/features/feature-9/feature-9.component.ts	2026-11-10 07:28:59
+@@ -1,11 +1,12 @@
+ import { ChangeDetectionStrategy, Component } from "@angular/core";
+ import { CardComponent } from "../../lib/card.component";
+ import { PillComponent, type PillVariant } from "../../lib/pill.component";
++import { PillTonePipe } from "../../lib/pill-tone.pipe";
+ 
+ @Component({
+     selector: "app-feature-9",
+     changeDetection: ChangeDetectionStrategy.OnPush,
+-    imports: [ PillComponent, CardComponent ],
++    imports: [ PillComponent, CardComponent, PillTonePipe ],
+     templateUrl: "./feature-9.component.html"
+ })
+ export class Feature009Component {

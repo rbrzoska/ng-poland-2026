@@ -1,0 +1,12 @@
+{
+  "component": "TentComponent",
+  "inputs": {
+    "hideFlag": { "rename": "flag", "negate": true },
+    "unit": {
+      "rename": "cloth",
+      "values": { "legio": "red-white", "auxilia": "yellow", "equites": "yellow-white", "praetoria": "red-yellow" },
+      "otherwise": { "pipe": "tentCloth", "import": "TentClothPipe", "from": "src/app/lib/tent-cloth.pipe" }
+    },
+    "label": { "toContent": true }
+  }
+}
