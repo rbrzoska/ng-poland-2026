@@ -71,3 +71,20 @@ export const HYBRID_TOOL_HINT = " A fact tool built on the TypeScript and Angula
     + "`node ../tools/ajs-facts.mjs summary --root .` prints how many components, directives, filters, services, downgrades, wrappers and states are registered and how many of each are unused; "
     + "`node ../tools/ajs-facts.mjs list <components|directives|filters|services|downgrades|wrappers|states> --root . [--unused] [--json]` prints one line per registered thing with the facts that matter: its number of uses and, for a component, what its template renders and its Angular twin. "
     + "`node ../tools/ajs-facts.mjs show <name> --root .` prints the fact card of one registered thing, and `node ../tools/ajs-facts.mjs usages <name> --root .` every use with file, line and the element or expression text.";
+
+/** One refactoring on rename/ (scripts/generate-rename.mjs): rename an input of a shared component. Every arm of bench/rename.mjs gets this text; a tool arm gets one of the two hints appended. */
+export const RENAME_TASK = "This is an Angular workspace (standalone components; templates are external .html files or inline `template:` strings in .ts files). "
+    + "Rename one input of a shared component everywhere: the input `disableTooltip` of `PillComponent` (`<app-pill>`, src/app/lib/pill.component.ts) gets the new name `hideHint`. Its meaning stays the same. "
+    + "\"Everywhere\" covers: (1) the declaration; (2) every template binding of this input, in external .html files and in inline templates, in the bound form (`[disableTooltip]=\"...\"`) and in the plain attribute form (`disableTooltip` with no value), on every component that has this input, including components that extend `PillComponent`; (3) every expression that reads this input, in TypeScript code and in templates; (4) every place that names this input in a string or in a style sheet: `setInput(\"disableTooltip\", ...)` on such a component created in code, and CSS selectors such as `app-pill[disableTooltip]`. "
+    + "Do not change anything else: other components have their own input with the same name, some classes have a field with the same name, and the word also appears in comments and text. All of those must stay as they are. "
+    + "The app compiles now and must compile after the rename. When done, `npx ngc -p tsconfig.json` must report no errors. Reply with one line when finished.";
+export const RENAME_NG_FACTS_HINT = " A tool built on the Angular compiler's parser is available at `node ../tools/ng-facts.mjs`. "
+    + "`node ../tools/ng-facts.mjs usages <Class>.<input> --root . [--all]` lists the template bindings of an input with file and line, counted, the first eight unless `--all`; "
+    + "`node ../tools/ng-facts.mjs rename-input <Class>.<old> <new> --root . [--write]` plans the rename and prints how many edits in how many files, and applies them with `--write`; "
+    + "`node ../tools/ng-facts.mjs check --root .` runs the compiler and prints its errors in a few lines. "
+    + "Check the result with the compiler.";
+export const RENAME_LS_FACTS_HINT = " A tool built on the Angular Language Service (type-checked) is available at `node ../tools/ls-facts.mjs`. "
+    + "`node ../tools/ls-facts.mjs refs <Class>.<member> --root . [--all]` lists the references of a class member with file and line, grouped and counted, the first eight per group unless `--all`; "
+    + "`node ../tools/ls-facts.mjs rename <Class>.<member> <new> --root . [--write]` plans the rename and prints how many edits in how many files, and applies them with `--write`; "
+    + "`node ../tools/ls-facts.mjs check --root .` runs the compiler and prints its errors, counted by message. "
+    + "Check the result with the compiler.";

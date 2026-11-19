@@ -11,7 +11,7 @@ export function tokensOf(usage = {}) {
  * summed over all of them, cost is the last cumulative total, `seconds` is wall clock from spawn to the last result and
  * `modelSeconds` the part of it spent waiting for the model (an agent that hangs on its own command pays in `seconds` only).
  */
-export function runClaude({ prompt, cwd, model, budget, recordingFile, onToolUse = () => {} }) {
+export function runClaude({ prompt, cwd, model, budget, recordingFile, onToolUse = () => {}, extraTools = [] }) {
     const recording = createWriteStream(recordingFile);
     const seen = new Set();
     const totals = { inputTokens: 0, outputTokens: 0, turns: 0, toolCalls: 0 };
@@ -57,7 +57,7 @@ export function runClaude({ prompt, cwd, model, budget, recordingFile, onToolUse
             "--max-budget-usd", String(budget),
             "--setting-sources", "project",
             "--strict-mcp-config",
-            "--allowedTools", "Read", "Edit", "Write", "Glob", "Grep", "Bash"
+            "--allowedTools", "Read", "Edit", "Write", "Glob", "Grep", "Bash", ...extraTools
         ], { cwd, env: { ...process.env, FORCE_COLOR: "0" }, stdio: [ "ignore", "pipe", "pipe" ] });
         let buffered = "";
         child.stdout.on("data", chunk => {

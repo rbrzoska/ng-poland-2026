@@ -1,0 +1,35 @@
+<section id="search-3" data-transition="none" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:64px 112px;display:flex;flex-direction:column;justify-content:center;gap:20px">
+<img src="/_blob/6b93647a1a02266a570b96ede142ca02" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The search · the agents' own log, from a recorded run</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Same task. <span style="color:#F230BF">Two ways to search.</span></h2>
+<p style="font-size:34px;line-height:1.3;color:#FFFFFF;background:#2B1240;border:2px solid #A127F2;border-radius:16px;padding:14px 26px;align-self:flex-start"><span style="font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#C98BFF">We are looking for</span>&#160;&#160; every <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">&lt;app-pill&gt;</b> and its old inputs: <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">disableTooltip</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">variant</b>, <b style="font-family:'JetBrains Mono', monospace;color:#F2C230">label</b></p>
+<div style="display:flex;gap:28px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#FF6FA5">Obelix · grep</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #FF6FA5;border-radius:12px;padding:12px 18px;visibility:visible"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; Migrate every &lt;app-pill&gt; to v2 …</p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:visible">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">Grep "app-pill|PillComponent"</span><br>&#160;&#160;Output too large (30.8KB)</p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rcE "&lt;app-pill([ &gt;/]|$)" src</span><br>&#160;&#160;420 &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← there are 440</span></p>
+<p data-step="3" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">grep -rhoE "&lt;app-pill[^&gt;]*&gt;?" src | uniq -c</span><br>&#160;&#160;100 &lt;app-pill label="…" variant="…" …/&gt;<br>&#160;&#160;&#160;60 &lt;app-pill &#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← tag split over lines</span><br>&#160;&#160;&#160;40 &lt;app-pill … [disableTooltip]="count &gt;<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← cut at the "&gt;"</span></p>
+<p data-step="4" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">python3 mig.py</span> &#160;&#160;<span style="color:#FF9AD5;font-family:Roboto, Arial, sans-serif;font-style:italic">← his own regex program</span></p>
+</div>
+<p data-step="4" style="font-size:26px;color:#DCD6E8;visibility:visible"><b>9 commands</b> · 10 trips to the model · 301 k tokens</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:46px;line-height:1;color:#C98BFF">Asterix · the compiler</p>
+<p style="font-size:24px;line-height:1.35;color:#DCD6E8;background:#24102F;border:1px solid #3A1F4A;border-left:8px solid #C98BFF;border-radius:12px;padding:12px 18px;visibility:visible"><b style="font-size:20px;letter-spacing:3px;color:#9AA4B5">PROMPT</b>&#160; the same + <span style="color:#F2C230">“and use ng-facts script based on Angular Compiler”</span></p>
+<div style="flex:1;background:#0E0316;border:1px solid #3A1F4A;border-radius:16px;padding:20px 24px;visibility:visible">
+<p data-step="1" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts usages PillComponent</span><br>&#160;&#160;<b style="color:#9FE0B8">440 uses in 120 files</b> <span style="color:#8E86A6">(139 ms)</span><br>&#160;&#160;&#160;&#160;feature-1.component.html:3 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:4 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;feature-1.component.html:5 &#160;&lt;app-pill&gt;<br>&#160;&#160;&#160;&#160;<span style="color:#8E86A6">… +437 more</span></p>
+<p data-step="2" style="font-family:'JetBrains Mono', monospace;font-size:22px;line-height:1.5;color:#B9B2CC;white-space:nowrap"><span style="color:#F2C230">&gt;</span> <span style="color:#FFFFFF">ng-facts migrate spec.json --write</span><br>&#160;&#160;440 elements, <b style="color:#9FE0B8">2680 edits</b> in 170 files,<br>&#160;&#160;0 need a decision <span style="color:#8E86A6">(163 ms)</span></p>
+</div>
+<p data-step="2" style="font-size:26px;color:#DCD6E8;visibility:visible"><b>3 commands</b> · 4 trips to the model · 130 k tokens</p>
+</div>
+</div>
+<aside>[2:15] Now Asterix. His prompt has one more sentence: use the ng-facts script, based on the Angular compiler.
+→ Click: his question.
+[2:25] He asks one question. The answer: every pill, with file and line.
+→ Click: the recipe.
+[2:32] Then he writes one short recipe, and the tool makes every edit.
+[2:38] Three commands. Obelix needed nine.
+→ Click to “What is in the potion” at 2:42.</aside>
+</section>

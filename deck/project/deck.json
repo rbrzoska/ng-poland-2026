@@ -1,0 +1,73 @@
+{
+  "v": 4,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-03T10:40:00Z"
+  },
+  "lists": "css",
+  "title": "Veni, Vidi, Compilavi",
+  "order": [
+    "cover",
+    "about",
+    "occupied",
+    "task",
+    "traps",
+    "typist",
+    "cauldron",
+    "xray",
+    "spec",
+    "race",
+    "otherjobs",
+    "jobs",
+    "closing",
+    "thanks",
+    "method",
+    "scaling",
+    "steelman",
+    "toolv2",
+    "stages",
+    "potion",
+    "referees"
+  ],
+  "sections": {
+    "intro": {
+      "description": "The title, the Gaulish village under the magnifier, and who is talking.",
+      "start": "cover"
+    },
+    "problem": {
+      "description": "A breaking library upgrade, the traps, and two ways to send an agent at it.",
+      "start": "occupied"
+    },
+    "potion": {
+      "description": "What a compiler is, one element seen through it, and the small spec that was the whole job.",
+      "start": "cauldron"
+    },
+    "proof": {
+      "description": "The measured race and three other everyday jobs, as ranges.",
+      "start": "race"
+    },
+    "beyond": {
+      "description": "Ten everyday jobs for the compiler, the takeaways and the thank-you.",
+      "start": "jobs"
+    },
+    "backup": {
+      "description": "Backup for questions: method and limits, scaling, the fair objections, compiler stages, the tool, the referees.",
+      "start": "method"
+    }
+  },
+  "faces": {
+    "bangers": {
+      "family": "Bangers",
+      "href": "https://fonts.googleapis.com/css2?family=Bangers&display=swap"
+    },
+    "roboto": {
+      "family": "Roboto",
+      "href": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    },
+    "jetbrains-mono": {
+      "family": "JetBrains Mono",
+      "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
+    }
+  },
+  "designSystems": []
+}

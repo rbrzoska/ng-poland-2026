@@ -1,0 +1,27 @@
+<section id="ngfacts" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:72px 128px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="/_blob/6b93647a1a02266a570b96ede142ca02" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The magic potion · brewed by our druids, the Angular core team</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:92px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">The potion: <span style="color:#F230BF">a few lines of code.</span></h2>
+<div style="display:flex;gap:32px;align-items:stretch">
+<div style="width:1060px;background:#0E0316;border:1px solid #3A1F4A;border-radius:18px;padding:30px 34px">
+<p style="font-family:'JetBrains Mono', monospace;font-size:25px;line-height:1.46;color:#B9B2CC;white-space:nowrap"><span style="color:#C98BFF">import</span> { <mark data-step="1" style="background:#F230BF;color:#FFFFFF;padding:0 6px;border-radius:5px">parseTemplate</mark> } <span style="color:#C98BFF">from</span> <span style="color:#9FE0B8">"@angular/compiler"</span>;<br><br><span style="color:#8E86A6">// node mini-facts.mjs <b style="color:#F2C230">app-pill disableTooltip</b></span><br><span style="color:#C98BFF">const</span> [ tag, input ] = process.argv.slice(2);<br><br><span style="color:#C98BFF">for</span> (<span style="color:#C98BFF">const</span> file <span style="color:#C98BFF">of</span> htmlFiles) {<br>&#160;&#160;<span style="color:#C98BFF">const</span> { nodes } = <mark data-step="1" style="background:#F230BF;color:#FFFFFF;padding:0 6px;border-radius:5px">parseTemplate(read(file), file)</mark>;<br><br>&#160;&#160;everyElement(nodes, element =&gt; {<br>&#160;&#160;&#160;&#160;<span style="color:#C98BFF">if</span> (<mark data-step="2" style="background:#A127F2;color:#FFFFFF;padding:0 6px;border-radius:5px">element.name !== tag</mark>) <span style="color:#C98BFF">return</span>;<br>&#160;&#160;&#160;&#160;<span style="color:#C98BFF">for</span> (<span style="color:#C98BFF">const</span> binding <span style="color:#C98BFF">of</span> element.inputs) {<br>&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#C98BFF">if</span> (<mark data-step="2" style="background:#A127F2;color:#FFFFFF;padding:0 6px;border-radius:5px">binding.name !== input</mark>) <span style="color:#C98BFF">continue</span>;<br>&#160;&#160;&#160;&#160;&#160;&#160;<mark data-step="3" style="background:#1B7F4A;color:#FFFFFF;padding:0 6px;border-radius:5px">print(file, binding.sourceSpan)</mark>;<br>&#160;&#160;&#160;&#160;}<br>&#160;&#160;});<br>}</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:18px">
+<div data-step="1" style="display:flex;gap:22px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F230BF;border-radius:16px;padding:22px 26px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;color:#F230BF">1</p><p style="font-size:34px;line-height:1.25;color:#FFFFFF"><b>The compiler reads</b><br><span style="font-size:28px;color:#B9B2CC">facts, not a regex guess</span></p></div>
+<div data-step="2" style="display:flex;gap:22px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #A127F2;border-radius:16px;padding:22px 26px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;color:#C98BFF">2</p><p style="font-size:34px;line-height:1.25;color:#FFFFFF"><b>Only the tag and input you ask for</b><br><span style="font-size:28px;color:#B9B2CC">no wrong hits: 1 004 → 440</span></p></div>
+<div data-step="3" style="display:flex;gap:22px;align-items:flex-start;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #1B7F4A;border-radius:16px;padding:22px 26px"><p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:72px;line-height:1;color:#9FE0B8">3</p><p style="font-size:34px;line-height:1.25;color:#FFFFFF"><b>File and line, nothing more</b><br><span style="font-size:28px;color:#B9B2CC">the agent reads less and asks less</span></p></div>
+</div>
+</div>
+<p data-step="4" style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:58px;font-weight:400;line-height:1.1;color:#C98BFF">The compiler reads. <span style="color:#FFFFFF">The script answers.</span> <span style="color:#F230BF">The agent decides.</span></p>
+<aside>[2:43] So what is in the potion? Our druids brewed it: the Angular core team. It is the compiler.
+[2:54] And you drink it with a few lines of code.
+→ Click: point 1.
+[2:59] One: the compiler's parser reads the template. No regex.
+→ Click: point 2.
+[3:05] Two: we keep only the tag and the input we asked for. No wrong hits.
+→ Click: point 3.
+[3:13] Three: we print file and line. So the agent reads less, and asks less.
+→ Click: the motto.
+[3:21] The compiler reads. The script answers. The agent decides.
+→ Click to “Does it pay off” at 3:27.</aside>
+</section>

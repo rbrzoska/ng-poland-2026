@@ -1,0 +1,36 @@
+<section id="steelman" data-transition="fade" style="font-variant-ligatures:none;background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:80px 128px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="/_blob/6b93647a1a02266a570b96ede142ca02" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">What if we only mention the compiler? · Claude Sonnet</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;font-weight:400;line-height:1.04;letter-spacing:1px">A hint is not enough. <span style="color:#A127F2">A ready script is.</span></h2>
+<div style="display:flex;flex-direction:column;gap:8px;background:#170621;border-radius:18px;padding:22px 32px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B9B2CC">The hint added to the prompt</p>
+<p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.45;color:#F6F4FA">“The Angular compiler is installed in node_modules …<br><span style="color:#F2C230">write your own migration script on top of the compiler</span> and run it.”</p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:24px;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-radius:18px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296">Plain prompt</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.1;color:#C41633">Obelix · files + grep</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1">$0.17–0.32</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b></p>
+<p style="font-size:26px;color:#5A6273">3.3k–7.8k tokens written</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:24px 32px;border:1px solid #E3E0EC;border-left:10px solid #C41633;border-radius:18px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296">Prompt + the hint</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.1;color:#C41633">Obelix · his own codemod</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#C41633">$0.23–0.27</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#C41633">2 of 3</b></p>
+<p style="font-size:26px;color:#5A6273">8.0k–10k tokens written</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;padding:24px 32px;border:2px solid #A127F2;border-radius:18px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7A8296">Prompt + ready script</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:42px;line-height:1.1;color:#A127F2">Asterix · with the potion</p>
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:104px;line-height:1;color:#A127F2">$0.06–0.09</p>
+<p style="font-size:30px;color:#40485A">a run · right in <b style="color:#1B7F4A">8 of 8</b> · once $0.65</p>
+<p style="font-size:26px;color:#5A6273">0.5k–1.1k tokens written · once 11k</p>
+</div>
+</div>
+<aside>The fair objection: maybe the agent only needs to know the compiler is there.
+We told Obelix exactly that. He wrote his own codemod: two runs of three were right, one left 20 elements wrong.
+It cost as much as plain grep, and he wrote more: eight to ten thousand tokens of script each run.
+A second check: when the task did not say which input becomes which, both agents worked it out from the old source, three runs of three.</aside>
+</section>

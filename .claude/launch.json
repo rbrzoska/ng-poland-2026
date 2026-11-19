@@ -1,0 +1,9 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "deck-draft", "runtimeExecutable": "node", "runtimeArgs": [ "deck/serve.mjs" ], "port": 4400, "autoPort": false },
+    { "name": "getafix-cauldron", "runtimeExecutable": "node", "runtimeArgs": [ "ui/server.mjs" ], "port": 4310 },
+    { "name": "gaul-before", "runtimeExecutable": "npm", "runtimeArgs": [ "run", "gaul:before" ], "port": 4321, "autoPort": false },
+    { "name": "gaul-after", "runtimeExecutable": "npm", "runtimeArgs": [ "run", "gaul:after" ], "port": 4322, "autoPort": false }
+  ]
+}

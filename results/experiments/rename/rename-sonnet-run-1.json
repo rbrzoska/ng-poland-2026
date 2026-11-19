@@ -1,0 +1,263 @@
+{
+  "model": "sonnet",
+  "run": 1,
+  "startedAt": "2026-11-17T22:26:31.967Z",
+  "budget": 3,
+  "task": {
+    "component": "PillComponent",
+    "from": "disableTooltip",
+    "to": "hideHint"
+  },
+  "counts": {
+    "targets": 588,
+    "byKind": {
+      "static": 178,
+      "binding": 362,
+      "template-read": 18,
+      "class-read": 24,
+      "string": 2,
+      "declaration": 1,
+      "style": 3
+    },
+    "byTag": {
+      "app-pill": 442,
+      "app-fancy-pill": 62,
+      "no element": 43,
+      "app-status-pill": 41
+    },
+    "decoys": 385,
+    "decoysByKind": {
+      "text": 26,
+      "other-component": 231,
+      "class-field": 86,
+      "comment": 42
+    },
+    "targetFiles": 141,
+    "files": 225
+  },
+  "toolsAlone": {
+    "ng-facts": {
+      "command": "node ../tools/ng-facts.mjs rename-input PillComponent.disableTooltip hideHint --root . --write",
+      "seconds": 1,
+      "exitCode": 0,
+      "ngcExit": 1,
+      "ngcErrors": 24,
+      "ngcFirstErrors": [
+        "src/app/lib/status-pill.component.ts:11:43 - error TS2339: Property 'disableTooltip' does not exist on type 'StatusPillComponent'.",
+        "src/app/features/feature-8/feature-8.component.ts:23:22 - error TS2339: Property 'disableTooltip' does not exist on type 'FancyPillComponent'.",
+        "src/app/features/feature-11/feature-11.component.ts:25:60 - error TS2339: Property 'disableTooltip' does not exist on type 'PillComponent'."
+      ],
+      "targets": 588,
+      "missed": 146,
+      "missedByKind": {
+        "binding": 62,
+        "template-read": 17,
+        "static": 38,
+        "class-read": 24,
+        "string": 2,
+        "style": 3
+      },
+      "missedByTag": {
+        "app-fancy-pill": 62,
+        "no element": 41,
+        "app-status-pill": 41,
+        "app-pill": 2
+      },
+      "missedExamples": [
+        "src/app/features/feature-1/feature-1.component.ts:24 binding on <app-fancy-pill>",
+        "src/app/features/feature-10/feature-10.component.ts:18 binding on <app-fancy-pill>",
+        "src/app/features/feature-10/feature-10.component.ts:19 template-read",
+        "src/app/features/feature-10/feature-10.component.ts:20 static on <app-status-pill>",
+        "src/app/features/feature-100/feature-100.component.html:8 binding on <app-status-pill>",
+        "src/app/features/feature-101/feature-101.component.ts:19 binding on <app-fancy-pill>",
+        "src/app/features/feature-104/feature-104.component.html:12 binding on <app-fancy-pill>",
+        "src/app/features/feature-104/feature-104.component.html:14 template-read"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false
+    },
+    "ls-facts": {
+      "command": "node ../tools/ls-facts.mjs rename PillComponent.disableTooltip hideHint --root . --write",
+      "seconds": 11.4,
+      "exitCode": 0,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 5,
+      "missedByKind": {
+        "string": 2,
+        "style": 3
+      },
+      "missedByTag": {
+        "app-pill": 2,
+        "app-fancy-pill": 2,
+        "app-status-pill": 1
+      },
+      "missedExamples": [
+        "src/app/lib/pill-tray.component.ts:18 string on <app-pill>",
+        "src/app/lib/pill-tray.component.ts:25 string on <app-fancy-pill>",
+        "src/styles.css:21 style on <app-pill>",
+        "src/styles.css:21 style on <app-fancy-pill>",
+        "src/styles.css:22 style on <app-status-pill>"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false
+    }
+  },
+  "arms": {
+    "no-tool": {
+      "seconds": 329,
+      "apiSeconds": 188,
+      "modelSeconds": 4437,
+      "resultEvents": 4,
+      "turns": 35,
+      "toolCalls": 423,
+      "inputTokens": 685226,
+      "outputTokens": 21760,
+      "costUsd": 3.0878973999999992,
+      "modelId": "claude-sonnet-5",
+      "cliVersion": "2.1.268",
+      "error": "agent reported an error",
+      "ngcExit": 1,
+      "ngcErrors": 1,
+      "ngcFirstErrors": [
+        "src/app/features/feature-119/feature-119.component.ts:26:60 - error TS2339: Property 'disableTooltip' does not exist on type 'PillComponent'."
+      ],
+      "targets": 588,
+      "missed": 14,
+      "missedByKind": {
+        "binding": 8,
+        "static": 5,
+        "class-read": 1
+      },
+      "missedByTag": {
+        "app-pill": 10,
+        "app-fancy-pill": 2,
+        "app-status-pill": 1,
+        "no element": 1
+      },
+      "missedExamples": [
+        "src/app/features/feature-118/feature-118.component.html:3 binding on <app-pill>",
+        "src/app/features/feature-118/feature-118.component.html:5 static on <app-pill>",
+        "src/app/features/feature-118/feature-118.component.html:6 binding on <app-pill>",
+        "src/app/features/feature-118/feature-118.component.html:7 binding on <app-fancy-pill>",
+        "src/app/features/feature-118/feature-118.component.html:8 static on <app-status-pill>",
+        "src/app/features/feature-119/feature-119.component.html:2 binding on <app-pill>",
+        "src/app/features/feature-119/feature-119.component.html:3 binding on <app-pill>",
+        "src/app/features/feature-119/feature-119.component.html:4 binding on <app-pill>"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false,
+      "toolRuns": {},
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-no-tool-MJNLlJ\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-sonnet-run-1-no-tool.ndjson"
+    },
+    "ng-facts": {
+      "seconds": 260,
+      "apiSeconds": 258,
+      "modelSeconds": 223,
+      "resultEvents": 1,
+      "turns": 45,
+      "toolCalls": 44,
+      "inputTokens": 2196286,
+      "outputTokens": 19878,
+      "costUsd": 0.8738159999999999,
+      "modelId": "claude-sonnet-5",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 0,
+      "missedByKind": {},
+      "missedByTag": {},
+      "missedExamples": [],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": true,
+      "onlyTheRename": true,
+      "toolRuns": {
+        "ng-facts": 4
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-ng-facts-6TtJOi\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-sonnet-run-1-ng-facts.ndjson"
+    },
+    "ls-facts": {
+      "seconds": 115,
+      "apiSeconds": 113,
+      "modelSeconds": 76,
+      "resultEvents": 1,
+      "turns": 18,
+      "toolCalls": 17,
+      "inputTokens": 1107414,
+      "outputTokens": 5539,
+      "costUsd": 0.518088,
+      "modelId": "claude-sonnet-5",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 0,
+      "missedByKind": {},
+      "missedByTag": {},
+      "missedExamples": [],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": true,
+      "onlyTheRename": true,
+      "toolRuns": {
+        "ls-facts": 3
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-ls-facts-1NROo3\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-sonnet-run-1-ls-facts.ndjson"
+    }
+  }
+}

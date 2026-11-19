@@ -1,0 +1,16 @@
+<section id="task" data-transition="fade" style="background:#FFFFFF;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:36px">
+<img src="/_blob/756f2525b48eaa36095d0a128c642db9" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">The task · PillComponent v1 → v2</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1.04;letter-spacing:1px">Not a rename. A real API migration.</h2>
+<table style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#1F2533;border:1px solid #E3E0EC">
+<tr style="background:#F2F3F6"><th style="width:46%;text-align:left;padding:14px 18px">v1 — what the templates say</th><th style="width:8%;text-align:center">→</th><th style="width:46%;text-align:left">v2 — what they must say</th></tr>
+<tr><td style="color:#C41633">[disableTooltip]="!isActive"</td><td style="text-align:center;color:#A127F2">→</td><td style="color:#1F2533">[tooltip]="isActive"</td></tr>
+<tr style="background:#F9F7FC"><td style="color:#C41633">[disableTooltip]="count &gt; 3"</td><td style="text-align:center;color:#A127F2">→</td><td style="color:#1F2533">[tooltip]="!(count &gt; 3)"</td></tr>
+<tr><td style="color:#C41633">variant="success"</td><td style="text-align:center;color:#A127F2">→</td><td style="color:#1F2533">tone="positive"</td></tr>
+<tr style="background:#F9F7FC"><td style="color:#C41633">[variant]="a ? 'success' : 'warning'"</td><td style="text-align:center;color:#A127F2">→</td><td style="color:#1F2533">[tone]="a ? 'positive' : 'caution'"</td></tr>
+<tr><td style="color:#C41633">[variant]="statusVariant"</td><td style="text-align:center;color:#A127F2">→</td><td style="color:#1F2533">[tone]="statusVariant | pillTone" + import</td></tr>
+<tr style="background:#F9F7FC"><td style="color:#C41633">&lt;app-pill label="Plain" /&gt;</td><td style="text-align:center;color:#A127F2">→</td><td style="color:#1F2533">&lt;app-pill&gt;Plain&lt;/app-pill&gt;</td></tr>
+</table>
+<p style="font-size:30px;line-height:1.4;color:#40485A">Negate the meaning, remap values (also inside <b>?:</b>), wrap fields in a pipe and import it, move an input into content. Touch nothing else.</p>
+<aside>Three kinds of change: a boolean flips meaning, an enum is remapped, an input becomes content projection. The pipe case needs a TypeScript edit too: imports array plus an import statement.</aside>
+</section>

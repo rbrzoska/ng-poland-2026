@@ -8,6 +8,8 @@ gaul/fixture/
 gaul/fixture-expected/
 atlas/
 atlas-key.json
+deck/out/*
+!deck/out/veni-vidi-compilavi-five-min.pptx
 .atlas-run.log
 .atlas-blast.log
 .v2-run.log
@@ -15,6 +17,12 @@ atlas-key.json
 __pycache__/
 /hybrid/
 /hybrid-key.json
+/rename/
+/rename-expected/
+/rename-key.json
 
 # speaker versions (notes, presenter view): kept on this machine only
 presenter/
+
+# Local issue tracker for the agent skills (may name private code; never commit)
+/.scratch/

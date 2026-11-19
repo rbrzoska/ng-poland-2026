@@ -1,0 +1,63 @@
+{
+  "v": 4,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-10T08:30:00Z"
+  },
+  "lists": "css",
+  "title": "Veni, Vidi, Compilavi · five minutes",
+  "order": [
+    "cover",
+    "about",
+    "bigapp",
+    "mission",
+    "search-1",
+    "search-2",
+    "search-3",
+    "ngfacts",
+    "results",
+    "village",
+    "thanks",
+    "appendix",
+    "method",
+    "traps",
+    "spec",
+    "race",
+    "scaling",
+    "steelman",
+    "toolv2",
+    "questions-stage",
+    "blast",
+    "a11y",
+    "angularjs",
+    "models",
+    "tools",
+    "limits",
+    "reproduce"
+  ],
+  "sections": {
+    "talk": {
+      "description": "The five-minute talk: 11 slides, about 4:57 of speaking; the spoken script with the second each sentence starts at is in the speaker notes.",
+      "start": "cover"
+    },
+    "backup": {
+      "description": "The appendix of the full deck: the rest of the research.",
+      "start": "appendix"
+    }
+  },
+  "faces": {
+    "bangers": {
+      "family": "Bangers",
+      "href": "https://fonts.googleapis.com/css2?family=Bangers&display=swap"
+    },
+    "roboto": {
+      "family": "Roboto",
+      "href": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    },
+    "jetbrains-mono": {
+      "family": "JetBrains Mono",
+      "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
+    }
+  },
+  "designSystems": []
+}

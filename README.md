@@ -1,19 +1,10 @@
-# Veni, Vidi, Compilavi
+# angular-compiler-ai
 
-**Teaching AI agents to use the Angular compiler.** The code, the test apps and every recorded run behind Rafał Brzoska's lightning talk at NG Poland 2026.
+Demo for the talk *Getafix's Potion: Feeding AI Agents with the Angular Compiler*.
 
-- Slides of the talk: https://rbrzoska.github.io/ng-poland-2026/ · [PowerPoint](docs/veni-vidi-compilavi.pptx)
-- Full deck, the talk plus the rest of the research: https://rbrzoska.github.io/ng-poland-2026/full/ · [PowerPoint](docs/veni-vidi-compilavi-full.pptx)
+Thesis: an AI agent should not type out hundreds of mechanical edits — and should not read hundreds of files to find them. It should **describe** the change; the Angular compiler knows every element, binding, expression and import, and can **apply** it deterministically, in milliseconds, for zero tokens.
 
-The idea: an AI agent should not search hundreds of files and type out hundreds of mechanical edits. The Angular compiler already knows which tag is which component and which attribute is which input. A small script asks the compiler's parser for those facts and hands the agent a short answer; for a migration the agent writes a short recipe and the script applies it as exact edits. The compiler reads, the script answers, the agent decides.
-
-Start here: [tool/mini-facts.mjs](tool/mini-facts.mjs) is the whole idea in 25 lines of code.
-
-```bash
-npm install
-npm run generate
-node tool/mini-facts.mjs app-pill disableTooltip fixture/src
-```
+Slides: https://rbrzoska.github.io/ng-poland-2026/ (built with `node deck/site.mjs` into `docs/`) · [PowerPoint](deck/out/veni-vidi-compilavi-five-min.pptx)
 
 ## Run it
 
@@ -66,10 +57,7 @@ On this workspace: **2 680 edits in 170 files, 80 imports added, ~130 ms, 0 deci
 | [bench/experiments.sh](bench/experiments.sh) | The whole evidence series in one command (2–3 hours, roughly $15–20) |
 | [bench/evidence.mjs](bench/evidence.mjs) | Every recorded run as min–max ranges → [bench/evidence.md](bench/evidence.md); no API calls |
 | [bench/tool-v1/](bench/tool-v1/ng-facts.mjs) | The tool as first written, frozen, so later versions are measured against it |
-| [tool/mini-facts.mjs](tool/mini-facts.mjs) | The starter: where is this input of this component used, in 25 lines of code |
-| [tool/ajs-facts.mjs](tool/ajs-facts.mjs) | The same idea for a hybrid AngularJS + Angular app: what is registered, what uses it, what is dead |
-| [scripts/generate-hybrid.mjs](scripts/generate-hybrid.mjs), [bench/hybrid.mjs](bench/hybrid.mjs) | The hybrid test app (40 AngularJS components inside an Angular app) with its answer key, and six migration-planning questions asked with and without `ajs-facts` on four models — **costs API money** |
-| [docs/](docs/) | The slides as web pages and PowerPoint files |
+| [deck/](deck/) | Sources of the talk's slides: `evidence-slides.mjs` rebuilds the slides that carry numbers from `results/`, `five-min.mjs` builds the five-minute stage version with the spoken script as speaker notes, `render.mjs` renders an offline page and a PDF |
 | [results/](results/) | Agent runs (`agent-<model>-run-<n>.json`), the summary with medians, and `recordings/` (stream + patch of every run, replayed by the UI offline) |
 | [ui/](ui/server.mjs) | Live UI (Getafix's Cauldron) and slides |
 
@@ -83,7 +71,7 @@ On this workspace: **2 680 edits in 170 files, 80 imports added, ~130 ms, 0 deci
 
 The compiler lane runs a spec that was written beforehand, so its ~0.15 s is the cost of *executing* a migration, not of deciding it — in the agent race that deciding costs the ng-facts agent ~27 s of wall clock. "Functionally correct" = 0 `ngc` errors **and** 0 elements that differ from the answer key in the compiler's own AST. The line diff still counts formatting; the AST referee does not — an agent that puts `Multi-line` on its own line is wrong by the line diff and right by the compiler.
 
-Agents (Claude Code headless, the tool agent has to **write the spec itself**, no answer key reachable): every recorded run is summarised as lowest–highest ranges in [bench/evidence.md](bench/evidence.md); nothing is averaged. In short: both agents end functionally correct in every migration run; the agent with `ng-facts` was cheaper in 7 of 8 pairs (2.2–4.6×) and read a third of the context, and once cost more because it tripped over its own shell command. The cost does **not** grow with the repository for either agent (30, 120 and 480 components). Asked six questions about the code instead of migrating it, the grep agent miscounted in 2 of 5 runs and the `ng-facts` agent in none. A small model (Haiku) with the tool was right in 3 of 3 runs, without it in 1 of 3. On two jobs the tool was not written for — blast radius and an accessibility sweep — the first version bought nothing; after adding `where`/`unrouted` (and inline specs, a write lock and a built-in compiler check) the blast-radius bill fell to under a third and the migration to 2 turns. On a hybrid AngularJS + Angular app, six planning questions: the strong models answered all of them with or without the script, at less than half the cost with it; the small model alone got 2–3 of 6 right, with the script 5–6. Wall-clock times are not quoted: in about one session in seven an agent hung for minutes on a command of its own, in either lane.
+Agents (Claude Code headless, the tool agent has to **write the spec itself**, no answer key reachable): every recorded run is summarised as lowest–highest ranges in [bench/evidence.md](bench/evidence.md); nothing is averaged. In short: both agents end functionally correct in every migration run; the agent with `ng-facts` was cheaper in 7 of 8 pairs (2.2–4.6×) and read a third of the context, and once cost more because it tripped over its own shell command. The cost does **not** grow with the repository for either agent (30, 120 and 480 components). Asked six questions about the code instead of migrating it, the grep agent miscounted in 2 of 5 runs and the `ng-facts` agent in none. A small model (Haiku) with the tool was right in 3 of 3 runs, without it in 1 of 3. On two jobs the tool was not written for — blast radius and an accessibility sweep — the first version bought nothing; after adding `where`/`unrouted` (and inline specs, a write lock and a built-in compiler check) the blast-radius bill fell to a quarter and the migration to 2 turns. Wall-clock times are not quoted: in about one run in five an agent hung for minutes on a command of its own, in either lane.
 
 ## Live UI — Getafix's Cauldron
 
@@ -98,7 +86,7 @@ Agents (Claude Code headless, the tool agent has to **write the spec itself**, n
 
 **Reset** stops everything and deletes the temporary workspaces. Untick "Run Claude agents" for a free 15-second run. Live agents run in a temporary copy (no answer key, no ready-made spec), with `Read/Edit/Write/Glob/Grep/Bash`, no MCP servers, no user settings and a `--max-budget-usd` cap.
 
-**Slides** (`/slides`, ← → to navigate, F full screen, R reload data): 18 slides with live snippets from `ng-facts`, the migration spec, real tool output, both prompts, the agent's own spec and the medians from `results/`.
+**Slides** (`/slides`, ← → to navigate, F full screen, R reload data): 18 slides with live snippets from `ng-facts`, the migration spec, real tool output, both prompts, the agent's own spec and the medians from `results/`. A designed deck with the Asterix artwork lives in Claude (see SUMMARY.md).
 
 ## Gaul, 50 BC — a side scenario (`gaul/`, not part of the talk)
 

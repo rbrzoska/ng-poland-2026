@@ -186,7 +186,10 @@ class ExpressionCollector extends ng.TmplAstRecursiveVisitor {
 /** Codemod: rename an input of `owner` everywhere it is bound, optionally negating the meaning. Returns edits; `write` applies them. */
 export function renameInput(workspace, owner, oldName, newName, { negate = false, write = false } = {}) {
     const input = owner.inputs.find(candidate => candidate.name === oldName);
-    if (!input) throw new Error(`${owner.className} has no signal input "${oldName}" — inputs: ${owner.inputs.map(candidate => candidate.name).join(", ")}`);
+    if (!input) {
+        const base = owner.classNode.heritageClauses?.find(clause => clause.token === ts.SyntaxKind.ExtendsKeyword)?.types[0]?.expression.getText(owner.sourceFile);
+        throw new Error(`${owner.className} declares no signal input "${oldName}" — it declares: ${owner.inputs.map(candidate => candidate.name).join(", ") || "none"}.${base ? ` It extends ${base}: this tool reads one class at a time and does not follow "extends", so name the class that declares the input.` : ""}`);
+    }
     const edits = [];
     const decisions = [];
     const sourceFile = owner.sourceFile;
@@ -221,9 +224,12 @@ export function renameInput(workspace, owner, oldName, newName, { negate = false
     }
 
     const { uses } = findUsages(workspace, owner, input.bindingName);
-    for (const { template, binding } of uses) {
+    for (const use of uses) {
+        const { template, binding } = use;
+        // a plain attribute is renamed like a bound one; only its negation cannot be written without a decision
         if (binding instanceof ng.TmplAstTextAttribute) {
-            decisions.push(binding);
+            if (negate) decisions.push(`${describe(workspace, use)} — a plain attribute cannot be negated`);
+            else edit(template.file, absolute(template, binding.keySpan.start.offset), absolute(template, binding.keySpan.end.offset), newName);
             continue;
         }
         edit(template.file, absolute(template, binding.keySpan.start.offset), absolute(template, binding.keySpan.end.offset), newName);
@@ -509,12 +515,14 @@ function withWriteLock(root, action) {
 
 /** Runs ngc on the workspace and answers in a few lines: the raw output of a broken workspace runs to hundreds of kilobytes. */
 function compilerVerdict(root) {
+    // node starts the compiler's own script: node_modules/.bin/ngc is a shell script that Windows cannot start as a program
+    const manifestPath = "node_modules/@angular/compiler-cli/package.json";
     let directory = root;
-    while (!existsSync(path.join(directory, "node_modules/.bin/ngc")) && path.dirname(directory) !== directory) directory = path.dirname(directory);
-    const ngc = path.join(directory, "node_modules/.bin/ngc");
-    if (!existsSync(ngc)) return "ngc: not found in node_modules — run it yourself";
-    const run = spawnSync(ngc, [ "-p", path.join(root, "tsconfig.json") ], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
-    const output = `${run.stdout}${run.stderr}`.replace(/\x1b\[[0-9;]*m/g, "");
+    while (!existsSync(path.join(directory, manifestPath)) && path.dirname(directory) !== directory) directory = path.dirname(directory);
+    if (!existsSync(path.join(directory, manifestPath))) return "ngc: not found in node_modules — run it yourself";
+    const ngc = path.resolve(directory, path.dirname(manifestPath), JSON.parse(readFileSync(path.join(directory, manifestPath), "utf8")).bin.ngc);
+    const run = spawnSync(process.execPath, [ ngc, "-p", path.join(root, "tsconfig.json") ], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+    const output = `${run.stdout ?? ""}${run.stderr ?? ""}`.replace(/\x1b\[[0-9;]*m/g, "");
     const errors = [ ...output.matchAll(/^(.+?):(\d+):(\d+) - error ((?:NG|TS)\d+): (.*)$/gm) ].map(([ , file, line, column, code, message ]) => ({ file, line, column, code, message }));
     if (!errors.length) return run.status === 0 ? "ngc: 0 errors" : `ngc: failed without a parsable error — ${output.trim().split("\n")[0] ?? ""}`;
     const byCode = [ ...Map.groupBy(errors, error => error.code) ].map(([ code, list ]) => `${code} ×${list.length}`).join(", ");
@@ -559,7 +567,7 @@ function main() {
         if (inputName) {
             const values = Map.groupBy(uses, entry => String(entry.binding.value?.source ?? entry.binding.value).trim());
             console.log(`Values: ${[ ...values ].map(([ value, list ]) => `${value} ×${list.length}`).join(", ")}`);
-            console.log(`Same name elsewhere (NOT this input — do not touch): ${decoys.length} bindings on ${[ ...new Set(decoys.map(entry => `<${entry.element.name}>`)) ].join(", ") || "—"}`);
+            console.log(`Same name on other elements: ${decoys.length} bindings on ${[ ...new Set(decoys.map(entry => `<${entry.element.name}>`)) ].join(", ") || "—"} — these elements do not match the selector of ${owner.className}; whether their component extends it is not followed`);
             console.log(`→ rename everywhere: ng-facts rename-input ${owner.className}.${inputName} <newName> [--negate] --write`);
         }
         return;
@@ -570,6 +578,8 @@ function main() {
         const owner = findDeclaration(workspace, target);
         const result = renameInput(workspace, owner, oldName, positional[1], flags);
         console.log(`rename-input ${owner.className}.${oldName} → ${positional[1]}${flags.negate ? " (negated)" : ""}: ${result.edits.length} edits in ${result.files.size} files, ${result.uses} bindings, ${result.decisions.length} need a decision — ${flags.write ? "written" : "dry run, add --write"} (${elapsed()})`);
+        for (const decision of flags.all ? result.decisions : result.decisions.slice(0, 20)) console.log(`  needs a decision: ${decision}`);
+        if (result.decisions.length > 20 && !flags.all) console.log(`  … +${result.decisions.length - 20} more (--all lists every one)`);
         return;
     }
 
@@ -602,7 +612,10 @@ function main() {
     }
 
     if (command === "check") {
-        console.log(compilerVerdict(workspace.root));
+        const verdict = compilerVerdict(workspace.root);
+        console.log(verdict);
+        // exit code 1 when the compiler found an error: `check && next step` must not go on then
+        if (verdict !== "ngc: 0 errors") process.exitCode = 1;
         return;
     }
 

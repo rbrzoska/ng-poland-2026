@@ -2,8 +2,11 @@
 # The full evidence series behind the talk's numbers. Costs API money (roughly $15–20 on Sonnet) and takes 2–3 hours:
 # every arm runs one after another so the wall-clock times do not share a rate limit or a CPU.
 #   sh bench/experiments.sh            # everything
-#   sh bench/experiments.sh facts      # one block: baseline | facts | scale | own-codemod | discover | haiku | atlas | v2 | hybrid
+#   sh bench/experiments.sh facts      # one block: baseline | facts | scale | own-codemod | discover | haiku | atlas | v2 | hybrid | rename
 # The hybrid block (AngularJS + Angular app, bench/hybrid.mjs) runs on three models, three runs each, capped at $3 per arm.
+# The rename block (one input renamed everywhere, bench/rename.mjs: no tool, ng-facts, ls-facts) does the same with three arms;
+# every call first repeats node bench/rename.mjs --check (no API call) and starts no agent when the key and the two trees
+# disagree or a tool does not start. The first call copies the app's packages to the temp directory, outside this repository.
 # Afterwards: node bench/evidence.mjs (the table), node deck/evidence-slides.mjs and node deck/five-min.mjs (the slides).
 set -u
 cd "$(dirname "$0")/.."
@@ -22,4 +25,5 @@ wants atlas       && node bench/atlas.mjs --task a11y --runs 5
 wants v2          && node bench/atlas.mjs --task blast --arms tool-v2 --runs 5
 wants v2          && node bench/agent.mjs --experiment tool-v2 --arms tool-v2 --runs 5
 wants hybrid      && node scripts/generate-hybrid.mjs && for model in haiku sonnet opus; do node bench/hybrid.mjs --model "$model" --runs 3; done
+wants rename      && node scripts/generate-rename.mjs && for model in haiku sonnet opus; do node bench/rename.mjs --model "$model" --runs 3; done
 echo "experiments finished: $only"

@@ -1,0 +1,29 @@
+<section id="referees" data-transition="fade" style="background:#FFFFFF;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:36px">
+<img src="/_blob/756f2525b48eaa36095d0a128c642db9" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#F230BF">Fere libenter homines id quod volunt credunt — Caesar, De Bello Gallico III.18</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:88px;font-weight:400;line-height:1.04;letter-spacing:1px">A green build is not a correct build</h2>
+<p style="font-size:32px;line-height:1.4;color:#40485A;width:1600px">Rename <b>disableTooltip</b> to <b>tooltip</b> and forget the negation: it compiles clean, and every tooltip in the app flips. So the compiler is the first referee, never the only one.</p>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#F6F4FA;padding:32px 32px;border:1px solid #E3E0EC;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">I</p>
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:34px;font-weight:400">ngc --strictTemplates</h3>
+<p style="font-size:26px;line-height:1.4;color:#40485A">A v1 binding on v2 is NG8002; a wrong value type is a type error.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#F6F4FA;padding:32px 32px;border:1px solid #E3E0EC;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">II</p>
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:34px;font-weight:400">AST diff vs answer key</h3>
+<p style="font-size:26px;line-height:1.4;color:#40485A">Element by element with the compiler’s own AST: formatting-blind, meaning-exact.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#F6F4FA;padding:32px 32px;border:1px solid #E3E0EC;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">III</p>
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:34px;font-weight:400">The built app</h3>
+<p style="font-size:26px;line-height:1.4;color:#40485A">ng build, then every pill compared with the reference: text, tone, tooltip.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#F6F4FA;padding:32px 32px;border:1px solid #E3E0EC;border-radius:20px">
+<p style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:56px;font-weight:400;line-height:1;background:linear-gradient(120deg, #F230BF, #C41633);background-clip:text;-webkit-text-fill-color:transparent;color:#F230BF">IV</p>
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:34px;font-weight:400">The API contract</h3>
+<p style="font-size:26px;line-height:1.4;color:#40485A">An external consumer, input name computed at runtime, must keep working.</p>
+</div>
+</div>
+<aside>A migration can compile and still be wrong: a dropped negation type-checks. Four referees, the compiler first; the second one, the AST diff against the answer key, is what “functionally correct” means on the race slide.</aside>
+</section>

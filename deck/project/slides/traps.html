@@ -1,0 +1,29 @@
+<section id="traps" data-transition="fade" style="background:#F6F4FA;color:#1F2533;font-family:Roboto, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:36px">
+<img src="/_blob/756f2525b48eaa36095d0a128c642db9" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Ils sont fous, ces Romains!</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1.04;letter-spacing:1px">Four fortified camps around the village</h2>
+<div style="display:flex;gap:28px">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;align-items:center;background:#FFFFFF;padding:32px 28px;border:1px solid #E3E0EC;border-top:6px solid #F230BF;border-radius:20px">
+<img src="/_blob/f79516ceb88685b630ed80b851f2736d" alt="Red and white Roman tent" style="width:94px;height:120px;object-fit:contain">
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:38px;font-weight:400;color:#C41633">Totorum</h3>
+<p style="font-size:24px;line-height:1.4;text-align:center;color:#40485A"><b>Same name, other component.</b> <span style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:0.88em;font-weight:600;color:#7A1FC2;background:#EFE4FB;padding:2px 10px;border-radius:8px;white-space:nowrap">&lt;app-card [disableTooltip]&gt;</span> must not change.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;align-items:center;background:#FFFFFF;padding:32px 28px;border:1px solid #E3E0EC;border-top:6px solid #F230BF;border-radius:20px">
+<img src="/_blob/199d7313830d9a48c32034830c720ba7" alt="Yellow Roman tent" style="width:90px;height:120px;object-fit:contain">
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:38px;font-weight:400;color:#C41633">Aquarium</h3>
+<p style="font-size:24px;line-height:1.4;text-align:center;color:#40485A"><b>Same name, not an input.</b> A class field, <span style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:0.88em;font-weight:600;color:#7A1FC2;background:#EFE4FB;padding:2px 10px;border-radius:8px;white-space:nowrap">@if (disableTooltip)</span>, a comment, a hint text.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;align-items:center;background:#FFFFFF;padding:32px 28px;border:1px solid #E3E0EC;border-top:6px solid #F230BF;border-radius:20px">
+<img src="/_blob/1f559d35dd01be1e6696286ed24cc633" alt="Yellow and white Roman tent" style="width:94px;height:120px;object-fit:contain">
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:38px;font-weight:400;color:#C41633">Laudanum</h3>
+<p style="font-size:24px;line-height:1.4;text-align:center;color:#40485A"><b>Same prefix, other element.</b> <span style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:0.88em;font-weight:600;color:#7A1FC2;background:#EFE4FB;padding:2px 10px;border-radius:8px;white-space:nowrap">&lt;app-pill-legacy&gt;</span> stays on v1. <span style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:0.88em;font-weight:600;color:#7A1FC2;background:#EFE4FB;padding:2px 10px;border-radius:8px;white-space:nowrap">&lt;app-pill\b</span> matches it anyway.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;align-items:center;background:#FFFFFF;padding:32px 28px;border:1px solid #E3E0EC;border-top:6px solid #F230BF;border-radius:20px">
+<img src="/_blob/48b23e9c80ad17858c80a25768dd3f4e" alt="Red and yellow Roman tent" style="width:94px;height:120px;object-fit:contain">
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:38px;font-weight:400;color:#C41633">Compendium</h3>
+<p style="font-size:24px;line-height:1.4;text-align:center;color:#40485A"><b>Text is not structure.</b> A <span style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:0.88em;font-weight:600;color:#7A1FC2;background:#EFE4FB;padding:2px 10px;border-radius:8px;white-space:nowrap">&gt;</span> inside <span style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:0.88em;font-weight:600;color:#7A1FC2;background:#EFE4FB;padding:2px 10px;border-radius:8px;white-space:nowrap">count &gt; 3</span>, one attribute per line, templates inside .ts strings.</p>
+</div>
+</div>
+<p style="font-size:30px;line-height:1.4;color:#40485A;width:1500px">Every text-based script falls into at least one camp. An agent with grep does get out, by retrying against the compiler, and the retries are what you pay for. The <span style="color:#A127F2"><b>Angular</b></span> compiler walks past all four.</p>
+<aside>Each camp is a real trap in the workspace. Find and replace hits all four, a careful regex survives two: those are the two deterministic lanes on the race slide, both end with compiler errors. The grep agent ended functionally correct in every measured run, so do not claim it fails; it gets out by iterating against ngc. Only selector matching from the compiler never walks in.</aside>
+</section>

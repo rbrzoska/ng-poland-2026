@@ -1,0 +1,304 @@
+{
+  "model": "haiku",
+  "run": 5,
+  "startedAt": "2026-11-18T08:50:47.692Z",
+  "budget": 100,
+  "task": {
+    "component": "PillComponent",
+    "from": "disableTooltip",
+    "to": "hideHint"
+  },
+  "counts": {
+    "targets": 588,
+    "byKind": {
+      "static": 178,
+      "binding": 362,
+      "template-read": 18,
+      "class-read": 24,
+      "string": 2,
+      "declaration": 1,
+      "style": 3
+    },
+    "byTag": {
+      "app-pill": 442,
+      "app-fancy-pill": 62,
+      "no element": 43,
+      "app-status-pill": 41
+    },
+    "decoys": 385,
+    "decoysByKind": {
+      "text": 26,
+      "other-component": 231,
+      "class-field": 86,
+      "comment": 42
+    },
+    "targetFiles": 141,
+    "files": 225
+  },
+  "toolsAlone": {
+    "ng-facts": {
+      "command": "node ../tools/ng-facts.mjs rename-input PillComponent.disableTooltip hideHint --root . --write",
+      "seconds": 1,
+      "exitCode": 0,
+      "ngcExit": 1,
+      "ngcErrors": 24,
+      "ngcFirstErrors": [
+        "src/app/lib/status-pill.component.ts:11:43 - error TS2339: Property 'disableTooltip' does not exist on type 'StatusPillComponent'.",
+        "src/app/features/feature-8/feature-8.component.ts:23:22 - error TS2339: Property 'disableTooltip' does not exist on type 'FancyPillComponent'.",
+        "src/app/features/feature-11/feature-11.component.ts:25:60 - error TS2339: Property 'disableTooltip' does not exist on type 'PillComponent'."
+      ],
+      "targets": 588,
+      "missed": 146,
+      "missedByKind": {
+        "binding": 62,
+        "template-read": 17,
+        "static": 38,
+        "class-read": 24,
+        "string": 2,
+        "style": 3
+      },
+      "missedByTag": {
+        "app-fancy-pill": 62,
+        "no element": 41,
+        "app-status-pill": 41,
+        "app-pill": 2
+      },
+      "missedExamples": [
+        "src/app/features/feature-1/feature-1.component.ts:24 binding on <app-fancy-pill>",
+        "src/app/features/feature-10/feature-10.component.ts:18 binding on <app-fancy-pill>",
+        "src/app/features/feature-10/feature-10.component.ts:19 template-read",
+        "src/app/features/feature-10/feature-10.component.ts:20 static on <app-status-pill>",
+        "src/app/features/feature-100/feature-100.component.html:8 binding on <app-status-pill>",
+        "src/app/features/feature-101/feature-101.component.ts:19 binding on <app-fancy-pill>",
+        "src/app/features/feature-104/feature-104.component.html:12 binding on <app-fancy-pill>",
+        "src/app/features/feature-104/feature-104.component.html:14 template-read"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false
+    },
+    "ls-facts": {
+      "command": "node ../tools/ls-facts.mjs rename PillComponent.disableTooltip hideHint --root . --write",
+      "seconds": 9.5,
+      "exitCode": 0,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 5,
+      "missedByKind": {
+        "string": 2,
+        "style": 3
+      },
+      "missedByTag": {
+        "app-pill": 2,
+        "app-fancy-pill": 2,
+        "app-status-pill": 1
+      },
+      "missedExamples": [
+        "src/app/lib/pill-tray.component.ts:18 string on <app-pill>",
+        "src/app/lib/pill-tray.component.ts:25 string on <app-fancy-pill>",
+        "src/styles.css:21 style on <app-pill>",
+        "src/styles.css:21 style on <app-fancy-pill>",
+        "src/styles.css:22 style on <app-status-pill>"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false
+    }
+  },
+  "arms": {
+    "skill-ng": {
+      "seconds": 985,
+      "apiSeconds": 984,
+      "modelSeconds": 398,
+      "resultEvents": 1,
+      "turns": 160,
+      "toolCalls": 158,
+      "inputTokens": 12369048,
+      "outputTokens": 43456,
+      "costUsd": 1.7094159,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 43,
+      "missedByKind": {
+        "static": 38,
+        "string": 2,
+        "style": 3
+      },
+      "missedByTag": {
+        "app-status-pill": 21,
+        "app-fancy-pill": 20,
+        "app-pill": 2
+      },
+      "missedExamples": [
+        "src/app/features/feature-10/feature-10.component.ts:20 static on <app-status-pill>",
+        "src/app/features/feature-104/feature-104.component.html:15 static on <app-status-pill>",
+        "src/app/features/feature-107/feature-107.component.html:6 static on <app-status-pill>",
+        "src/app/features/feature-115/feature-115.component.html:13 static on <app-status-pill>",
+        "src/app/features/feature-118/feature-118.component.html:8 static on <app-status-pill>",
+        "src/app/features/feature-13/feature-13.component.html:13 static on <app-fancy-pill>",
+        "src/app/features/feature-15/feature-15.component.ts:27 static on <app-fancy-pill>",
+        "src/app/features/feature-17/feature-17.component.html:6 static on <app-fancy-pill>"
+      ],
+      "decoys": 385,
+      "collateral": 10,
+      "collateralByKind": {
+        "other-component": 2,
+        "comment": 3,
+        "class-field": 5
+      },
+      "collateralExamples": [
+        "src/app/features/feature-105/feature-105.component.html:18 other-component on <app-card>",
+        "src/app/features/feature-111/feature-111.component.ts:16 comment",
+        "src/app/features/feature-117/feature-117.component.html:17 class-field",
+        "src/app/features/feature-27/feature-27.component.html:21 class-field",
+        "src/app/features/feature-3/feature-3.component.html:5 comment",
+        "src/app/features/feature-33/feature-33.component.html:18 other-component on <app-card>",
+        "src/app/features/feature-45/feature-45.component.html:18 class-field",
+        "src/app/features/feature-63/feature-63.component.ts:43 class-field"
+      ],
+      "otherChanges": 48,
+      "changedLines": 48,
+      "addedFiles": 0,
+      "otherExamples": [
+        "src/app/features/feature-105/feature-105.component.html: 3 lines added, removed or rewritten",
+        "src/app/features/feature-111/feature-111.component.ts: 3 lines added, removed or rewritten",
+        "src/app/features/feature-117/feature-117.component.html: 3 lines added, removed or rewritten",
+        "src/app/features/feature-15/feature-15.component.ts: 3 lines added, removed or rewritten",
+        "src/app/features/feature-21/feature-21.component.html: 3 lines added, removed or rewritten",
+        "src/app/features/feature-27/feature-27.component.html: 3 lines added, removed or rewritten",
+        "src/app/features/feature-3/feature-3.component.html: 3 lines added, removed or rewritten",
+        "src/app/features/feature-33/feature-33.component.html: 3 lines added, removed or rewritten"
+      ],
+      "unalignedFiles": [
+        "src/app/features/feature-105/feature-105.component.html",
+        "src/app/features/feature-111/feature-111.component.ts",
+        "src/app/features/feature-117/feature-117.component.html",
+        "src/app/features/feature-15/feature-15.component.ts",
+        "src/app/features/feature-21/feature-21.component.html",
+        "src/app/features/feature-27/feature-27.component.html",
+        "src/app/features/feature-3/feature-3.component.html",
+        "src/app/features/feature-33/feature-33.component.html",
+        "src/app/features/feature-45/feature-45.component.html",
+        "src/app/features/feature-51/feature-51.component.html",
+        "src/app/features/feature-57/feature-57.component.html",
+        "src/app/features/feature-63/feature-63.component.ts",
+        "src/app/features/feature-75/feature-75.component.html",
+        "src/app/features/feature-81/feature-81.component.html",
+        "src/app/features/feature-87/feature-87.component.ts",
+        "src/app/features/feature-93/feature-93.component.html"
+      ],
+      "functionallyCorrect": false,
+      "onlyTheRename": false,
+      "toolRuns": {
+        "skill": 1,
+        "ng-facts": 19
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-skill-ng-kTc8HA\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-haiku-run-5-skill-ng.ndjson"
+    },
+    "skill-ls": {
+      "seconds": 65,
+      "apiSeconds": 64,
+      "modelSeconds": 34,
+      "resultEvents": 1,
+      "turns": 14,
+      "toolCalls": 12,
+      "inputTokens": 429251,
+      "outputTokens": 3634,
+      "costUsd": 0.10562069999999998,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 0,
+      "missedByKind": {},
+      "missedByTag": {},
+      "missedExamples": [],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": true,
+      "onlyTheRename": true,
+      "toolRuns": {
+        "skill": 1,
+        "ls-facts": 2
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-skill-ls-8RzACx\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-haiku-run-5-skill-ls.ndjson"
+    },
+    "skill-both": {
+      "seconds": 74,
+      "apiSeconds": 72,
+      "modelSeconds": 43,
+      "resultEvents": 1,
+      "turns": 15,
+      "toolCalls": 13,
+      "inputTokens": 440833,
+      "outputTokens": 4427,
+      "costUsd": 0.1027901,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 0,
+      "missedByKind": {},
+      "missedByTag": {},
+      "missedExamples": [],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": true,
+      "onlyTheRename": true,
+      "toolRuns": {
+        "skill": 1,
+        "ls-facts": 2
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-skill-both-AVzv8G\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-haiku-run-5-skill-both.ndjson"
+    }
+  }
+}

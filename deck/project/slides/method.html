@@ -1,0 +1,28 @@
+<section id="method" data-transition="fade" style="background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:112px 128px 128px;display:flex;flex-direction:column;gap:32px">
+<img src="/_blob/756f2525b48eaa36095d0a128c642db9" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Backup · how it was measured, and what it does not show</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:84px;font-weight:400;line-height:1.04;letter-spacing:1px;width:1560px;color:#FFFFFF">Read the small print before you quote us</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#24102F;padding:36px 40px;border:1px solid #3A1F4A;border-top:6px solid #A127F2;border-radius:20px">
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;font-weight:400;color:#C98BFF">How</h3>
+<ul style="font-size:26px;line-height:1.4;color:#C7C9DD">
+<li>Claude Code headless 2.1.294, claude-sonnet-5-5 and claude-haiku-5-5, 83 agent runs in all</li>
+<li>same task text for both lanes; the tool lane gets one extra paragraph and no spec</li>
+<li>lanes run one after another; every run is recorded and replayable</li>
+<li>referees: ngc with strict templates, then the compiler’s AST compared with an answer key the generator builds on its own</li>
+<li>every number is lowest–highest of the runs; nothing is averaged</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#24102F;padding:36px 40px;border:1px solid #3A1F4A;border-top:6px solid #C41633;border-radius:20px">
+<h3 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:40px;font-weight:400;color:#FF6FA5">What it does not show</h3>
+<ul style="font-size:26px;line-height:1.4;color:#C7C9DD">
+<li>the repos are synthetic and written by the tool’s author; no real codebase yet</li>
+<li>one agent harness; three to eight runs per lane</li>
+<li>the migration spec format covers exactly this kind of change</li>
+<li>writing the tool is not on the bill; it rests on @angular/compiler, which is private API</li>
+<li>agents trip: 16 of 83 runs lost minutes to a command of their own, in both lanes</li>
+</ul>
+</div>
+</div>
+<aside>If someone asks “did you cherry-pick?”: every run is in results/, the tables come from bench/evidence.mjs, and the one run where the tool agent cost more than the grep agent is on the race slide.</aside>
+</section>

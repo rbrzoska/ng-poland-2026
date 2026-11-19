@@ -1,0 +1,263 @@
+{
+  "model": "haiku",
+  "run": 6,
+  "startedAt": "2026-11-18T09:09:55.616Z",
+  "budget": 100,
+  "task": {
+    "component": "PillComponent",
+    "from": "disableTooltip",
+    "to": "hideHint"
+  },
+  "counts": {
+    "targets": 588,
+    "byKind": {
+      "static": 178,
+      "binding": 362,
+      "template-read": 18,
+      "class-read": 24,
+      "string": 2,
+      "declaration": 1,
+      "style": 3
+    },
+    "byTag": {
+      "app-pill": 442,
+      "app-fancy-pill": 62,
+      "no element": 43,
+      "app-status-pill": 41
+    },
+    "decoys": 385,
+    "decoysByKind": {
+      "text": 26,
+      "other-component": 231,
+      "class-field": 86,
+      "comment": 42
+    },
+    "targetFiles": 141,
+    "files": 225
+  },
+  "toolsAlone": {
+    "ng-facts": {
+      "command": "node ../tools/ng-facts.mjs rename-input PillComponent.disableTooltip hideHint --root . --write",
+      "seconds": 1,
+      "exitCode": 0,
+      "ngcExit": 1,
+      "ngcErrors": 24,
+      "ngcFirstErrors": [
+        "src/app/lib/status-pill.component.ts:11:43 - error TS2339: Property 'disableTooltip' does not exist on type 'StatusPillComponent'.",
+        "src/app/features/feature-8/feature-8.component.ts:23:22 - error TS2339: Property 'disableTooltip' does not exist on type 'FancyPillComponent'.",
+        "src/app/features/feature-11/feature-11.component.ts:25:60 - error TS2339: Property 'disableTooltip' does not exist on type 'PillComponent'."
+      ],
+      "targets": 588,
+      "missed": 146,
+      "missedByKind": {
+        "binding": 62,
+        "template-read": 17,
+        "static": 38,
+        "class-read": 24,
+        "string": 2,
+        "style": 3
+      },
+      "missedByTag": {
+        "app-fancy-pill": 62,
+        "no element": 41,
+        "app-status-pill": 41,
+        "app-pill": 2
+      },
+      "missedExamples": [
+        "src/app/features/feature-1/feature-1.component.ts:24 binding on <app-fancy-pill>",
+        "src/app/features/feature-10/feature-10.component.ts:18 binding on <app-fancy-pill>",
+        "src/app/features/feature-10/feature-10.component.ts:19 template-read",
+        "src/app/features/feature-10/feature-10.component.ts:20 static on <app-status-pill>",
+        "src/app/features/feature-100/feature-100.component.html:8 binding on <app-status-pill>",
+        "src/app/features/feature-101/feature-101.component.ts:19 binding on <app-fancy-pill>",
+        "src/app/features/feature-104/feature-104.component.html:12 binding on <app-fancy-pill>",
+        "src/app/features/feature-104/feature-104.component.html:14 template-read"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false
+    },
+    "ls-facts": {
+      "command": "node ../tools/ls-facts.mjs rename PillComponent.disableTooltip hideHint --root . --write",
+      "seconds": 9.5,
+      "exitCode": 0,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 5,
+      "missedByKind": {
+        "string": 2,
+        "style": 3
+      },
+      "missedByTag": {
+        "app-pill": 2,
+        "app-fancy-pill": 2,
+        "app-status-pill": 1
+      },
+      "missedExamples": [
+        "src/app/lib/pill-tray.component.ts:18 string on <app-pill>",
+        "src/app/lib/pill-tray.component.ts:25 string on <app-fancy-pill>",
+        "src/styles.css:21 style on <app-pill>",
+        "src/styles.css:21 style on <app-fancy-pill>",
+        "src/styles.css:22 style on <app-status-pill>"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false
+    }
+  },
+  "arms": {
+    "skill-ng": {
+      "seconds": 256,
+      "apiSeconds": 255,
+      "modelSeconds": 149,
+      "resultEvents": 1,
+      "turns": 66,
+      "toolCalls": 64,
+      "inputTokens": 2626281,
+      "outputTokens": 17296,
+      "costUsd": 0.43954899999999997,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 38,
+      "missedByKind": {
+        "static": 38
+      },
+      "missedByTag": {
+        "app-status-pill": 20,
+        "app-fancy-pill": 18
+      },
+      "missedExamples": [
+        "src/app/features/feature-10/feature-10.component.ts:20 static on <app-status-pill>",
+        "src/app/features/feature-104/feature-104.component.html:15 static on <app-status-pill>",
+        "src/app/features/feature-107/feature-107.component.html:6 static on <app-status-pill>",
+        "src/app/features/feature-115/feature-115.component.html:13 static on <app-status-pill>",
+        "src/app/features/feature-118/feature-118.component.html:8 static on <app-status-pill>",
+        "src/app/features/feature-13/feature-13.component.html:13 static on <app-fancy-pill>",
+        "src/app/features/feature-15/feature-15.component.ts:27 static on <app-fancy-pill>",
+        "src/app/features/feature-17/feature-17.component.html:6 static on <app-fancy-pill>"
+      ],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": false,
+      "onlyTheRename": false,
+      "toolRuns": {
+        "skill": 1,
+        "ng-facts": 11
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-skill-ng-tIhZbB\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-haiku-run-6-skill-ng.ndjson"
+    },
+    "skill-ls": {
+      "seconds": 91,
+      "apiSeconds": 90,
+      "modelSeconds": 47,
+      "resultEvents": 1,
+      "turns": 18,
+      "toolCalls": 16,
+      "inputTokens": 828620,
+      "outputTokens": 4972,
+      "costUsd": 0.1892454,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 0,
+      "missedByKind": {},
+      "missedByTag": {},
+      "missedExamples": [],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": true,
+      "onlyTheRename": true,
+      "toolRuns": {
+        "skill": 1,
+        "ls-facts": 3
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-skill-ls-0kYToD\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-haiku-run-6-skill-ls.ndjson"
+    },
+    "skill-both": {
+      "seconds": 76,
+      "apiSeconds": 74,
+      "modelSeconds": 44,
+      "resultEvents": 1,
+      "turns": 17,
+      "toolCalls": 15,
+      "inputTokens": 275679,
+      "outputTokens": 5030,
+      "costUsd": 0.0927276,
+      "modelId": "claude-haiku-4-5-20251001",
+      "cliVersion": "2.1.268",
+      "error": null,
+      "ngcExit": 0,
+      "ngcErrors": 0,
+      "ngcFirstErrors": [],
+      "targets": 588,
+      "missed": 0,
+      "missedByKind": {},
+      "missedByTag": {},
+      "missedExamples": [],
+      "decoys": 385,
+      "collateral": 0,
+      "collateralByKind": {},
+      "collateralExamples": [],
+      "otherChanges": 0,
+      "changedLines": 0,
+      "addedFiles": 0,
+      "otherExamples": [],
+      "unalignedFiles": [],
+      "functionallyCorrect": true,
+      "onlyTheRename": true,
+      "toolRuns": {
+        "skill": 1,
+        "ng-facts": 1,
+        "ls-facts": 2
+      },
+      "workspace": "C:\\Users\\rafal\\AppData\\Local\\Temp\\rename-bench-skill-both-cponks\\workspace",
+      "workspaceKept": false,
+      "recording": "results/experiments/rename/recordings/rename-haiku-run-6-skill-both.ndjson"
+    }
+  }
+}

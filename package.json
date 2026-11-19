@@ -21,7 +21,9 @@
     "gaul:after": "cd gaul/fixture-expected && ng serve --port 4322",
     "gaul:migrate": "node tool/ng-facts.mjs migrate tool/specs/tent-v2.migration.json --root gaul/fixture",
     "hybrid:generate": "node scripts/generate-hybrid.mjs",
-    "hybrid:check": "node bench/hybrid.mjs --check"
+    "hybrid:check": "node bench/hybrid.mjs --check",
+    "rename:generate": "node scripts/generate-rename.mjs",
+    "rename:check": "node bench/rename.mjs --check"
   },
   "dependencies": {
     "@angular/common": "22.2.1",
@@ -36,6 +38,7 @@
   },
   "devDependencies": {
     "@angular/build": "22.2.1",
-    "@angular/cli": "22.2.1"
+    "@angular/cli": "22.2.1",
+    "@angular/language-service": "^22.2.1"
   }
 }

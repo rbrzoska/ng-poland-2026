@@ -1,0 +1,25 @@
+<section id="reproduce" data-transition="fade" style="font-variant-ligatures:none;background:#170621;color:#F6F4FA;font-family:Roboto, Arial, sans-serif;padding:72px 128px;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<img src="/_blob/6b93647a1a02266a570b96ede142ca02" alt="NG Poland" style="position:absolute;right:16px;bottom:16px;width:100px;height:84px;object-fit:contain">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F230BF">Limits and how to run it · the repo is public · Node 22 or newer</p>
+<h2 style="font-family:Bangers, 'Trebuchet MS', sans-serif;font-size:96px;font-weight:400;line-height:1.04;letter-spacing:1px;color:#FFFFFF">Run it yourself: <span style="color:#F230BF">five steps.</span></h2>
+<div style="display:flex;gap:32px;align-items:stretch">
+<div style="width:1050px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;background:#0E0316;border:1px solid #3A1F4A;border-radius:18px;padding:30px 36px">
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">1</b> · get the packages</p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> npm install</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">2</b> · find &amp; replace, regex and the compiler, side by side · <span style="color:#9FE0B8">free, no API key</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> npm run demo</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">3</b> · the small potion: where is this input used? · <span style="color:#9FE0B8">free</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> node tool/mini-facts.mjs <span style="color:#F2C230">app-pill disableTooltip</span> fixture/src</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">4</b> · Obelix and Asterix on the mission, three runs · <span style="color:#FF8A9E">costs API money</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> node bench/agent.mjs --runs 3</p></div>
+<div style="display:flex;flex-direction:column;gap:2px"><p style="font-size:26px;color:#B9B2CC"><b style="color:#F230BF">5</b> · the AngularJS app and its answer key · <span style="color:#9FE0B8">free</span></p><p style="font-family:'JetBrains Mono', monospace;font-size:26px;line-height:1.4;color:#F6F4FA;white-space:nowrap"><span style="color:#8E86A6">$</span> node scripts/generate-hybrid.mjs<br><span style="color:#8E86A6">$</span> node bench/hybrid.mjs --check</p></div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B9B2CC">Where things are</p>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F230BF;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">tool/</p><p style="font-size:28px;color:#B9B2CC">the scripts: the potion</p></div>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #A127F2;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">bench/</p><p style="font-size:28px;color:#B9B2CC">the measurements</p></div>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #F2C230;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">scripts/</p><p style="font-size:28px;color:#B9B2CC">the test apps are made here</p></div>
+<div style="display:flex;flex-direction:column;gap:2px;background:#24102F;border:1px solid #3A1F4A;border-left:10px solid #1B7F4A;border-radius:16px;padding:18px 26px"><p style="font-family:'JetBrains Mono', monospace;font-size:36px;color:#FFFFFF">results/</p><p style="font-size:28px;color:#B9B2CC">every recorded run</p></div>
+</div>
+</div>
+<aside>Everything on these slides can be run again. Steps two and three need no model, so they are free.
+Step four starts the two real agents, so it costs API money: in our runs, between 6 and 65 cents for one agent.
+Step five builds the AngularJS app and checks that the script agrees with the answer key.
+Every run we recorded is in the results folder, so you can read the numbers without running anything.</aside>
+</section>
